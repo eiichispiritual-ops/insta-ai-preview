@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+  <defs>
+    <linearGradient id="camera-gradient" x1="2" y1="32" x2="27" y2="1" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F9C76A"/>
+      <stop offset=".32" stop-color="#E65D4F"/>
+      <stop offset=".64" stop-color="#BE438C"/>
+      <stop offset="1" stop-color="#6854AE"/>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="8" fill="url(#camera-gradient)"/>
+  <rect x="7.1" y="7.1" width="17.8" height="17.8" rx="5" stroke="white" stroke-width="1.9"/>
+  <circle cx="16" cy="16" r="4.2" stroke="white" stroke-width="1.9"/>
+  <circle cx="21.8" cy="10.3" r="1.25" fill="white"/>
+</svg>
