@@ -1,0 +1,91 @@
+'use strict';
+// 「見本｜AI再現」ギャラリー。assets/reels/manifest.json と howto.json を読んで描く。
+// データが無い形式はカードを出さない（作例を捏造しない）。
+(function(){
+  const root=document.getElementById('reels-gallery'); if(!root) return;
+  const ORDER=['ranking','voiceover','vlog','talk','comparison'];
+  const LABEL={ranking:'ランキング',voiceover:'アフレコ',vlog:'VLOG',talk:'トーク',comparison:'比較'};
+  const base='assets/reels/';
+  const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=text;return n;};
+  const fmt1=v=>v==null?'—':(Math.round(v*100)/100).toFixed(2);
+
+  function video(side,item,label){
+    const box=el('figure','reel-side');
+    const v=document.createElement('video');
+    v.src=base+side.file; v.poster=base+side.poster; v.controls=true; v.playsInline=true; v.preload='metadata';
+    v.setAttribute('aria-label',label+'：'+item.title);
+    box.appendChild(v);
+    const cap=el('figcaption'); cap.appendChild(el('span','reel-tag',label));
+    if(side.duration_sec) cap.appendChild(el('small',null,Math.round(side.duration_sec)+'秒'));
+    box.appendChild(cap); return box;
+  }
+
+  function qcLine(item){
+    const q=item.qc; const p=el('p','reel-qc');
+    if(q){
+      const parts=['全フレームの平均差 '+fmt1(q.mad_mean),'最大 '+fmt1(q.mad_max),'5を超えたフレーム '+q.frames_over_5+' / '+q.frames];
+      if(q.lufs_ref!=null&&q.lufs_ai!=null) parts.push('音量 '+fmt1(q.lufs_ref)+' → '+fmt1(q.lufs_ai)+' LUFS');
+      p.textContent=parts.join(' ・ ');
+      p.appendChild(el('small',null,'見本と同じ色変換で全フレームを比べた実測値。差は0〜255。'));
+    }else if(item.approved){ p.textContent='承認：'+item.approved; }
+    else{ p.textContent='数値の比較は未実施'; }
+    return p;
+  }
+
+  function howtoBlock(h,format){
+    const d=el('details','reel-howto'); const s=el('summary',null,'この動画の作り方'); d.appendChild(s);
+    if(!h){ d.appendChild(el('p','reel-note','作り方は準備中です。')); return d; }
+    if(h.summary) d.appendChild(el('p','reel-summary',h.summary));
+    const two=el('div','reel-two');
+    const list=(title,arr)=>{const w=el('div');w.appendChild(el('h4',null,title));const ul=el('ul');(arr||[]).forEach(x=>ul.appendChild(el('li',null,x)));w.appendChild(ul);return w;};
+    if(h.fixed&&h.fixed.length) two.appendChild(list('この型で必ず守ること',h.fixed));
+    if(h.rules&&h.rules.length) two.appendChild(list('字幕・音の決まり',h.rules));
+    d.appendChild(two);
+    if(h.timeline&&h.timeline.length){
+      d.appendChild(el('h4',null,'何秒に、何を'));
+      const t=document.createElement('table'); t.className='reel-timeline';
+      const thead=t.createTHead(); const hr=thead.insertRow();
+      ['時間','声','映像','差し込み','字幕'].forEach(x=>{const th=document.createElement('th');th.textContent=x;hr.appendChild(th);});
+      const tb=t.createTBody();
+      h.timeline.forEach(r=>{const tr=tb.insertRow();[r.t,r.voice,r.video,r.insert,r.caption].forEach(x=>{tr.insertCell().textContent=x==null||x===''?'—':x;});});
+      d.appendChild(t);
+    }
+    if(h.materials&&h.materials.length) d.appendChild(list('使う素材',h.materials));
+    const a=el('a','text-link','作り方をMarkdownで保存 ↓'); a.href=base+'howto_'+format+'.md'; a.download='作り方_'+LABEL[format]+'.md'; d.appendChild(a);
+    return d;
+  }
+
+  function card(item,h){
+    const c=el('article','reel-card'); c.id='reel-'+item.format;
+    const head=el('div','reel-head');
+    head.appendChild(el('p','overline',(LABEL[item.format]||item.format)+' / '+(item.account||'')));
+    head.appendChild(el('h3',null,item.title||''));
+    c.appendChild(head);
+    const pair=el('div','reel-pair');
+    if(item.ref) pair.appendChild(video(item.ref,item,'見本（人の編集）'));
+    if(item.ai)  pair.appendChild(video(item.ai,item,'AI再現'+(item.ai.version?'（'+item.ai.version+'）':'')));
+    c.appendChild(pair);
+    c.appendChild(qcLine(item));
+    c.appendChild(howtoBlock(h,item.format));
+    return c;
+  }
+
+  Promise.all([
+    fetch(base+'manifest.json').then(r=>r.ok?r.json():{items:[]}).catch(()=>({items:[]})),
+    fetch(base+'howto.json').then(r=>r.ok?r.json():{items:[]}).catch(()=>({items:[]}))
+  ]).then(([m,h])=>{
+    const how={}; (h.items||[]).forEach(x=>{how[x.format]=x;});
+    const items=(m.items||[]).slice().sort((a,b)=>ORDER.indexOf(a.format)-ORDER.indexOf(b.format));
+    root.replaceChildren();
+    if(!items.length){ root.appendChild(el('p','reel-note','動画は準備中です。')); return; }
+    // 形式のタブ
+    const nav=el('nav','reel-nav'); nav.setAttribute('aria-label','形式を選ぶ');
+    items.forEach((it,i)=>{const b=el('button',null,LABEL[it.format]||it.format); b.type='button'; b.dataset.target='reel-'+it.format; if(i===0)b.setAttribute('aria-current','true');
+      b.addEventListener('click',()=>{nav.querySelectorAll('button').forEach(x=>x.removeAttribute('aria-current'));b.setAttribute('aria-current','true');document.getElementById(b.dataset.target).scrollIntoView({behavior:'smooth',block:'start'});});
+      nav.appendChild(b);});
+    root.appendChild(nav);
+    items.forEach(it=>root.appendChild(card(it,how[it.format])));
+    // 同時再生を1本に（ページが重くならないように）
+    root.querySelectorAll('video').forEach(v=>v.addEventListener('play',()=>{root.querySelectorAll('video').forEach(o=>{if(o!==v)o.pause();});}));
+  });
+})();

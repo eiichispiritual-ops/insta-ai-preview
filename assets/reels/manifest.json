@@ -1,0 +1,131 @@
+{
+ "generated": "2026-10-11",
+ "items": [
+  {
+   "format": "ranking",
+   "label": "ランキング",
+   "account": "さき",
+   "title": "2026年最新版 インスタで使える無料神ツールランキング",
+   "ref": {
+    "file": "ranking_ref.mp4",
+    "poster": "ranking_ref.jpg",
+    "size_mb": 8.02,
+    "duration_sec": 51.93
+   },
+   "ai": {
+    "file": "ranking_ai.mp4",
+    "poster": "ranking_ai.jpg",
+    "size_mb": 6.8,
+    "duration_sec": 51.93,
+    "version": "r1011"
+   },
+   "qc": {
+    "mad_mean": 2.97,
+    "mad_max": 3.797,
+    "frames_over_5": 0,
+    "lufs_ref": -22.0,
+    "lufs_ai": -22.0,
+    "frames": 1558
+   },
+   "approved": null
+  },
+  {
+   "format": "voiceover",
+   "label": "アフレコ操作画面",
+   "account": "さき",
+   "title": "万バズリール量産プロンプト",
+   "ref": {
+    "file": "voiceover_ref.mp4",
+    "poster": "voiceover_ref.jpg",
+    "size_mb": 5.91,
+    "duration_sec": 49.53
+   },
+   "ai": {
+    "file": "voiceover_ai.mp4",
+    "poster": "voiceover_ai.jpg",
+    "size_mb": 6.53,
+    "duration_sec": 49.51,
+    "version": "r1011"
+   },
+   "qc": {
+    "mad_mean": 2.123,
+    "mad_max": 3.694,
+    "frames_over_5": 0,
+    "lufs_ref": -14.2,
+    "lufs_ai": -14.2,
+    "frames": 1485
+   },
+   "approved": null
+  },
+  {
+   "format": "talk",
+   "label": "トーク（抽象マーケ）",
+   "account": "さき",
+   "title": "もっちゅりん",
+   "ref": {
+    "file": "talk_ref.mp4",
+    "poster": "talk_ref.jpg",
+    "size_mb": 13.06,
+    "duration_sec": 151.3
+   },
+   "ai": {
+    "file": "talk_ai.mp4",
+    "poster": "talk_ai.jpg",
+    "size_mb": 13.4,
+    "duration_sec": 151.32,
+    "version": "v31"
+   },
+   "qc": null,
+   "approved": "2026-09-19 ユーザー承認（v31）"
+  },
+  {
+   "format": "comparison",
+   "label": "比較",
+   "account": "さき",
+   "title": "2026年バズる冒頭ワード",
+   "ref": {
+    "file": "comparison_ref.mp4",
+    "poster": "comparison_ref.jpg",
+    "size_mb": 3.71,
+    "duration_sec": 34.28
+   },
+   "ai": {
+    "file": "comparison_ai.mp4",
+    "poster": "comparison_ai.jpg",
+    "size_mb": 3.61,
+    "duration_sec": 34.28,
+    "version": "v05"
+   },
+   "qc": null,
+   "approved": "2026-09-18 ユーザー承認（v05・「比較リールはこれで完成でOK」）"
+  },
+  {
+   "format": "vlog",
+   "label": "Vlogアフレコ",
+   "account": "みさを",
+   "title": "日本人しか勝てへん海外ﾌｸ業",
+   "ref": {
+    "file": "vlog_ref.mp4",
+    "poster": "vlog_ref.jpg",
+    "size_mb": 11.28,
+    "duration_sec": 53.33
+   },
+   "ai": {
+    "file": "vlog_ai.mp4",
+    "poster": "vlog_ai.jpg",
+    "size_mb": 11.16,
+    "duration_sec": 53.33,
+    "version": "r1011"
+   },
+   "qc": {
+    "mad_mean": 2.188,
+    "mad_max": 3.174,
+    "frames_over_5": 0,
+    "lufs_ref": -19.3,
+    "lufs_ai": -19.3,
+    "frames": 1600
+   },
+   "approved": null
+  }
+ ]
+}
