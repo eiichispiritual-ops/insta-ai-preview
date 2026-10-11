@@ -55,6 +55,38 @@
     "lufs_ai": -14.2,
     "frames": 1485
    },
+   "approved": null,
+   "key": "voiceover",
+   "nav": "アフレコ①"
+  },
+  {
+   "format": "voiceover",
+   "key": "voiceover2",
+   "nav": "アフレコ②",
+   "label": "アフレコ操作画面",
+   "account": "さき",
+   "title": "0→1新規アカ 2大GPTs",
+   "ref": {
+    "file": "voiceover2_ref.mp4",
+    "poster": "voiceover2_ref.jpg",
+    "size_mb": 12.69,
+    "duration_sec": 59.61
+   },
+   "ai": {
+    "file": "voiceover2_ai.mp4",
+    "poster": "voiceover2_ai.jpg",
+    "size_mb": 12.74,
+    "duration_sec": 59.58,
+    "version": "v48"
+   },
+   "qc": {
+    "mad_mean": 4.116,
+    "mad_max": 8.518,
+    "frames_over_5": 535,
+    "lufs_ref": -14.1,
+    "lufs_ai": -14.1,
+    "frames": 1787
+   },
    "approved": null
   },
   {

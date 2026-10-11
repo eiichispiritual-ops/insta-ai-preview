@@ -62,9 +62,9 @@
   }
 
   function card(item,h){
-    const c=el('article','reel-card'); c.id='reel-'+item.format;
+    const c=el('article','reel-card'); c.id='reel-'+(item.key||item.format);
     const head=el('div','reel-head');
-    head.appendChild(el('p','overline',(LABEL[item.format]||item.format)+' / '+(item.account||'')));
+    head.appendChild(el('p','overline',(LABEL[item.format]||item.format)+(item.nav?' '+item.nav:'')+' / '+(item.account||'')));
     head.appendChild(el('h3',null,item.title||''));
     c.appendChild(head);
     const pair=el('div','reel-pair');
@@ -81,12 +81,12 @@
     fetch(base+'howto.json').then(r=>r.ok?r.json():{items:[]}).catch(()=>({items:[]}))
   ]).then(([m,h])=>{
     const how={}; (h.items||[]).forEach(x=>{how[x.format]=x;});
-    const items=(m.items||[]).slice().sort((a,b)=>ORDER.indexOf(a.format)-ORDER.indexOf(b.format));
+    const items=(m.items||[]).map((x,i)=>({x,i})).sort((a,b)=>(ORDER.indexOf(a.x.format)-ORDER.indexOf(b.x.format))||(a.i-b.i)).map(o=>o.x);
     root.replaceChildren();
     if(!items.length){ root.appendChild(el('p','reel-note','動画は準備中です。')); return; }
     // 形式のタブ
     const nav=el('nav','reel-nav'); nav.setAttribute('aria-label','形式を選ぶ');
-    items.forEach((it,i)=>{const b=el('button',null,LABEL[it.format]||it.format); b.type='button'; b.dataset.target='reel-'+it.format; if(i===0)b.setAttribute('aria-current','true');
+    items.forEach((it,i)=>{const b=el('button',null,it.nav||LABEL[it.format]||it.format); b.type='button'; b.dataset.target='reel-'+(it.key||it.format); if(i===0)b.setAttribute('aria-current','true');
       b.addEventListener('click',()=>{nav.querySelectorAll('button').forEach(x=>x.removeAttribute('aria-current'));b.setAttribute('aria-current','true');document.getElementById(b.dataset.target).scrollIntoView({behavior:'smooth',block:'start'});});
       nav.appendChild(b);});
     root.appendChild(nav);
