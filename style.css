@@ -36,3 +36,12 @@ html{scroll-behavior:auto}
 .reel-timeline th{color:var(--muted);font-weight:500;font-size:10.5px}.reel-timeline td:first-child{white-space:nowrap;color:var(--muted)}
 .reel-howto .text-link{display:inline-block;margin:12px 0 16px}.reel-note{font-size:12px;color:var(--muted)}
 @media(max-width:760px){.reel-pair{max-width:none;gap:10px}.reel-two{grid-template-columns:1fr}.reel-timeline{font-size:10.5px}.reel-timeline th,.reel-timeline td{padding:6px 5px}.reel-head h3{font-size:17px}}
+@media(max-width:760px){.workbench input,.workbench textarea,.workbench select{font-size:16px}}
+/* 第7巡：幅390px前後の崩れ対策（2026-10-11） */
+/* 並んだ入力欄：2列だと選択欄が約100pxになり「企画を相談する」等が欠ける。480px以下は1列 */
+@media(max-width:480px){.two-inputs{grid-template-columns:1fr;gap:0}}
+/* 5列のタブ：6文字の見出し（プロフィール・フィード投稿）が1列の幅を超えて隣へはみ出すため、余白と文字を少し詰める */
+@media(max-width:430px){.service-tabs button{padding-left:3px;padding-right:3px}.service-tabs button:first-child{padding-left:0}.service-tabs span{font-size:10px;letter-spacing:-.04em}}
+/* 「この動画の作り方」の時間表：5列のままだと1列が約60pxになり読めない。480px以下は1行ごとのカード表示に */
+@media(max-width:480px){.reel-timeline,.reel-timeline tbody,.reel-timeline tr,.reel-timeline td{display:block;width:100%}.reel-timeline thead{display:none}.reel-timeline tr{padding:10px 0;border-bottom:1px solid var(--line)}.reel-timeline td{border:0;padding:2px 0;font-size:11.5px}.reel-timeline td:first-child{font-weight:600;color:var(--ink);font-size:12px}.reel-timeline td:not(:first-child)::before{content:attr(data-label);display:inline-block;min-width:4.2em;margin-right:6px;font-size:10px;color:var(--muted)}.reel-timeline td:first-child::before{content:attr(data-label) "　";font-size:10px;color:var(--muted);font-weight:400}}
+.reel-prepare{margin:8px 0 12px}.reel-prepare p{margin:6px 0}

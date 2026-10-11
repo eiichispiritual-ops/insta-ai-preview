@@ -23,11 +23,11 @@
   function qcLine(item){
     const q=item.qc; const p=el('p','reel-qc');
     if(q){
-      const parts=['全フレームの平均差 '+fmt1(q.mad_mean),'最大 '+fmt1(q.mad_max),'5を超えたフレーム '+q.frames_over_5+' / '+q.frames];
-      if(q.lufs_ref!=null&&q.lufs_ai!=null) parts.push('音量 '+fmt1(q.lufs_ref)+' → '+fmt1(q.lufs_ai)+' LUFS');
+      const parts=['全フレーム（1コマずつ）の平均差 '+fmt1(q.mad_mean),'最大 '+fmt1(q.mad_max),'差が5を超えたコマ '+q.frames_over_5+' / '+q.frames];
+      if(q.lufs_ref!=null&&q.lufs_ai!=null) parts.push('音の大きさ（LUFS） '+fmt1(q.lufs_ref)+' → '+fmt1(q.lufs_ai));
       p.textContent=parts.join(' ・ ');
-      p.appendChild(el('small',null,'見本と同じ色変換で全フレームを比べた実測値。差は0〜255。'));
-    }else if(item.approved){ p.textContent='承認：'+item.approved; }
+      p.appendChild(el('small',null,'見本と同じ色変換で全フレームを比べた実測値。差は0〜255で、数値が小さいほど見本に近い。'));
+    }else if(item.approved){ p.textContent='講師の確認済み'; }
     else{ p.textContent='数値の比較は未実施'; }
     return p;
   }
@@ -36,22 +36,28 @@
     const d=el('details','reel-howto'); const s=el('summary',null,'この動画の作り方'); d.appendChild(s);
     if(!h){ d.appendChild(el('p','reel-note','作り方は準備中です。')); return d; }
     if(h.summary) d.appendChild(el('p','reel-summary',h.summary));
+    if(h.prepare&&h.prepare.length){const w=el('div','reel-prepare');w.appendChild(el('h4',null,'用意するもの'));const ul=el('ul');h.prepare.forEach(x=>ul.appendChild(el('li',null,x)));w.appendChild(ul);
+      if(h.first_step){const p=el('p');p.appendChild(el('strong',null,'最初の一手：'));p.appendChild(document.createTextNode(h.first_step));w.appendChild(p);}
+      if(h.desk) w.appendChild(el('p','reel-note',h.desk));
+      d.appendChild(w);}
     const two=el('div','reel-two');
     const list=(title,arr)=>{const w=el('div');w.appendChild(el('h4',null,title));const ul=el('ul');(arr||[]).forEach(x=>ul.appendChild(el('li',null,x)));w.appendChild(ul);return w;};
-    if(h.fixed&&h.fixed.length) two.appendChild(list('この型で必ず守ること',h.fixed));
-    if(h.rules&&h.rules.length) two.appendChild(list('字幕・音の決まり',h.rules));
+    if(h.fixed&&h.fixed.length) two.appendChild(list('この型の決まり（最初はここだけ守れば形になる）',h.fixed));
+    if(h.rules&&h.rules.length) two.appendChild(list('字幕と音のコツ',h.rules));
     d.appendChild(two);
     if(h.timeline&&h.timeline.length){
-      d.appendChild(el('h4',null,'何秒に、何を'));
+      d.appendChild(el('h4',null,'時間順の流れ（秒数は目安）'));
+      if(h.timeline_note) d.appendChild(el('p','reel-note',h.timeline_note));
       const t=document.createElement('table'); t.className='reel-timeline';
       const thead=t.createTHead(); const hr=thead.insertRow();
       ['時間','声','映像','差し込み','字幕'].forEach(x=>{const th=document.createElement('th');th.textContent=x;hr.appendChild(th);});
       const tb=t.createTBody();
-      h.timeline.forEach(r=>{const tr=tb.insertRow();[r.t,r.voice,r.video,r.insert,r.caption].forEach(x=>{tr.insertCell().textContent=x==null||x===''?'—':x;});});
+      const LAB=['時間','声','映像','差し込み','字幕'];
+      h.timeline.forEach(r=>{const tr=tb.insertRow();[r.t,r.voice,r.video,r.insert,r.caption].forEach((x,i)=>{const td=tr.insertCell();td.textContent=x==null||x===''?'—':x;td.setAttribute('data-label',LAB[i]);});});
       d.appendChild(t);
     }
-    if(h.materials&&h.materials.length) d.appendChild(list('使う素材',h.materials));
-    const a=el('a','text-link','作り方をMarkdownで保存 ↓'); a.href=base+'howto_'+format+'.md'; a.download='作り方_'+LABEL[format]+'.md'; d.appendChild(a);
+    if(h.materials&&h.materials.length) d.appendChild(list('見本で使った素材',h.materials));
+    const a=el('a','text-link','作り方をテキストで保存（AIに貼って相談できる） ↓'); a.href=base+'howto_'+format+'.md'; a.download='作り方_'+LABEL[format]+'.md'; d.appendChild(a);
     return d;
   }
 
