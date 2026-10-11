@@ -75,14 +75,14 @@
    "ai": {
     "file": "voiceover2_ai.mp4",
     "poster": "voiceover2_ai.jpg",
-    "size_mb": 12.74,
+    "size_mb": 12.28,
     "duration_sec": 59.58,
-    "version": "v48"
+    "version": "v49"
    },
    "qc": {
-    "mad_mean": 4.116,
-    "mad_max": 8.518,
-    "frames_over_5": 535,
+    "mad_mean": 4.017,
+    "mad_max": 8.52,
+    "frames_over_5": 427,
     "lufs_ref": -14.1,
     "lufs_ai": -14.1,
     "frames": 1787
