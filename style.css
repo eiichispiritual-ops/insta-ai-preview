@@ -7,4 +7,8 @@
 
 .field-help{font-size:12px;color:var(--muted);margin:0 0 20px}.brief-next{font-size:12px;line-height:1.9;padding:16px 0;border-top:1px solid var(--line);margin-top:18px}.brief-detail summary{font-size:12px;cursor:pointer;padding:10px 0}.output-actions{flex-wrap:wrap}#materials,#original{min-height:100px;resize:vertical}#post-date{max-width:100%}
 
+#manual-output{width:100%;min-height:220px;font-size:12px;line-height:1.8}#select-output{padding:10px 14px;margin:10px 0;background:var(--ink);color:var(--paper)}#reuse-materials{margin-bottom:18px;text-align:left}#original-count{display:block;font-size:11px;color:var(--muted)}
+
+html{scroll-behavior:auto}
+
 .public-preview{padding:10px 24px;background:#efece3;color:#55594f;font-size:12px;text-align:center}.package-private{display:inline-block;color:var(--muted)}
