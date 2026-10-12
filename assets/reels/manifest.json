@@ -1,266 +1,266 @@
 {
- "generated": "2026-10-12",
- "items": [
-  {
-   "format": "ranking",
-   "label": "ランキング",
-   "account": "さき",
-   "title": "2026年最新版 インスタで使える無料神ツールランキング",
-   "ref": {
-    "file": "ranking_ref.mp4",
-    "poster": "ranking_ref.jpg",
-    "size_mb": 8.02,
-    "duration_sec": 51.93
-   },
-   "ai": {
-    "file": "ranking_ai.mp4",
-    "poster": "ranking_ai.jpg",
-    "size_mb": 6.8,
-    "duration_sec": 51.93,
-    "version": "r1011"
-   },
-   "qc": {
-    "mad_mean": 2.97,
-    "mad_max": 3.797,
-    "frames_over_5": 0,
-    "lufs_ref": -22.0,
-    "lufs_ai": -22.0,
-    "frames": 1558
-   },
-   "approved": null,
-   "stage": "見本と同等（機械測定で合格）"
-  },
-  {
-   "format": "voiceover",
-   "label": "アフレコ操作画面",
-   "account": "さき",
-   "title": "万バズリール量産プロンプト",
-   "ref": {
-    "file": "voiceover_ref.mp4",
-    "poster": "voiceover_ref.jpg",
-    "size_mb": 5.91,
-    "duration_sec": 49.53
-   },
-   "ai": {
-    "file": "voiceover_ai.mp4",
-    "poster": "voiceover_ai.jpg",
-    "size_mb": 6.53,
-    "duration_sec": 49.51,
-    "version": "r1011"
-   },
-   "qc": {
-    "mad_mean": 2.123,
-    "mad_max": 3.694,
-    "frames_over_5": 0,
-    "lufs_ref": -14.2,
-    "lufs_ai": -14.2,
-    "frames": 1485
-   },
-   "approved": null,
-   "key": "voiceover",
-   "nav": "アフレコ①",
-   "stage": "見本と同等（機械測定で合格）"
-  },
-  {
-   "format": "voiceover",
-   "key": "voiceover2",
-   "nav": "アフレコ②",
-   "label": "アフレコ操作画面",
-   "account": "さき",
-   "title": "0→1新規アカ 2大GPTs",
-   "ref": {
-    "file": "voiceover2_ref.mp4",
-    "poster": "voiceover2_ref.jpg",
-    "size_mb": 12.69,
-    "duration_sec": 59.61
-   },
-   "ai": {
-    "file": "voiceover2_ai.mp4",
-    "poster": "voiceover2_ai.jpg",
-    "size_mb": 12.27,
-    "duration_sec": 59.57,
-    "version": "v52"
-   },
-   "qc": {
-    "mad_mean": 4.016,
-    "mad_max": 8.58,
-    "frames_over_5": 427,
-    "lufs_ref": -14.1,
-    "lufs_ai": -14.1,
-    "frames": 1787
-   },
-   "approved": null,
-   "stage": "仕上げ中"
-  },
-  {
-   "format": "talk",
-   "label": "トーク（抽象マーケ）",
-   "account": "さき",
-   "title": "もっちゅりん",
-   "ref": {
-    "file": "talk_ref.mp4",
-    "poster": "talk_ref.jpg",
-    "size_mb": 13.06,
-    "duration_sec": 151.3
-   },
-   "ai": {
-    "file": "talk_ai.mp4",
-    "poster": "talk_ai.jpg",
-    "size_mb": 13.4,
-    "duration_sec": 151.32,
-    "version": "v31"
-   },
-   "qc": null,
-   "approved": "2026-09-19 講師の確認済み",
-   "key": "talk",
-   "nav": "トーク①",
-   "stage": "講師の確認済み"
-  },
-  {
-   "format": "comparison",
-   "label": "比較",
-   "account": "さき",
-   "title": "2026年バズる冒頭ワード",
-   "ref": {
-    "file": "comparison_ref.mp4",
-    "poster": "comparison_ref.jpg",
-    "size_mb": 3.71,
-    "duration_sec": 34.28
-   },
-   "ai": {
-    "file": "comparison_ai.mp4",
-    "poster": "comparison_ai.jpg",
-    "size_mb": 3.61,
-    "duration_sec": 34.28,
-    "version": "v05"
-   },
-   "qc": null,
-   "approved": "2026-09-18 講師の確認済み",
-   "stage": "講師の確認済み"
-  },
-  {
-   "format": "vlog",
-   "label": "Vlogアフレコ",
-   "account": "みさを",
-   "title": "日本人しか勝てへん海外ﾌｸ業",
-   "ref": {
-    "file": "vlog_ref.mp4",
-    "poster": "vlog_ref.jpg",
-    "size_mb": 11.28,
-    "duration_sec": 53.33
-   },
-   "ai": {
-    "file": "vlog_ai.mp4",
-    "poster": "vlog_ai.jpg",
-    "size_mb": 11.16,
-    "duration_sec": 53.33,
-    "version": "r1011"
-   },
-   "qc": {
-    "mad_mean": 2.188,
-    "mad_max": 3.174,
-    "frames_over_5": 0,
-    "lufs_ref": -19.3,
-    "lufs_ai": -19.3,
-    "frames": 1600
-   },
-   "approved": null,
-   "key": "vlog",
-   "nav": "Vlog①",
-   "stage": "見本と同等（機械測定で合格）"
-  },
-  {
-   "format": "vlog",
-   "key": "vlog2",
-   "nav": "Vlog②",
-   "label": "Vlogアフレコ",
-   "account": "みさを",
-   "title": "AI×Etsy ステッカー販売",
-   "ref": {
-    "file": "vlog2_ref.mp4",
-    "poster": "vlog2_ref.jpg",
-    "size_mb": 7.77,
-    "duration_sec": 56.49
-   },
-   "ai": {
-    "file": "vlog2_ai.mp4",
-    "poster": "vlog2_ai.jpg",
-    "size_mb": 8.31,
-    "duration_sec": 56.47,
-    "version": "v16"
-   },
-   "qc": {
-    "mad_mean": 2.998,
-    "mad_max": 6.54,
-    "frames_over_5": 6,
-    "lufs_ref": -14.1,
-    "lufs_ai": -14.1,
-    "frames": 1694
-   },
-   "approved": null,
-   "stage": "見本と同等（機械測定で合格）"
-  },
-  {
-   "format": "talk",
-   "key": "talk2",
-   "nav": "トーク②",
-   "label": "トーク強調",
-   "account": "みさを",
-   "title": "枝葉vs本質 ハッシュタグ",
-   "ref": {
-    "file": "talk2_ref.mp4",
-    "poster": "talk2_ref.jpg",
-    "size_mb": 12.14,
-    "duration_sec": 103.45
-   },
-   "ai": {
-    "file": "talk2_ai.mp4",
-    "poster": "talk2_ai.jpg",
-    "size_mb": 12.3,
-    "duration_sec": 103.45,
-    "version": "v17"
-   },
-   "qc": {
-    "mad_mean": 2.418,
-    "mad_max": 4.437,
-    "frames_over_5": 0,
-    "lufs_ref": -14.1,
-    "lufs_ai": -15.0,
-    "frames": 3100
-   },
-   "approved": null,
-   "stage": "仕上げ中"
-  },
-  {
-   "format": "talk",
-   "key": "talk3",
-   "nav": "トーク③",
-   "label": "トーク（抽象マーケ②）",
-   "account": "さき",
-   "title": "Claudeでバズリール100本一括分析",
-   "ref": {
-    "file": "talk3_ref.mp4",
-    "poster": "talk3_ref.jpg",
-    "size_mb": 11.0,
-    "duration_sec": 95.37
-   },
-   "ai": {
-    "file": "talk3_ai.mp4",
-    "poster": "talk3_ai.jpg",
-    "size_mb": 11.78,
-    "duration_sec": 95.47,
-    "version": "v14"
-   },
-   "qc": {
-    "mad_mean": 5.396,
-    "mad_max": 14.63,
-    "frames_over_5": 1428,
-    "lufs_ref": -14.1,
-    "lufs_ai": -14.1,
-    "frames": 2861
-   },
-   "approved": null,
-   "stage": "仕上げ中"
-  }
- ]
+  "generated": "2026-10-12",
+  "items": [
+    {
+      "format": "ranking",
+      "label": "ランキング",
+      "account": "さき",
+      "title": "2026年最新版 インスタで使える無料神ツールランキング",
+      "ref": {
+        "file": "ranking_ref.mp4",
+        "poster": "ranking_ref.jpg",
+        "size_mb": 8.02,
+        "duration_sec": 51.93
+      },
+      "ai": {
+        "file": "ranking_ai.mp4",
+        "poster": "ranking_ai.jpg",
+        "size_mb": 6.8,
+        "duration_sec": 51.93,
+        "version": "r1011"
+      },
+      "qc": {
+        "mad_mean": 2.97,
+        "mad_max": 3.797,
+        "frames_over_5": 0,
+        "lufs_ref": -22.0,
+        "lufs_ai": -22.0,
+        "frames": 1558
+      },
+      "approved": null,
+      "stage": "見本と同等（機械測定で合格）"
+    },
+    {
+      "format": "voiceover",
+      "label": "アフレコ操作画面",
+      "account": "さき",
+      "title": "万バズリール量産プロンプト",
+      "ref": {
+        "file": "voiceover_ref.mp4",
+        "poster": "voiceover_ref.jpg",
+        "size_mb": 5.91,
+        "duration_sec": 49.53
+      },
+      "ai": {
+        "file": "voiceover_ai.mp4",
+        "poster": "voiceover_ai.jpg",
+        "size_mb": 6.53,
+        "duration_sec": 49.51,
+        "version": "r1011"
+      },
+      "qc": {
+        "mad_mean": 2.123,
+        "mad_max": 3.694,
+        "frames_over_5": 0,
+        "lufs_ref": -14.2,
+        "lufs_ai": -14.2,
+        "frames": 1485
+      },
+      "approved": null,
+      "key": "voiceover",
+      "nav": "アフレコ①",
+      "stage": "見本と同等（機械測定で合格）"
+    },
+    {
+      "format": "voiceover",
+      "key": "voiceover2",
+      "nav": "アフレコ②",
+      "label": "アフレコ操作画面",
+      "account": "さき",
+      "title": "0→1新規アカ 2大GPTs",
+      "ref": {
+        "file": "voiceover2_ref.mp4",
+        "poster": "voiceover2_ref.jpg",
+        "size_mb": 12.69,
+        "duration_sec": 59.61
+      },
+      "ai": {
+        "file": "voiceover2_ai.mp4",
+        "poster": "voiceover2_ai.jpg",
+        "size_mb": 12.27,
+        "duration_sec": 59.57,
+        "version": "v52"
+      },
+      "qc": {
+        "mad_mean": 4.016,
+        "mad_max": 8.58,
+        "frames_over_5": 427,
+        "lufs_ref": -14.1,
+        "lufs_ai": -14.1,
+        "frames": 1787
+      },
+      "approved": null,
+      "stage": "仕上げ中"
+    },
+    {
+      "format": "talk",
+      "label": "トーク（抽象マーケ）",
+      "account": "さき",
+      "title": "もっちゅりん",
+      "ref": {
+        "file": "talk_ref.mp4",
+        "poster": "talk_ref.jpg",
+        "size_mb": 13.06,
+        "duration_sec": 151.3
+      },
+      "ai": {
+        "file": "talk_ai.mp4",
+        "poster": "talk_ai.jpg",
+        "size_mb": 13.4,
+        "duration_sec": 151.32,
+        "version": "v31"
+      },
+      "qc": null,
+      "approved": "2026-09-19 講師の確認済み",
+      "key": "talk",
+      "nav": "トーク①",
+      "stage": "講師の確認済み"
+    },
+    {
+      "format": "comparison",
+      "label": "比較",
+      "account": "さき",
+      "title": "2026年バズる冒頭ワード",
+      "ref": {
+        "file": "comparison_ref.mp4",
+        "poster": "comparison_ref.jpg",
+        "size_mb": 3.71,
+        "duration_sec": 34.28
+      },
+      "ai": {
+        "file": "comparison_ai.mp4",
+        "poster": "comparison_ai.jpg",
+        "size_mb": 3.61,
+        "duration_sec": 34.28,
+        "version": "v05"
+      },
+      "qc": null,
+      "approved": "2026-09-18 講師の確認済み",
+      "stage": "講師の確認済み"
+    },
+    {
+      "format": "vlog",
+      "label": "Vlogアフレコ",
+      "account": "みさを",
+      "title": "日本人しか勝てへん海外ﾌｸ業",
+      "ref": {
+        "file": "vlog_ref.mp4",
+        "poster": "vlog_ref.jpg",
+        "size_mb": 11.28,
+        "duration_sec": 53.33
+      },
+      "ai": {
+        "file": "vlog_ai.mp4",
+        "poster": "vlog_ai.jpg",
+        "size_mb": 11.16,
+        "duration_sec": 53.33,
+        "version": "r1011"
+      },
+      "qc": {
+        "mad_mean": 2.188,
+        "mad_max": 3.174,
+        "frames_over_5": 0,
+        "lufs_ref": -19.3,
+        "lufs_ai": -19.3,
+        "frames": 1600
+      },
+      "approved": null,
+      "key": "vlog",
+      "nav": "Vlog①",
+      "stage": "見本と同等（機械測定で合格）"
+    },
+    {
+      "format": "vlog",
+      "key": "vlog2",
+      "nav": "Vlog②",
+      "label": "Vlogアフレコ",
+      "account": "みさを",
+      "title": "AI×Etsy ステッカー販売",
+      "ref": {
+        "file": "vlog2_ref.mp4",
+        "poster": "vlog2_ref.jpg",
+        "size_mb": 7.77,
+        "duration_sec": 56.49
+      },
+      "ai": {
+        "file": "vlog2_ai.mp4",
+        "poster": "vlog2_ai.jpg",
+        "size_mb": 8.31,
+        "duration_sec": 56.47,
+        "version": "v16"
+      },
+      "qc": {
+        "mad_mean": 2.998,
+        "mad_max": 6.54,
+        "frames_over_5": 6,
+        "lufs_ref": -14.1,
+        "lufs_ai": -14.1,
+        "frames": 1694
+      },
+      "approved": null,
+      "stage": "見本と同等（機械測定で合格）"
+    },
+    {
+      "format": "talk",
+      "key": "talk2",
+      "nav": "トーク②",
+      "label": "トーク強調",
+      "account": "みさを",
+      "title": "枝葉vs本質 ハッシュタグ",
+      "ref": {
+        "file": "talk2_ref.mp4",
+        "poster": "talk2_ref.jpg",
+        "size_mb": 12.14,
+        "duration_sec": 103.45
+      },
+      "ai": {
+        "file": "talk2_ai.mp4",
+        "poster": "talk2_ai.jpg",
+        "size_mb": 12.3,
+        "duration_sec": 103.45,
+        "version": "v17"
+      },
+      "qc": {
+        "mad_mean": 2.418,
+        "mad_max": 4.437,
+        "frames_over_5": 0,
+        "lufs_ref": -14.1,
+        "lufs_ai": -15.0,
+        "frames": 3100
+      },
+      "approved": null,
+      "stage": "仕上げ中"
+    },
+    {
+      "format": "talk",
+      "key": "talk3",
+      "nav": "トーク③",
+      "label": "トーク（抽象マーケ②）",
+      "account": "さき",
+      "title": "Claudeでバズリール100本一括分析",
+      "ref": {
+        "file": "talk3_ref.mp4",
+        "poster": "talk3_ref.jpg",
+        "size_mb": 11.0,
+        "duration_sec": 95.37
+      },
+      "ai": {
+        "file": "talk3_ai.mp4",
+        "poster": "talk3_ai.jpg",
+        "size_mb": 11.78,
+        "duration_sec": 95.47,
+        "version": "v14"
+      },
+      "qc": {
+        "mad_mean": 5.396,
+        "mad_max": 14.63,
+        "frames_over_5": 1428,
+        "lufs_ref": -14.1,
+        "lufs_ai": -14.1,
+        "frames": 2861
+      },
+      "approved": null,
+      "stage": "仕上げ中"
+    }
+  ]
 }

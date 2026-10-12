@@ -3,9 +3,9 @@
 // データが無い形式はカードを出さない（作例を捏造しない）。
 (function(){
   const root=document.getElementById('reels-gallery'); if(!root) return;
-  const ORDER=['ranking','voiceover','vlog','talk','comparison','taidan'];
-  const LABEL={ranking:'ランキング',voiceover:'アフレコ',vlog:'VLOG',talk:'トーク',comparison:'比較',taidan:'対談'};
-  const FOR={ranking:'紹介したいもの（ツール・商品・方法）が複数あり、順位をつけて見せたい人。',voiceover:'顔や声を出さず、自分の声（アフレコ）に生活映像を合わせて作りたい人。',talk:'自分が話す映像があり、実績などを部品として差し込みたい人。',comparison:'2つの考え方や2人を並べて、違いを見せたい人。',vlog:'朝から外出までなど、日常を撮って説明につなげたい人。',taidan:'2人で話す形で、題材をひも解いて見せたい人。'};
+  const ORDER=['ranking','voiceover','vlog','talk','comparison'];
+  const LABEL={ranking:'ランキング',voiceover:'アフレコ',vlog:'VLOG',talk:'トーク',comparison:'比較'};
+  const FOR={ranking:'紹介したいもの（ツール・商品・方法）が複数あり、順位をつけて見せたい人。',voiceover:'顔や声を出さず、自分の声（アフレコ）に生活映像を合わせて作りたい人。',talk:'自分が話す映像があり、実績などを部品として差し込みたい人。',comparison:'2つの考え方や2人を並べて、違いを見せたい人。',vlog:'朝から外出までなど、日常を撮って説明につなげたい人。'};
   const base='assets/reels/';
   const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=text;return n;};
   const fmt1=v=>v==null?'—':(Math.round(v*100)/100).toFixed(2);
@@ -33,9 +33,14 @@
     return p;
   }
 
+  function copyText(t){
+    const fb=()=>{try{const x=document.createElement('textarea');x.value=t;x.style.position='fixed';x.style.opacity='0';document.body.appendChild(x);x.select();const ok=document.execCommand('copy');x.remove();return ok;}catch(e){return false;}};
+    if(navigator.clipboard&&navigator.clipboard.writeText) return navigator.clipboard.writeText(t).then(()=>true,()=>fb());
+    return Promise.resolve(fb());
+  }
   function howtoBlock(h,format){
     const d=el('details','reel-howto'); const s=el('summary',null,'この動画の作り方'); d.appendChild(s);
-    if(!h){ d.appendChild(el('p','reel-note','作り方は準備中です。')); return d; }
+    if(!h){ d.appendChild(el('p','reel-note','この形式の作り方の記録は、まだ公開していません。')); return d; }
     if(h.summary) d.appendChild(el('p','reel-summary',h.summary));
     if(h.prepare&&h.prepare.length){const w=el('div','reel-prepare');w.appendChild(el('h4',null,'用意するもの'));const ul=el('ul');h.prepare.forEach(x=>ul.appendChild(el('li',null,x)));w.appendChild(ul);
       if(h.first_step){const p=el('p');p.appendChild(el('strong',null,'最初の一手：'));p.appendChild(document.createTextNode(h.first_step));w.appendChild(p);}
@@ -58,6 +63,16 @@
       d.appendChild(t);
     }
     if(h.materials&&h.materials.length) d.appendChild(list('見本で使った素材',h.materials));
+    if(h.agent_prompt){
+      const w=el('div','reel-agent'); w.appendChild(el('h4',null,'Claude Code／Codex で作る'));
+      w.appendChild(el('p','reel-note','下のボタンでコピーして、Claude Code（Opus 5.5）か Codex（Astra）に貼ると、あなたの素材でこの型の編集指示書と動画が作れます。'));
+      const det=el('details','reel-agent-body'); det.appendChild(el('summary',null,'指示文の本文を見る'));
+      const ta=el('textarea','reel-agent-text'); ta.readOnly=true; ta.value=h.agent_prompt; ta.rows=14; ta.setAttribute('aria-label','指示文の本文'); det.appendChild(ta);
+      const btn=el('button','reel-copy','指示文をコピー'); btn.type='button';
+      const st=el('span','reel-copy-state',''); st.setAttribute('role','status');
+      btn.addEventListener('click',()=>copyText(h.agent_prompt).then(ok=>{st.textContent=ok?'コピーしました':'コピーできなかったため、下の本文を選んでコピーしてください';if(!ok)det.open=true;}));
+      w.appendChild(btn); w.appendChild(st); w.appendChild(det); d.appendChild(w);
+    }
     const a=el('a','text-link','作り方をテキストで保存（AIに貼って相談できる） ↓'); a.href=base+'howto_'+format+'.md'; a.download='作り方_'+LABEL[format]+'.md'; d.appendChild(a);
     return d;
   }
@@ -74,8 +89,8 @@
     if(item.ai)  pair.appendChild(video(item.ai,item,'AI再現'+(item.ai.version?'（'+item.ai.version+'）':'')));
     c.appendChild(pair);
     c.appendChild(qcLine(item));
-    if(item.stage){ c.appendChild(el('p','reel-stage',item.stage));
-      const SN=item.stage.indexOf('仕上げ中')===0?'途中経過の作例です。AIの失敗例ではなく、見本との差が残る場面を数値で確かめながら直している段階で、数値が大きいのは「直す場所が残っている」という意味です。下の作り方は、見本の編集メモなので同じように読めます。':item.stage.indexOf('見本と同等')===0?'数値の比較で基準内だった作例です。人の目での最終確認とは別の判定です。':'';
+    if(item.stage){ c.appendChild(el('p','reel-stage',item.stage.indexOf('仕上げ中')===0?'改善を続けている作例（数値は見本との差）':item.stage));
+      const SN=item.stage.indexOf('仕上げ中')===0?'見本との差が残る場面を、数値で確かめながら直し続けている作例です。数値が大きいほど、見本との差が大きいことを表します。下の作り方は、見本の編集メモです。':item.stage.indexOf('見本と同等')===0?'数値の比較で基準内だった作例です。人の目での最終確認とは別の判定です。':'';
       if(SN) c.appendChild(el('p','reel-note',SN)); }
     c.appendChild(howtoBlock(h,item.format));
     return c;
@@ -88,7 +103,7 @@
     const how={}; (h.items||[]).forEach(x=>{how[x.format]=x;});
     const items=(m.items||[]).map((x,i)=>({x,i})).sort((a,b)=>(ORDER.indexOf(a.x.format)-ORDER.indexOf(b.x.format))||(a.i-b.i)).map(o=>o.x);
     root.replaceChildren();
-    if(!items.length){ root.appendChild(el('p','reel-note','動画は準備中です。')); return; }
+    if(!items.length){ root.appendChild(el('p','reel-note','表示できる動画がありません。')); return; }
     // 形式のタブ
     const nav=el('nav','reel-nav'); nav.setAttribute('aria-label','形式を選ぶ');
     items.forEach((it,i)=>{const b=el('button',null,it.nav||LABEL[it.format]||it.format); b.type='button'; b.dataset.target='reel-'+(it.key||it.format); if(i===0)b.setAttribute('aria-current','true');
