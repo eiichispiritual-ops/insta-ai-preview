@@ -1,8 +1,8 @@
 'use strict';
 const formats=window.INSTA_FORMATS;
 const categories={profile:{name:'プロフィール作成',defaultKey:'profile'},feed:{name:'フィード投稿',defaultKey:'feed'},story:{name:'ストーリー',defaultKey:'story'},reels:{name:'リール',defaultKey:'comparison'},edit:{name:'動画編集',defaultKey:'edit-voiceover'}};
-const reelKeys=['voiceover','vlog','talk','ranking','comparison'];
-const editKeys=['edit-voiceover','edit-vlog','edit-talk','edit-ranking','edit-comparison'];
+const reelKeys=['ranking','voiceover','vlog','comparison','talk','abstract'];
+const editKeys=['edit-ranking','edit-voiceover','edit-vlog','edit-comparison','edit-talk','edit-abstract'];
 let category='profile';
 let selected='profile';
 let selectedReel='comparison';
