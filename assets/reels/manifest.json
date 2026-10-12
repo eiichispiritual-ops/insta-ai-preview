@@ -27,7 +27,8 @@
     "lufs_ai": -22.0,
     "frames": 1558
    },
-   "approved": null
+   "approved": null,
+   "stage": "見本と同等（機械測定で合格）"
   },
   {
    "format": "voiceover",
@@ -57,7 +58,8 @@
    },
    "approved": null,
    "key": "voiceover",
-   "nav": "アフレコ①"
+   "nav": "アフレコ①",
+   "stage": "見本と同等（機械測定で合格）"
   },
   {
    "format": "voiceover",
@@ -87,7 +89,8 @@
     "lufs_ai": -14.1,
     "frames": 1787
    },
-   "approved": null
+   "approved": null,
+   "stage": "仕上げ中"
   },
   {
    "format": "talk",
@@ -110,7 +113,8 @@
    "qc": null,
    "approved": "2026-09-19 講師の確認済み",
    "key": "talk",
-   "nav": "トーク①"
+   "nav": "トーク①",
+   "stage": "講師の確認済み"
   },
   {
    "format": "comparison",
@@ -131,7 +135,8 @@
     "version": "v05"
    },
    "qc": null,
-   "approved": "2026-09-18 講師の確認済み"
+   "approved": "2026-09-18 講師の確認済み",
+   "stage": "講師の確認済み"
   },
   {
    "format": "vlog",
@@ -161,7 +166,8 @@
    },
    "approved": null,
    "key": "vlog",
-   "nav": "Vlog①"
+   "nav": "Vlog①",
+   "stage": "見本と同等（機械測定で合格）"
   },
   {
    "format": "vlog",
@@ -191,7 +197,8 @@
     "lufs_ai": -14.1,
     "frames": 1694
    },
-   "approved": null
+   "approved": null,
+   "stage": "見本と同等（機械測定で合格）"
   },
   {
    "format": "talk",
@@ -221,7 +228,39 @@
     "lufs_ai": -15.0,
     "frames": 3100
    },
-   "approved": null
+   "approved": null,
+   "stage": "仕上げ中"
+  },
+  {
+   "format": "taidan",
+   "key": "taidan",
+   "nav": "対談",
+   "label": "対談",
+   "account": "たくむ言語化",
+   "title": "婚約指輪「給料3ヶ月分」の正体",
+   "ref": {
+    "file": "taidan_ref.mp4",
+    "poster": "taidan_ref.jpg",
+    "size_mb": 12.3,
+    "duration_sec": 139.62
+   },
+   "ai": {
+    "file": "taidan_ai.mp4",
+    "poster": "taidan_ai.jpg",
+    "size_mb": 12.04,
+    "duration_sec": 139.57,
+    "version": "v06"
+   },
+   "qc": {
+    "mad_mean": 7.846,
+    "mad_max": 43.609,
+    "frames_over_5": 2504,
+    "lufs_ref": -14.1,
+    "lufs_ai": -14.0,
+    "frames": 4187
+   },
+   "approved": null,
+   "stage": "仕上げ中"
   }
  ]
 }

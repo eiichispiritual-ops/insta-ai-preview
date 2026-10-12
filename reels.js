@@ -3,8 +3,8 @@
 // データが無い形式はカードを出さない（作例を捏造しない）。
 (function(){
   const root=document.getElementById('reels-gallery'); if(!root) return;
-  const ORDER=['ranking','voiceover','vlog','talk','comparison'];
-  const LABEL={ranking:'ランキング',voiceover:'アフレコ',vlog:'VLOG',talk:'トーク',comparison:'比較'};
+  const ORDER=['ranking','voiceover','vlog','talk','comparison','taidan'];
+  const LABEL={ranking:'ランキング',voiceover:'アフレコ',vlog:'VLOG',talk:'トーク',comparison:'比較',taidan:'対談'};
   const base='assets/reels/';
   const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=text;return n;};
   const fmt1=v=>v==null?'—':(Math.round(v*100)/100).toFixed(2);
@@ -72,6 +72,7 @@
     if(item.ai)  pair.appendChild(video(item.ai,item,'AI再現'+(item.ai.version?'（'+item.ai.version+'）':'')));
     c.appendChild(pair);
     c.appendChild(qcLine(item));
+    if(item.stage) c.appendChild(el('p','reel-stage',item.stage));
     c.appendChild(howtoBlock(h,item.format));
     return c;
   }
