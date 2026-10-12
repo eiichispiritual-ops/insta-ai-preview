@@ -6,9 +6,9 @@
   var state={ai:'cc',make:'reel'};
   var FMT={voiceover:'アフレコ',vlog:'VLOG',talk:'トーク',ranking:'ランキング',comparison:'比較'};
   var AI={
-    cc:{name:'Claude Code',cmd:'claude',skills:'.claude/skills',inst:'curl -fsSL https://claude.ai/install.sh | bash',instNote:'Claude Codeを入れます（すでに入っている人は飛ばします）。',loginNote:'claude と打ち、案内に沿ってログインします。フォルダを信頼するかの英語の確認が出たら「Yes」を選びます。ログインできたら、control＋C を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。',desc:'Macのターミナルで進めます。上から順に、コピーして貼ります。',after:'確認できたら、下の言葉を打って、Claude Codeを起動します。'},
-    codex:{name:'Codex',cmd:'codex',skills:'~/.codex/skills',inst:'npm install -g @openai/codex',instNote:'Codexを入れます（すでに入っている人は飛ばします）。',loginNote:'codex と打ち、案内に沿ってログインします。フォルダを信頼するかの英語の確認が出たら「Yes」を選びます。ログインできたら、control＋C を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。',pre:'node -v',preNote:'先に、Node.js が入っているか確認します。数字が出なければ、nodejs.org から LTS を入れて、ターミナルを開き直します。',desc:'Macのターミナルで進めます。上から順に、コピーして貼ります。',after:'確認できたら、このフォルダ（~/insta-ai）のまま、下の言葉を打って、Codexを起動します。.codex は隠しフォルダなので、Finderでは探さず、上のコマンドで置きます。Codexがすでに開いていた場合は、一度閉じて、打ち直します。'},
-    app:{name:'アプリ',desc:'下のボタンで手順書をコピーします。新しい会話の入力欄に貼って、送ります。'}
+    cc:{name:'Claude Code',cmd:'claude',skills:'.claude/skills',inst:'curl -fsSL https://claude.ai/install.sh | bash',instNote:'Claude Codeを入れます（すでに入っている人は飛ばします）。',loginNote:'claude と打ち、案内に沿ってログインします。フォルダを信頼するかの英語の確認が出たら「Yes」を選びます。ログインできたら、control＋C を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。',desc:'Macのターミナルで進めます。上から順に、コピーして貼ります。番号は多く見えますが、どれもコピーして貼るだけです。',after:'確認できたら、下の言葉を打って、Claude Codeを起動します。'},
+    codex:{name:'Codex',cmd:'codex',skills:'~/.codex/skills',inst:'npm install -g @openai/codex',instNote:'Codexを入れます（すでに入っている人は飛ばします）。',loginNote:'codex と打ち、案内に沿ってログインします。フォルダを信頼するかの英語の確認が出たら「Yes」を選びます。ログインできたら、control＋C を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。',pre:'node -v',preNote:'先に、Node.js が入っているか確認します。数字が出なければ、nodejs.org から LTS を入れて、ターミナルを開き直します。',desc:'Macのターミナルで進めます。上から順に、コピーして貼ります。番号は多く見えますが、どれもコピーして貼るだけです。',after:'確認できたら、このフォルダ（~/insta-ai）のまま、下の言葉を打って、Codexを起動します。.codex は隠しフォルダなので、Finderでは探さず、上のコマンドで置きます。Codexがすでに開いていた場合は、一度閉じて、打ち直します。'},
+    app:{name:'アプリ',desc:'下のボタンで手順書をコピーします（手順3で選ぶ「作りたいもの」用の版です。選び直すと切り替わります）。新しい会話の入力欄に貼って送り、AIの返事が出てから、手順3の「最初に打つ言葉」を貼ります。2つを同時には貼りません。'}
   };
   function copyText(t){
     var fb=function(){try{var x=document.createElement('textarea');x.value=t;x.style.position='fixed';x.style.opacity='0';document.body.appendChild(x);x.select();var ok=document.execCommand('copy');x.remove();return ok;}catch(e){return false;}};
@@ -38,13 +38,14 @@
   }
   function genre(){return $('start-genre').value.trim();}
   function prefix(){return state.ai==='app'?'いま貼った手順書を使って、':(state.ai==='codex'?'insta-ai-create のスキルで、':'インスタAIのスキル（/insta-ai-create）で、');}
-  function TAIL(w){return reader()+'質問せず、足りないところは要確認と書いて仮置きで、'+w+'まで出して。';}
+  function TAIL(w,x){return reader()+(x||'')+'質問せず、足りないところは要確認と書いて仮置きで、'+w+'まで出して。';}
   function reader(){var r=$('start-reader').value.trim(),t=$('start-trouble').value.trim();return (r?'見る人は、'+r+'です。':'')+(t?(r?'その人':'見る人')+'の困りごとは「'+t+'」です。':'');}
+  function tipSent(){var t=$('start-tip').value.trim();return t?'私が見る人に伝えたい工夫は「'+t+'」です。':'';}
   function nameSent(){var n=$('start-name').value.trim();return n?'呼ばれたい名前は、'+n+'です。':'名前は（あなたの名前）と仮置きして。';}
   function prompt(){
     var g=genre(), gn=g?g+'の':'', f=$('start-format').value, fl=f?FMT[f]+'形式の':'', P=prefix();
     switch(state.make){
-      case 'reel': return P+gn+fl+'リールの台本を1本作って。'+(f?'':'形式は2案出して、私に選ばせて。')+'私の経験は書いていないので、作らずに、見る人への呼びかけで入って。'+(f==='vlog'?'出来事は撮影予定として仮置きして、実際に撮った順に差し替える箇所も書いて。':'')+TAIL('台本');
+      case 'reel': return P+gn+fl+'リールの台本を1本作って。'+(f?'':'形式は2案出して、私に選ばせて。')+'私の経験は書いていないので、作らずに、見る人への呼びかけで入って。'+(f==='vlog'?'出来事は撮影予定として仮置きして、実際に撮った順に差し替える箇所も書いて。':'')+TAIL('台本',tipSent());
       case 'profile': return P+gn+'プロフィールの、表示名と紹介文を作って。'+nameSent()+TAIL('案');
       case 'feed': return P+gn+'フィード投稿を、1ページずつの原稿で作って。'+TAIL('原稿');
       case 'story': var td=$('start-today').value.trim(); return P+gn+'ストーリーを、1枚ずつの本文と使う素材で作って。'+(td?'今日あったことは「'+td+'」です。':'出来事は（今日あったこと）と仮置きして。')+TAIL('本文');
@@ -60,13 +61,29 @@
     story:'出てくるもの：1枚ごとの本文・使う素材・その画面の役割。「今日あったこと」を空欄にすると、本文の（ ）は自分で書き換える場所になります。',
     edit:'出てくるもの：時間・声・映像・差し込み・字幕の表（編集指示書）。'
   };
+  var MAKE_NAME={reel:'リールの台本',profile:'プロフィール',feed:'フィード投稿',story:'ストーリー',edit:'動画編集'};
+  function appKey(){var f=$('start-format').value;if(state.make==='reel')return f?'reel-'+f:'reel-any';if(state.make==='edit')return f?'edit-'+f:'edit-any';return state.make;}
+  function appName(){var f=$('start-format').value;return MAKE_NAME[state.make]+((state.make==='reel'||state.make==='edit')&&f?'・'+FMT[f]:'');}
   function renderS2(){
     var a=AI[state.ai], host=$('start-s2-actions'); host.replaceChildren(); $('start-s2-status').textContent='';
     $('start-s2-desc').textContent=a.desc;
     if(state.ai==='app'){
-      var b=el('button','start-btn primary','手順書を全部コピー');b.type='button';
-      b.addEventListener('click',function(){if(window.instaAiCopySkill)window.instaAiCopySkill('all',b,$('start-s2-status'));});
-      host.appendChild(b);
+      var key=appKey(),nm=appName();
+      var mk=function(k,pre,inner,cls){
+        var label=pre+'（'+inner+'）';
+        var b=el('button',cls,label);b.type='button';b.setAttribute('data-label',label);
+        b.addEventListener('click',function(){if(window.instaAiCopySkill)window.instaAiCopySkill(k,b,$('start-s2-status'));});
+        host.appendChild(b);
+        if(window.instaAiSkillLength)window.instaAiSkillLength(k).then(function(n){
+          var l=pre+'（'+inner+'・約'+n.toLocaleString('ja-JP')+'字）';
+          if(!b.classList.contains('is-copied')){b.textContent=l;}
+          b.setAttribute('data-label',l);
+        }).catch(function(){});
+        return b;
+      };
+      mk(key,'手順書をコピー',nm+'用','start-btn primary');
+      host.appendChild(el('p','start-note','「全部」は、すべての入口の手順書です。長いので、入力欄に入らないときは、上のボタンを使います。'));
+      mk('all','手順書を全部コピー','全部入り','start-btn');
     }else{
       var note=function(t){host.appendChild(el('p','start-note',t));};
       var row=function(label,text){var r=el('div','start-copyrows');copyRow(r,label,text);host.appendChild(r);};
@@ -82,8 +99,9 @@
       row('ログイン　'+a.cmd,a.cmd);
       note(nx()+' zipをダウンロードします。');
       var z=el('a','start-btn primary','全部入りzipをダウンロード');z.href='downloads/insta-ai-all.zip';z.setAttribute('download','');host.appendChild(z);
-      note(nx()+' ダウンロードしたzipを、作業フォルダへ移します。Safariは zip を自動で開くことがあります。「No such file」と出たら、Safariの設定「ダウンロード後に安全なファイルを開く」を切って、もう一度ダウンロードするか、Chromeでダウンロードします。');
+      note(nx()+' ダウンロードしたzipを、作業フォルダへ移します。Safariは zip を自動で開くことがあります。「No such file」と出たら、Safariの設定「ダウンロード後に安全なファイルを開く」を切って、もう一度ダウンロードするか、Chromeでダウンロードします。ファイル名が違えば、その名前で打ちます（例：insta-ai-all (1).zip のとき）。');
       row('zipを移す　mv ~/Downloads/insta-ai-all.zip .','mv ~/Downloads/insta-ai-all.zip .');
+      row('名前が「insta-ai-all (1).zip」のとき　mv ~/Downloads/"insta-ai-all (1).zip" ./insta-ai-all.zip','mv ~/Downloads/"insta-ai-all (1).zip" ./insta-ai-all.zip');
       note(nx()+' 展開して、手順書を '+a.skills+'/ に置きます（3行まとめて貼れます）。');
       var cp='unzip insta-ai-all.zip -d insta-ai-all\nmkdir -p '+a.skills+'\ncp -R insta-ai-all/insta-ai-create '+a.skills+'/';
       row(cp,cp);
@@ -91,6 +109,9 @@
       row('確認　'+a.cmd+' --version',a.cmd+' --version');
       host.appendChild(el('p','start-note',a.after));
       row('起動の言葉　'+a.cmd,a.cmd);
+      note('起動したら、手順書が読めているか確認します。「読めていません」と返ったら、置く3行（'+C[k-2]+'）をやり直して、AIを閉じて開き直します。');
+      var chk=(state.ai==='codex'?'insta-ai-create のスキル':'インスタAIのスキル（/insta-ai-create）')+'は読めていますか。読めていれば「読めています」とだけ答えて。';
+      row('確認　'+chk,chk);
     }
   }
   function renderS3(){
@@ -102,6 +123,11 @@
     $('start-folder-wrap').hidden=state.make!=='edit';
     $('start-name-wrap').hidden=state.make!=='profile';
     $('start-today-wrap').hidden=state.make!=='story';
+    $('start-tip-wrap').hidden=state.make!=='reel';
+    var hint='';
+    if(state.make==='profile'&&!$('start-reader').value.trim())hint='プロフィールは、見る人を入れると、紹介文の（ ）が減ります。';
+    if(state.make==='feed'&&!$('start-trouble').value.trim())hint='フィードは、見る人の困りごとを入れると、2ページ目の「迷う場面」が具体的になります。';
+    $('start-field-hint').textContent=hint;$('start-field-hint').hidden=!hint;
     $('start-edit-card').hidden=state.make!=='edit';
     $('start-edit-app').hidden=!(state.make==='edit'&&state.ai==='app');
     $('start-s3-status').textContent='';
@@ -110,8 +136,9 @@
     $(groupId).querySelectorAll('['+attr+']').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute(attr)===val?'true':'false');});
   }
   $('start-ai').addEventListener('click',function(e){var b=e.target.closest('[data-ai]');if(!b)return;state.ai=b.getAttribute('data-ai');setPressed('start-ai','data-ai',state.ai);renderS2();renderS3();});
-  $('start-make').addEventListener('click',function(e){var b=e.target.closest('[data-make]');if(!b)return;state.make=b.getAttribute('data-make');setPressed('start-make','data-make',state.make);renderS3();});
-  ['start-genre','start-reader','start-trouble','start-name','start-today','start-format','start-folder'].forEach(function(id){$(id).addEventListener('input',function(){renderS3();renderAnswers();});$(id).addEventListener('change',renderS3);});
+  $('start-make').addEventListener('click',function(e){var b=e.target.closest('[data-make]');if(!b)return;state.make=b.getAttribute('data-make');setPressed('start-make','data-make',state.make);if(state.ai==='app')renderS2();renderS3();});
+  ['start-genre','start-reader','start-trouble','start-name','start-today','start-format','start-folder','start-tip'].forEach(function(id){$(id).addEventListener('input',function(){renderS3();renderAnswers();});$(id).addEventListener('change',renderS3);});
+  $('start-format').addEventListener('change',function(){if(state.ai==='app')renderS2();});
   bindCopy($('start-copy-prompt'),function(){return $('start-prompt').value;},$('start-s3-status'),function(){$('start-prompt').focus();$('start-prompt').select();});
   /* 質問への返し方 */
   function renderAnswers(){

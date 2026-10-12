@@ -12,11 +12,13 @@
     'reel-talk':{name:'リール（トーク）',refs:['format-taxonomy.md','genre-adaptation.md','output-quality.md','conversation-flow.md','talk.md']},
     'reel-ranking':{name:'リール（ランキング）',refs:['format-taxonomy.md','genre-adaptation.md','output-quality.md','conversation-flow.md','ranking.md']},
     'reel-comparison':{name:'リール（比較）',refs:['format-taxonomy.md','genre-adaptation.md','output-quality.md','conversation-flow.md','comparison.md']},
+    'reel-any':{name:'リール（形式は相談）',refs:['format-taxonomy.md','genre-adaptation.md','output-quality.md','conversation-flow.md','voiceover.md','vlog.md','talk.md','ranking.md','comparison.md']},
     'edit-voiceover':{name:'動画編集（アフレコ）',refs:['edit-common.md','conversation-flow.md','edit-voiceover.md']},
     'edit-vlog':{name:'動画編集（VLOG）',refs:['edit-common.md','conversation-flow.md','edit-vlog.md']},
     'edit-talk':{name:'動画編集（トーク）',refs:['edit-common.md','conversation-flow.md','edit-talk.md']},
     'edit-ranking':{name:'動画編集（ランキング）',refs:['edit-common.md','conversation-flow.md','edit-ranking.md']},
     'edit-comparison':{name:'動画編集（比較）',refs:['edit-common.md','conversation-flow.md','edit-comparison.md']},
+    'edit-any':{name:'動画編集（形式は相談）',refs:['edit-common.md','conversation-flow.md','edit-voiceover.md','edit-vlog.md','edit-talk.md','edit-ranking.md','edit-comparison.md']},
     all:{name:'全部（SKILL.md＋全 references）',refs:null}
   };
   var bundle=null;
@@ -59,6 +61,8 @@
       if(btn){var old=btn.getAttribute('data-label')||btn.textContent;btn.setAttribute('data-label',old);btn.classList.add('is-copied');btn.textContent='コピーしました';setTimeout(function(){btn.textContent=old;btn.classList.remove('is-copied');},2200);}
     }catch(err){fallback(text,e.name);}
   }
+  /* 入口ごとの字数（サイトのボタン表示用）。ボタンを押したときのコピー文と同じ build() の長さ。 */
+  window.instaAiSkillLength=function(key){return load().then(function(b){return build(key,b).length;});};
   window.instaAiCopySkill=function(key,btn,extra){return copyKey(key,btn,extra);};
   document.querySelectorAll('#get-skill [data-skillcopy]').forEach(function(b){
     b.addEventListener('click',function(){copyKey(b.getAttribute('data-skillcopy'),b);});
