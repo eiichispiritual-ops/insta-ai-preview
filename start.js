@@ -6,8 +6,8 @@
   var state={ai:'cc',make:'reel'};
   var FMT={voiceover:'アフレコ',vlog:'VLOG',talk:'トーク',ranking:'ランキング',comparison:'比較'};
   var AI={
-    cc:{name:'Claude Code',cmd:'claude',skills:'.claude/skills',inst:'curl -fsSL https://claude.ai/install.sh | bash',instNote:'Claude Codeを入れます（すでに入っている人は飛ばします）。入れたら claude と打ち、案内に沿ってログインします。初回に英語の確認が出たら「Yes」を選びます。ログインできたら、control＋C を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。',desc:'Macのターミナルで進めます。上から順に、コピーして貼ります。',after:'確認できたら、下の言葉を打って、Claude Codeを起動します。'},
-    codex:{name:'Codex',cmd:'codex',skills:'~/.codex/skills',inst:'npm install -g @openai/codex',instNote:'Codexを入れます（すでに入っている人は飛ばします）。入れたら codex と打ち、案内に沿ってログインします。初回に英語の確認が出たら「Yes」を選びます。ログインできたら、control＋C を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。',pre:'node -v',preNote:'先に、Node.js が入っているか確認します。数字が出なければ、nodejs.org から LTS を入れて、ターミナルを開き直します。',desc:'Macのターミナルで進めます。上から順に、コピーして貼ります。',after:'確認できたら、このフォルダ（~/insta-ai）のまま、下の言葉を打って、Codexを起動します。.codex は隠しフォルダなので、Finderでは探さず、上のコマンドで置きます。Codexがすでに開いていた場合は、一度閉じて、打ち直します。'},
+    cc:{name:'Claude Code',cmd:'claude',skills:'.claude/skills',inst:'curl -fsSL https://claude.ai/install.sh | bash',instNote:'Claude Codeを入れます（すでに入っている人は飛ばします）。',loginNote:'claude と打ち、案内に沿ってログインします。フォルダを信頼するかの英語の確認が出たら「Yes」を選びます。ログインできたら、control＋C を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。',desc:'Macのターミナルで進めます。上から順に、コピーして貼ります。',after:'確認できたら、下の言葉を打って、Claude Codeを起動します。'},
+    codex:{name:'Codex',cmd:'codex',skills:'~/.codex/skills',inst:'npm install -g @openai/codex',instNote:'Codexを入れます（すでに入っている人は飛ばします）。',loginNote:'codex と打ち、案内に沿ってログインします。フォルダを信頼するかの英語の確認が出たら「Yes」を選びます。ログインできたら、control＋C を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。',pre:'node -v',preNote:'先に、Node.js が入っているか確認します。数字が出なければ、nodejs.org から LTS を入れて、ターミナルを開き直します。',desc:'Macのターミナルで進めます。上から順に、コピーして貼ります。',after:'確認できたら、このフォルダ（~/insta-ai）のまま、下の言葉を打って、Codexを起動します。.codex は隠しフォルダなので、Finderでは探さず、上のコマンドで置きます。Codexがすでに開いていた場合は、一度閉じて、打ち直します。'},
     app:{name:'アプリ',desc:'下のボタンで手順書をコピーします。新しい会話の入力欄に貼って、送ります。'}
   };
   function copyText(t){
@@ -44,20 +44,20 @@
   function prompt(){
     var g=genre(), gn=g?g+'の':'', f=$('start-format').value, fl=f?FMT[f]+'形式の':'', P=prefix();
     switch(state.make){
-      case 'reel': return P+gn+fl+'リールの台本を1本作って。'+(f?'':'形式は2案出して、私に選ばせて。')+(f==='vlog'?'出来事は撮影予定として仮置きして、実際に撮った順に差し替える箇所も書いて。':'')+TAIL('台本');
+      case 'reel': return P+gn+fl+'リールの台本を1本作って。'+(f?'':'形式は2案出して、私に選ばせて。')+'私の経験は書いていないので、作らずに、見る人への呼びかけで入って。'+(f==='vlog'?'出来事は撮影予定として仮置きして、実際に撮った順に差し替える箇所も書いて。':'')+TAIL('台本');
       case 'profile': return P+gn+'プロフィールの、表示名と紹介文を作って。'+nameSent()+TAIL('案');
       case 'feed': return P+gn+'フィード投稿を、1ページずつの原稿で作って。'+TAIL('原稿');
-      case 'story': return P+gn+'ストーリーを、1枚ずつの本文と使う素材で作って。'+TAIL('本文');
+      case 'story': var td=$('start-today').value.trim(); return P+gn+'ストーリーを、1枚ずつの本文と使う素材で作って。'+(td?'今日あったことは「'+td+'」です。':'出来事は（今日あったこと）と仮置きして。')+TAIL('本文');
       default:
         var fo=$('start-folder').value.trim();
         return P+gn+fl+'動画編集を進めて。'+(f?'':'形式は素材を見て決めて。')+(fo?'撮った素材は '+fo+' に入っています。':'撮った素材の場所は、あとで伝えます。')+'まず編集指示書の表だけ見せて、私がOKと言うまで進めないで。';
     }
   }
   var OUT={
-    reel:'出てくるもの：「日付とタイトル」と「台本の本文」の2つのコピー用ブロック。そのあとに撮影メモ。作りたいものを変えると、この説明も切り替わります。',
-    profile:'出てくるもの：表示名と紹介文の案と、選んだ理由。',
+    reel:'出てくるもの：「日付とタイトル」と「台本の本文」の2つのコピー用ブロック。そのあとに撮影メモ（撮れる素材か、要確認かの欄つき）。作りたいものを変えると、この説明も切り替わります。',
+    profile:'出てくるもの：表示名と紹介文の案と、選んだ理由。（ ）や「要確認」の括弧は、プロフィール欄へ貼る前に書き換えるか消します。',
     feed:'出てくるもの：ページごとの見出し・本文・配置。',
-    story:'出てくるもの：1枚ごとの本文・使う素材・その画面の役割。',
+    story:'出てくるもの：1枚ごとの本文・使う素材・その画面の役割。「今日あったこと」を空欄にすると、本文の（ ）は自分で書き換える場所になります。',
     edit:'出てくるもの：時間・声・映像・差し込み・字幕の表（編集指示書）。'
   };
   function renderS2(){
@@ -76,14 +76,16 @@
       row('入れる　'+a.inst,a.inst);
       note('③ 作業フォルダを作って、その中へ移ります。以降の手順は、すべてこのフォルダの中で行います。');
       row('作業フォルダ　mkdir -p ~/insta-ai && cd ~/insta-ai','mkdir -p ~/insta-ai && cd ~/insta-ai');
-      note('④ zipをダウンロードします。');
+      note('④ '+a.loginNote);
+      row('ログイン　'+a.cmd,a.cmd);
+      note('⑤ zipをダウンロードします。');
       var z=el('a','start-btn primary','全部入りzipをダウンロード');z.href='downloads/insta-ai-all.zip';z.setAttribute('download','');host.appendChild(z);
-      note('⑤ ダウンロードしたzipを、作業フォルダへ移します。Safariは zip を自動で開くことがあります。「No such file」と出たら、Safariの設定「ダウンロード後に安全なファイルを開く」を切って、もう一度ダウンロードするか、Chromeでダウンロードします。');
+      note('⑥ ダウンロードしたzipを、作業フォルダへ移します。Safariは zip を自動で開くことがあります。「No such file」と出たら、Safariの設定「ダウンロード後に安全なファイルを開く」を切って、もう一度ダウンロードするか、Chromeでダウンロードします。');
       row('zipを移す　mv ~/Downloads/insta-ai-all.zip .','mv ~/Downloads/insta-ai-all.zip .');
-      note('⑥ 展開して、手順書を '+a.skills+'/ に置きます（3行まとめて貼れます）。');
+      note('⑦ 展開して、手順書を '+a.skills+'/ に置きます（3行まとめて貼れます）。');
       var cp='unzip insta-ai-all.zip -d insta-ai-all\nmkdir -p '+a.skills+'\ncp -R insta-ai-all/insta-ai-create '+a.skills+'/';
       row(cp,cp);
-      note('⑦ 入っているか確認します。zipをダウンロードしたフォルダではなく、③で作った作業フォルダのターミナルで打ちます。バージョンの数字が出れば成功です。「command not found」と出たら、②へ戻ります。');
+      note('⑧ 入っているか確認します。zipをダウンロードしたフォルダではなく、③で作った作業フォルダのターミナルで打ちます。バージョンの数字が出れば成功です。「command not found」と出たら、②へ戻ります。');
       row('確認　'+a.cmd+' --version',a.cmd+' --version');
       host.appendChild(el('p','start-note',a.after));
       row('起動の言葉　'+a.cmd,a.cmd);
@@ -97,6 +99,7 @@
     $('start-format-wrap').hidden=!(state.make==='reel'||state.make==='edit');
     $('start-folder-wrap').hidden=state.make!=='edit';
     $('start-name-wrap').hidden=state.make!=='profile';
+    $('start-today-wrap').hidden=state.make!=='story';
     $('start-edit-card').hidden=state.make!=='edit';
     $('start-edit-app').hidden=!(state.make==='edit'&&state.ai==='app');
     $('start-s3-status').textContent='';
@@ -106,7 +109,7 @@
   }
   $('start-ai').addEventListener('click',function(e){var b=e.target.closest('[data-ai]');if(!b)return;state.ai=b.getAttribute('data-ai');setPressed('start-ai','data-ai',state.ai);renderS2();renderS3();});
   $('start-make').addEventListener('click',function(e){var b=e.target.closest('[data-make]');if(!b)return;state.make=b.getAttribute('data-make');setPressed('start-make','data-make',state.make);renderS3();});
-  ['start-genre','start-reader','start-trouble','start-name','start-format','start-folder'].forEach(function(id){$(id).addEventListener('input',function(){renderS3();renderAnswers();});$(id).addEventListener('change',renderS3);});
+  ['start-genre','start-reader','start-trouble','start-name','start-today','start-format','start-folder'].forEach(function(id){$(id).addEventListener('input',function(){renderS3();renderAnswers();});$(id).addEventListener('change',renderS3);});
   bindCopy($('start-copy-prompt'),function(){return $('start-prompt').value;},$('start-s3-status'),function(){$('start-prompt').focus();$('start-prompt').select();});
   /* 質問への返し方 */
   function renderAnswers(){
