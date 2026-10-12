@@ -140,16 +140,17 @@ insta-ai-create のスキルで、私のプロフィールの、表示名と紹�
 ```
 README.md
 全部入り_アプリ用.md   アプリに貼る連結済みの1ファイル（サイトの「手順書を全部コピー」と同じ内容。スキルのフォルダの外に置いてあります）
-insta-ai-create/        手順書の本体（SKILL.md と references/ の24本、合計25ファイル）。これだけを cp -R します
+insta-ai-create/        手順書の本体（SKILL.md と references/ の25本、合計26ファイル）。これだけを cp -R します
 video-edit/            （動画編集用）
-  howto_<形式>.md       形式ごとの作り方（5本）
-  prompt_<形式>.md      AIに貼る指示文（5本）
+  howto_<形式>.md       形式ごとの作り方（6本）
+  prompt_<形式>.md      AIに貼る指示文（6本）
   examples.md           作例の題名・形式・こんな人に
 ```
 
 - `video-edit/prompt_voiceover.md`：顔を出さず、あとから録った自分の声で、生活映像を合わせて作りたい人。
 - `video-edit/prompt_vlog.md`：朝から外出までなど、日常を撮って説明につなげたい人。
 - `video-edit/prompt_talk.md`：自分が話す映像があり、実績などを部品として差し込みたい人。
+- `video-edit/prompt_abstract.md`：身近な題材を入口に、人が反応する理由を解説し、権威性や実績を部品として差し込みたい人。
 - `video-edit/prompt_ranking.md`：紹介したいもの（ツール・商品・方法）が複数あり、順位をつけて見せたい人。
 - `video-edit/prompt_comparison.md`：2つの考え方や2人を並べて、違いを見せたい人。
 

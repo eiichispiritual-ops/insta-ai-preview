@@ -3,9 +3,9 @@
 // データが無い形式はカードを出さない（作例を捏造しない）。
 (function(){
   const root=document.getElementById('reels-gallery'); if(!root) return;
-  const ORDER=['ranking','voiceover','vlog','talk','comparison'];
-  const LABEL={ranking:'ランキング',voiceover:'アフレコ',vlog:'VLOG',talk:'トーク',comparison:'比較'};
-  const FOR={ranking:'紹介したいもの（ツール・商品・方法）が複数あり、順位をつけて見せたい人。',voiceover:'顔を出さず、あとから録った自分の声で、生活映像を合わせて作りたい人。',talk:'自分が話す映像があり、実績などを部品として差し込みたい人。',comparison:'2つの考え方や2人を並べて、違いを見せたい人。',vlog:'朝から外出までなど、日常を撮って説明につなげたい人。'};
+  const ORDER=['ranking','voiceover','vlog','talk','abstract','comparison'];
+  const LABEL={ranking:'ランキング',voiceover:'アフレコ',vlog:'VLOG',talk:'トーク',abstract:'抽象マーケ',comparison:'比較'};
+  const FOR={ranking:'紹介したいもの（ツール・商品・方法）が複数あり、順位をつけて見せたい人。',voiceover:'顔を出さず、あとから録った自分の声で、生活映像を合わせて作りたい人。',talk:'自分が話す映像があり、強調字幕や図を入れて、ひとつの話を伝えたい人。',abstract:'身近な題材を入口に、人が反応する理由を解説し、権威性や実績を部品として差し込みたい人。',comparison:'2つの考え方や2人を並べて、違いを見せたい人。',vlog:'朝から外出までなど、日常を撮って説明につなげたい人。'};
   const base='assets/reels/';
   const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=text;return n;};
   const fmt1=v=>v==null?'—':(Math.round(v*100)/100).toFixed(2);

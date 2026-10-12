@@ -93,8 +93,8 @@
       "stage": "仕上げ中"
     },
     {
-      "format": "talk",
-      "label": "トーク（抽象マーケ）",
+      "format": "abstract",
+      "label": "抽象マーケ",
       "account": "さき",
       "title": "もっちゅりん",
       "ref": {
@@ -113,7 +113,7 @@
       "qc": null,
       "approved": "2026-09-19 講師の確認済み",
       "key": "talk",
-      "nav": "トーク①",
+      "nav": "抽象マーケ①",
       "stage": "講師の確認済み"
     },
     {
@@ -232,10 +232,10 @@
       "stage": "仕上げ中"
     },
     {
-      "format": "talk",
+      "format": "abstract",
       "key": "talk3",
-      "nav": "トーク③",
-      "label": "トーク（抽象マーケ②）",
+      "nav": "抽象マーケ②",
+      "label": "抽象マーケ",
       "account": "さき",
       "title": "Claudeでバズリール100本一括分析",
       "ref": {
