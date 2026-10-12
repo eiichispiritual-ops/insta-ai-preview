@@ -47,3 +47,13 @@ html{scroll-behavior:auto}
 .reel-prepare{margin:8px 0 12px}.reel-prepare p{margin:6px 0}
 
 .reel-stage{margin:6px 0 0;font-size:11px;color:var(--accent);font-weight:600}
+/* 07 HOW TO USE：使い方動画4本 */
+.howto-section{padding-top:72px}.howto-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 40px;margin-top:20px}
+.howto-lead{margin:8px 0 0;font-size:13px;color:var(--muted);line-height:1.7}
+.howto-video{margin-top:16px;aspect-ratio:16/9;background:var(--soft);border:1px solid var(--line);border-radius:4px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;overflow:hidden}
+.howto-video video,.howto-video iframe{width:100%;height:100%;border:0;background:#000;display:block}
+.howto-label{margin:18px 0 6px;font-size:11px;color:var(--muted);letter-spacing:.08em}
+.howto-points ul,.howto-detail ul{margin:0;padding-left:1.2em;font-size:13px;line-height:1.8}
+.howto-detail{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}.howto-detail summary{cursor:pointer;font-size:12px;color:var(--accent);display:flex;justify-content:space-between}
+.howto-detail ul{margin-top:8px;color:var(--muted)}
+@media(max-width:760px){.howto-grid{grid-template-columns:1fr}}
