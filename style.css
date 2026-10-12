@@ -47,6 +47,7 @@ html{scroll-behavior:auto}
 .reel-prepare{margin:8px 0 12px}.reel-prepare p{margin:6px 0}
 
 .reel-stage{margin:6px 0 0;font-size:11px;color:var(--accent);font-weight:600}
+
 /* 07 HOW TO USE：使い方動画4本 */
 .howto-section{padding-top:72px}.howto-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 40px;margin-top:20px}
 .howto-lead{margin:8px 0 0;font-size:13px;color:var(--muted);line-height:1.7}
@@ -59,3 +60,9 @@ html{scroll-behavior:auto}
 @media(max-width:760px){.howto-grid{grid-template-columns:1fr}}
 
 .getskill-section{padding-top:30px;padding-bottom:80px;display:grid;grid-template-columns:1fr 1.3fr;gap:80px;align-items:start}.getskill-intro>p:not(.overline){font-size:13px;color:var(--muted);line-height:2}.getskill-steps{list-style:none;margin:0;padding:0;border-bottom:1px solid var(--line)}.getskill-steps>li{display:grid;grid-template-columns:32px 1fr;gap:20px;border-top:1px solid var(--line);padding:22px 0}.getskill-steps>li>span{color:var(--accent);font-size:11px;padding-top:6px}.getskill-steps h3{font-size:17px;font-weight:500;margin-bottom:8px}.getskill-steps p{font-size:12px;color:var(--muted);line-height:1.9;margin:0}.getskill-steps ul{list-style:none;margin:0;padding:0}.getskill-steps li li{font-size:12px;color:var(--muted);line-height:1.9;padding:7px 0;display:block}.getskill-steps li li b{display:block;font-weight:500;color:var(--ink)}.getskill-temp{display:inline-block;margin-top:8px;font-size:11px;border-left:2px solid #bac2b2;padding-left:10px}@media(max-width:1050px){.getskill-section{gap:40px}}@media(max-width:760px){.getskill-section{grid-template-columns:1fr;gap:27px;padding-top:10px;padding-bottom:50px}}
+
+/* 2026-10-12 実ブラウザ撮影（320px）で「プロフィール」「フィード投稿」が隣の列に食い込んだ対策 */
+@media(max-width:340px){
+  .service-tabs span{font-size:8.5px;letter-spacing:-.05em}
+  .service-tabs small{font-size:7px}
+}
