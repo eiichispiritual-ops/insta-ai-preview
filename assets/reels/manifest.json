@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-11",
+ "generated": "2026-10-12",
  "items": [
   {
    "format": "ranking",
@@ -75,13 +75,13 @@
    "ai": {
     "file": "voiceover2_ai.mp4",
     "poster": "voiceover2_ai.jpg",
-    "size_mb": 12.28,
-    "duration_sec": 59.58,
-    "version": "v49"
+    "size_mb": 12.27,
+    "duration_sec": 59.57,
+    "version": "v52"
    },
    "qc": {
-    "mad_mean": 4.017,
-    "mad_max": 8.52,
+    "mad_mean": 4.016,
+    "mad_max": 8.58,
     "frames_over_5": 427,
     "lufs_ref": -14.1,
     "lufs_ai": -14.1,
@@ -158,6 +158,38 @@
     "lufs_ref": -19.3,
     "lufs_ai": -19.3,
     "frames": 1600
+   },
+   "approved": null,
+   "key": "vlog",
+   "nav": "Vlog①"
+  },
+  {
+   "format": "vlog",
+   "key": "vlog2",
+   "nav": "Vlog②",
+   "label": "Vlogアフレコ",
+   "account": "みさを",
+   "title": "AI×Etsy ステッカー販売",
+   "ref": {
+    "file": "vlog2_ref.mp4",
+    "poster": "vlog2_ref.jpg",
+    "size_mb": 7.77,
+    "duration_sec": 56.49
+   },
+   "ai": {
+    "file": "vlog2_ai.mp4",
+    "poster": "vlog2_ai.jpg",
+    "size_mb": 8.31,
+    "duration_sec": 56.47,
+    "version": "v16"
+   },
+   "qc": {
+    "mad_mean": 2.998,
+    "mad_max": 6.54,
+    "frames_over_5": 6,
+    "lufs_ref": -14.1,
+    "lufs_ai": -14.1,
+    "frames": 1694
    },
    "approved": null
   },
