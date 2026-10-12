@@ -6,8 +6,8 @@
   var state={ai:'cc',make:'reel'};
   var FMT={voiceover:'アフレコ',vlog:'VLOG',talk:'トーク',ranking:'ランキング',comparison:'比較'};
   var AI={
-    cc:{name:'Claude Code',cmd:'claude',skills:'.claude/skills',inst:'curl -fsSL https://claude.ai/install.sh | bash',instNote:'Claude Codeを入れます（すでに入っている人は飛ばします）。入れたら claude と打ち、案内に沿ってログインします。ログインできたら /exit と打って閉じます（閉じないと、次の行がAIへの質問になってしまいます）。',desc:'Macのターミナルで進めます。上から順に、コピーして貼ります。',after:'確認できたら、下の言葉を打って、Claude Codeを起動します。'},
-    codex:{name:'Codex',cmd:'codex',skills:'~/.codex/skills',inst:'npm install -g @openai/codex',instNote:'Codexを入れます（すでに入っている人は飛ばします）。入れたら codex と打ち、案内に沿ってログインします。ログインできたら /exit と打って閉じます（閉じないと、次の行がAIへの質問になってしまいます）。',pre:'node -v',preNote:'先に、Node.js が入っているか確認します。数字が出なければ、nodejs.org から LTS を入れて、ターミナルを開き直します。',desc:'Macのターミナルで進めます。上から順に、コピーして貼ります。',after:'確認できたら、このフォルダ（~/insta-ai）のまま、下の言葉を打って、Codexを起動します。.codex は隠しフォルダなので、Finderでは探さず、上のコマンドで置きます。Codexがすでに開いていた場合は、一度閉じて、打ち直します。'},
+    cc:{name:'Claude Code',cmd:'claude',skills:'.claude/skills',inst:'curl -fsSL https://claude.ai/install.sh | bash',instNote:'Claude Codeを入れます（すでに入っている人は飛ばします）。入れたら claude と打ち、案内に沿ってログインします。初回に英語の確認が出たら「Yes」を選びます。ログインできたら、control＋C を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。',desc:'Macのターミナルで進めます。上から順に、コピーして貼ります。',after:'確認できたら、下の言葉を打って、Claude Codeを起動します。'},
+    codex:{name:'Codex',cmd:'codex',skills:'~/.codex/skills',inst:'npm install -g @openai/codex',instNote:'Codexを入れます（すでに入っている人は飛ばします）。入れたら codex と打ち、案内に沿ってログインします。初回に英語の確認が出たら「Yes」を選びます。ログインできたら、control＋C を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。',pre:'node -v',preNote:'先に、Node.js が入っているか確認します。数字が出なければ、nodejs.org から LTS を入れて、ターミナルを開き直します。',desc:'Macのターミナルで進めます。上から順に、コピーして貼ります。',after:'確認できたら、このフォルダ（~/insta-ai）のまま、下の言葉を打って、Codexを起動します。.codex は隠しフォルダなので、Finderでは探さず、上のコマンドで置きます。Codexがすでに開いていた場合は、一度閉じて、打ち直します。'},
     app:{name:'アプリ',desc:'下のボタンで手順書をコピーします。新しい会話の入力欄に貼って、送ります。'}
   };
   function copyText(t){
