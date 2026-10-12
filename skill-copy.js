@@ -10,15 +10,17 @@
     'reel-voiceover':{name:'リール（アフレコ）',refs:['format-taxonomy.md','genre-adaptation.md','output-quality.md','conversation-flow.md','voiceover.md']},
     'reel-vlog':{name:'リール（VLOG）',refs:['format-taxonomy.md','genre-adaptation.md','output-quality.md','conversation-flow.md','vlog.md']},
     'reel-talk':{name:'リール（トーク）',refs:['format-taxonomy.md','genre-adaptation.md','output-quality.md','conversation-flow.md','talk.md']},
+    'reel-abstract':{name:'リール（抽象マーケ）',refs:['format-taxonomy.md','genre-adaptation.md','output-quality.md','conversation-flow.md','abstract.md']},
     'reel-ranking':{name:'リール（ランキング）',refs:['format-taxonomy.md','genre-adaptation.md','output-quality.md','conversation-flow.md','ranking.md']},
     'reel-comparison':{name:'リール（比較）',refs:['format-taxonomy.md','genre-adaptation.md','output-quality.md','conversation-flow.md','comparison.md']},
-    'reel-any':{name:'リール（形式は相談）',refs:['format-taxonomy.md','genre-adaptation.md','output-quality.md','conversation-flow.md','voiceover.md','vlog.md','talk.md','ranking.md','comparison.md']},
+    'reel-any':{name:'リール（形式は相談）',refs:['format-taxonomy.md','genre-adaptation.md','output-quality.md','conversation-flow.md','voiceover.md','vlog.md','talk.md','abstract.md','ranking.md','comparison.md']},
     'edit-voiceover':{name:'動画編集（アフレコ）',refs:['edit-common.md','conversation-flow.md','edit-voiceover.md']},
     'edit-vlog':{name:'動画編集（VLOG）',refs:['edit-common.md','conversation-flow.md','edit-vlog.md']},
     'edit-talk':{name:'動画編集（トーク）',refs:['edit-common.md','conversation-flow.md','edit-talk.md']},
+    'edit-abstract':{name:'動画編集（抽象マーケ）',refs:['edit-common.md','conversation-flow.md','video-edit/edit-abstract.md']},
     'edit-ranking':{name:'動画編集（ランキング）',refs:['edit-common.md','conversation-flow.md','edit-ranking.md']},
     'edit-comparison':{name:'動画編集（比較）',refs:['edit-common.md','conversation-flow.md','edit-comparison.md']},
-    'edit-any':{name:'動画編集（形式は相談）',refs:['edit-common.md','conversation-flow.md','edit-voiceover.md','edit-vlog.md','edit-talk.md','edit-ranking.md','edit-comparison.md']},
+    'edit-any':{name:'動画編集（形式は相談）',refs:['edit-common.md','conversation-flow.md','edit-voiceover.md','edit-vlog.md','edit-talk.md','video-edit/edit-abstract.md','edit-ranking.md','edit-comparison.md']},
     all:{name:'全部（SKILL.md＋全 references）',refs:null}
   };
   var bundle=null;
