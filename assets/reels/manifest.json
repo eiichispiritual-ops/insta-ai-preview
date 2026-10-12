@@ -247,14 +247,14 @@
       "ai": {
         "file": "taidan_ai.mp4",
         "poster": "taidan_ai.jpg",
-        "size_mb": 12.04,
+        "size_mb": 13.4,
         "duration_sec": 139.57,
-        "version": "v06"
+        "version": "v07"
       },
       "qc": {
-        "mad_mean": 7.846,
-        "mad_max": 43.609,
-        "frames_over_5": 2504,
+        "mad_mean": 5.65,
+        "mad_max": 27.2,
+        "frames_over_5": 2073,
         "lufs_ref": -14.1,
         "lufs_ai": -14.0,
         "frames": 4187
