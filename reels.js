@@ -69,7 +69,7 @@
     if(h.materials&&h.materials.length) d.appendChild(list('見本で使った素材',h.materials));
     if(h.agent_prompt){
       const w=el('div','reel-agent'); w.appendChild(el('h4',null,'Claude Code／Codex で作る'));
-      w.appendChild(el('p','reel-note','下のボタンでコピーして、Claude Code（モデル名は Opus 5.5）か Codex（モデル名は Astra）に貼ると、あなたの素材でこの型の編集指示書と動画が作れます。'));
+      w.appendChild(el('p','reel-note','下のボタンでコピーして、Claude Code か Codex に貼ると、あなたの素材でこの型の編集指示書と動画が作れます。'));
       const det=el('details','reel-agent-body'); det.appendChild(el('summary',null,'指示文の本文を見る'));
       const ta=el('textarea','reel-agent-text'); ta.readOnly=true; ta.value=h.agent_prompt; ta.rows=14; ta.setAttribute('aria-label','指示文の本文'); det.appendChild(ta);
       const btn=el('button','reel-copy','指示文をコピー'); btn.type='button';

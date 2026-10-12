@@ -8,7 +8,7 @@
   var AI={
     cc:{name:'Claude Code',cmd:'claude',skills:'.claude/skills',inst:'curl -fsSL https://claude.ai/install.sh | bash',instNote:'Claude Codeを入れます（すでに入っている人は飛ばします）。',loginNote:'claude と打ち、案内に沿ってログインします。「Do you trust the files in this folder?」と出たら、Enter（Yes）を押します。ログインできたら、control＋C（command ではなく、左下の control キー）を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。',desc:'この手順は Mac で行います。iPhone から見ている人は「アプリ」を選んでください。Macのターミナルで進めます。上から順に、コピーして貼ります。番号は多く見えますが、どれもコピーして貼るだけです。',after:'確認できたら、下の言葉を打って、Claude Codeを起動します。.claude は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。'},
     codex:{name:'Codex',cmd:'codex',skills:'~/.codex/skills',inst:'npm install -g @openai/codex',instNote:'Codexを入れます（すでに入っている人は飛ばします）。',loginNote:'codex と打ち、案内に沿ってログインします。「Do you trust the files in this folder?」と出たら、Enter（Yes）を押します。ログインできたら、control＋C（command ではなく、左下の control キー）を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。',pre:'node -v',preNote:'先に、Node.js が入っているか確認します。数字が出なければ、nodejs.org から LTS を入れて、ターミナルを開き直します。',desc:'この手順は Mac で行います。iPhone から見ている人は「アプリ」を選んでください。Macのターミナルで進めます。上から順に、コピーして貼ります。番号は多く見えますが、どれもコピーして貼るだけです。',after:'確認できたら、このフォルダ（~/insta-ai）のまま、下の言葉を打って、Codexを起動します。.codex は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。上のコマンドで置きます。Codexがすでに開いていた場合は、一度閉じて、打ち直します。'},
-    app:{name:'アプリ',desc:'下のボタンで手順書をコピーします（手順3で選ぶ「作りたいもの」用の版です。選び直すと切り替わります）。新しい会話の入力欄に貼って送り、AIの返事が出てから、手順3の「最初に打つ言葉」を貼ります。2つを同時には貼りません。'}
+    app:{name:'アプリ',desc:'下のボタンで手順書をコピーします（上で選んだ「作りたいもの」用の版です。選び直すと切り替わります）。新しい会話の入力欄に貼って送り、AIの返事が出てから、手順3の「最初に打つ言葉」を貼ります。2つを同時には貼りません。'}
   };
   function copyText(t){
     var fb=function(){try{var x=document.createElement('textarea');x.value=t;x.style.position='fixed';x.style.opacity='0';document.body.appendChild(x);x.select();var ok=document.execCommand('copy');x.remove();return ok;}catch(e){return false;}};
@@ -43,22 +43,22 @@
   function tipSent(){var t=$('start-tip').value.trim();return t?'私が見る人に伝えたい工夫は「'+t+'」です。':'';}
   function nameSent(){var n=$('start-name').value.trim();return n?'呼ばれたい名前は、'+n+'です。':'名前は（あなたの名前）と仮置きして。';}
   function prompt(){
-    var g=genre(), gn=g?g+'の':'', f=$('start-format').value, fl=f?FMT[f]+'形式の':'', P=prefix();
+    var g=genre(), gs=g?'ジャンルは'+g+'。':'', f=$('start-format').value, fl=f?FMT[f]+'形式の':'', P=prefix();
     switch(state.make){
-      case 'reel': return P+gn+fl+'リールの台本を1本作って。'+(f?'':'形式は2案出して、私に選ばせて。')+'私の経験は書いていないので、作らずに、見る人への呼びかけで入って。'+(f==='vlog'?'出来事は撮影予定として仮置きして、実際に撮った順に差し替える箇所も書いて。':'')+TAIL('台本',tipSent());
-      case 'profile': return P+gn+'プロフィールの、表示名と紹介文を作って。'+nameSent()+TAIL('案');
-      case 'feed': return P+gn+'フィード投稿を、1ページずつの原稿で作って。'+TAIL('原稿');
-      case 'story': var td=$('start-today').value.trim(); return P+gn+'ストーリーを、1枚ずつの本文と使う素材で作って。'+(td?'今日あったことは「'+td+'」です。':'出来事は（今日あったこと）と仮置きして。')+TAIL('本文');
+      case 'reel': return P+gs+fl+'リール台本を1本作って。'+(f?'':'形式は2案出して、私に選ばせて。')+'私の経験は書いていないので、作らずに、見る人への呼びかけで入って。'+(f==='vlog'?'出来事は撮影予定として仮置きして、実際に撮った順に差し替える箇所も書いて。':'')+TAIL('台本',tipSent());
+      case 'profile': return P+gs+'プロフィールの表示名と紹介文を作って。'+nameSent()+TAIL('案');
+      case 'feed': return P+gs+'フィード投稿を、1ページずつの原稿で作って。'+TAIL('原稿');
+      case 'story': var td=$('start-today').value.trim(); return P+gs+'ストーリーを、1枚ずつの本文と使う素材で作って。'+(td?'今日あったことは「'+td+'」です。':'出来事は（今日あったこと）と仮置きして。')+TAIL('本文');
       default:
         var fo=$('start-folder').value.trim();
-        return P+gn+fl+reader()+'動画編集を進めて。'+(f?'':'形式は素材を見て決めて。')+(fo?'撮った素材は '+fo+' に入っています。':'撮った素材の場所は、あとで伝えます。')+'まず編集指示書の表だけ見せて、私がOKと言うまで進めないで。';
+        return P+gs+reader()+(f?'形式は'+FMT[f]+'です。':'')+'動画編集を進めて。'+(f?'':'形式は素材を見て決めて。')+(fo?'撮った素材は '+fo+' に入っています。':'撮った素材の場所は、あとで伝えます。')+'まず編集指示書の表だけ見せて、私がOKと言うまで進めないで。';
     }
   }
   var OUT={
     reel:'出てくるもの：「日付とタイトル」と「台本の本文」の2つのコピー用ブロック。そのあとに撮影メモ（撮れる素材か、要確認かの欄つき）。作りたいものを変えると、この説明も切り替わります。',
     profile:'出てくるもの：表示名と紹介文の案と、選んだ理由。（ ）や「要確認」の括弧は、プロフィール欄へ貼る前に書き換えるか消します。',
     feed:'出てくるもの：ページごとの見出し・本文・配置。',
-    story:'出てくるもの：1枚ごとの本文・使う素材・その画面の役割。「今日あったこと」を空欄にすると、本文の（ ）は自分で書き換える場所になります。',
+    story:'出てくるもの：1枚ごとの本文・使う素材・その画面の役割。材料が1つの日は1枚で終わります。枚数を増やすには、出来事をもう1つか、見る人の困りごとを入れてください。「今日あったこと」を空欄にすると、本文の（ ）は自分で書き換える場所になります。',
     edit:'出てくるもの：時間・声・映像・差し込み・字幕の表（編集指示書）。'
   };
   var MAKE_NAME={reel:'リールの台本',profile:'プロフィール',feed:'フィード投稿',story:'ストーリー',edit:'動画編集'};
@@ -67,6 +67,7 @@
   function renderS2(){
     var a=AI[state.ai], host=$('start-s2-actions'); host.replaceChildren(); $('start-s2-status').textContent='';
     $('start-s2-desc').textContent=a.desc;
+    $('start-s2-make').hidden=state.ai!=='app';
     if(state.ai==='app'){
       var key=appKey(),nm=appName();
       var mk=function(k,pre,inner,cls){
@@ -135,8 +136,10 @@
   function setPressed(groupId,attr,val){
     $(groupId).querySelectorAll('['+attr+']').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute(attr)===val?'true':'false');});
   }
+  function setMake(){setPressed('start-make','data-make',state.make);setPressed('start-make2','data-make',state.make);if(state.ai==='app')renderS2();renderS3();}
   $('start-ai').addEventListener('click',function(e){var b=e.target.closest('[data-ai]');if(!b)return;state.ai=b.getAttribute('data-ai');setPressed('start-ai','data-ai',state.ai);renderS2();renderS3();});
-  $('start-make').addEventListener('click',function(e){var b=e.target.closest('[data-make]');if(!b)return;state.make=b.getAttribute('data-make');setPressed('start-make','data-make',state.make);if(state.ai==='app')renderS2();renderS3();});
+  $('start-make').addEventListener('click',function(e){var b=e.target.closest('[data-make]');if(!b)return;state.make=b.getAttribute('data-make');setMake();});
+  $('start-make2').addEventListener('click',function(e){var b=e.target.closest('[data-make]');if(!b)return;state.make=b.getAttribute('data-make');setMake();});
   ['start-genre','start-reader','start-trouble','start-name','start-today','start-format','start-folder','start-tip'].forEach(function(id){$(id).addEventListener('input',function(){renderS3();renderAnswers();});$(id).addEventListener('change',renderS3);});
   $('start-format').addEventListener('change',function(){if(state.ai==='app')renderS2();});
   bindCopy($('start-copy-prompt'),function(){return $('start-prompt').value;},$('start-s3-status'),function(){$('start-prompt').focus();$('start-prompt').select();});
