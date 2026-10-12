@@ -109,6 +109,6 @@ html{scroll-behavior:auto}
 .start-card{border:1px solid var(--line);border-radius:4px;padding:20px;background:#fff}
 .start-copyrows{display:flex;flex-direction:column;gap:8px;margin-top:10px;width:100%}
 .start-copyrow{display:grid;grid-template-columns:1fr auto;gap:8px 10px;align-items:center;border-top:1px solid var(--line);padding-top:8px}
-.start-copytext{font-size:13px;line-height:1.7;word-break:break-word}.start-copyrow .start-status{grid-column:1/-1;margin:0;min-height:0}
+.start-copytext{white-space:pre-wrap;font-size:13px;line-height:1.7;word-break:break-word}.start-copyrow .start-status{grid-column:1/-1;margin:0;min-height:0}
 .start-copyrow .start-btn{padding:8px 16px;min-height:44px;font-size:13px}
 @media(max-width:760px){.start-section{padding-top:36px;padding-bottom:40px}.start-step{grid-template-columns:28px 1fr;gap:10px}.start-choice,.start-btn{width:100%}.start-copyrow{grid-template-columns:1fr}}
