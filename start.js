@@ -65,7 +65,7 @@
       b.addEventListener('click',function(){if(window.instaAiCopySkill)window.instaAiCopySkill('all',b,$('start-s2-status'));});
       host.appendChild(b);
     }else{
-      var z=el('a','start-btn primary','zipをダウンロード');z.href='downloads/insta-ai-create.zip';z.setAttribute('download','');host.appendChild(z);
+      var z=el('a','start-btn primary','全部入りzipをダウンロード');z.href='downloads/insta-ai-all.zip';z.setAttribute('download','');host.appendChild(z);
       var rows=el('div','start-copyrows');
       var r1=copyRow(rows,'置き場所　'+a.path,a.path);
       host.appendChild(rows);
