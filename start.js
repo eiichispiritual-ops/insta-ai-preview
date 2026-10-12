@@ -7,7 +7,7 @@
   var FMT={voiceover:'アフレコ',vlog:'VLOG',talk:'トーク',ranking:'ランキング',comparison:'比較'};
   var AI={
     cc:{name:'Claude Code',cmd:'claude',skills:'.claude/skills',inst:'curl -fsSL https://claude.ai/install.sh | bash',instNote:'Claude Codeを入れます（すでに入っている人は飛ばします）。入れたら claude と打ち、案内に沿ってログインします。',desc:'Macのターミナルで進めます。上から順に、コピーして貼ります。',after:'確認できたら、下の言葉を打って、Claude Codeを起動します。'},
-    codex:{name:'Codex',cmd:'codex',skills:'~/.codex/skills',inst:'npm install -g @openai/codex',instNote:'Codexを入れます（すでに入っている人は飛ばします）。入れたら codex と打ち、案内に沿ってログインします。',desc:'Macのターミナルで進めます。上から順に、コピーして貼ります。',after:'確認できたら、下の言葉を打って、Codexを起動します。'},
+    codex:{name:'Codex',cmd:'codex',skills:'~/.codex/skills',inst:'npm install -g @openai/codex',instNote:'Codexを入れます（すでに入っている人は飛ばします）。入れたら codex と打ち、案内に沿ってログインします。',desc:'Macのターミナルで進めます。上から順に、コピーして貼ります。',after:'確認できたら、このフォルダ（~/insta-ai）のまま、下の言葉を打って、Codexを起動します。.codex は隠しフォルダなので、Finderでは探さず、上のコマンドで置きます。Codexがすでに開いていた場合は、一度閉じて、打ち直します。'},
     app:{name:'アプリ',desc:'下のボタンで手順書をコピーします。新しい会話の入力欄に貼って、送ります。'}
   };
   function copyText(t){
@@ -37,14 +37,16 @@
     row.appendChild(b);row.appendChild(st);host.appendChild(row);return row;
   }
   function genre(){return $('start-genre').value.trim();}
-  function prefix(){return state.ai==='app'?'いま貼った手順書を使って、':(state.ai==='codex'?'インスタAIのスキル（insta-ai-create）で、':'インスタAIのスキル（/insta-ai-create）で、');}
+  function prefix(){return state.ai==='app'?'いま貼った手順書を使って、':(state.ai==='codex'?'insta-ai-create のスキルで、':'インスタAIのスキル（/insta-ai-create）で、');}
+  function TAIL(w){return reader()+'質問せず、足りないところは要確認と書いて仮置きで、'+w+'まで出して。';}
+  function reader(){var r=$('start-reader').value.trim();return r?'見る人は、'+r+'で困っている人です。':'';}
   function prompt(){
     var g=genre(), gn=g?g+'の':'', f=$('start-format').value, fl=f?FMT[f]+'形式の':'', P=prefix();
     switch(state.make){
-      case 'reel': return P+gn+fl+'リールの台本を1本作って。'+(f?'':'形式は2案出して、私に選ばせて。')+'質問は少なめで。';
-      case 'profile': return P+gn+'プロフィールの、表示名と紹介文を作って。質問は少なめで。';
-      case 'feed': return P+gn+'フィード投稿を、1ページずつの原稿で作って。質問は少なめで。';
-      case 'story': return P+gn+'ストーリーを、1枚ずつの本文と使う素材で作って。質問は少なめで。';
+      case 'reel': return P+gn+fl+'リールの台本を1本作って。'+(f?'':'形式は2案出して、私に選ばせて。')+TAIL('台本');
+      case 'profile': return P+gn+'プロフィールの、表示名と紹介文を作って。'+TAIL('案');
+      case 'feed': return P+gn+'フィード投稿を、1ページずつの原稿で作って。'+TAIL('原稿');
+      case 'story': return P+gn+'ストーリーを、1枚ずつの本文と使う素材で作って。'+TAIL('本文');
       default:
         var fo=$('start-folder').value.trim();
         return P+gn+fl+'動画編集を進めて。'+(f?'':'形式は素材を見て決めて。')+(fo?'撮った素材は '+fo+' に入っています。':'撮った素材の場所は、あとで伝えます。')+'まず編集指示書の表だけ見せて、私がOKと言うまで進めないで。';
@@ -79,7 +81,7 @@
       note('⑥ 展開して、手順書を '+a.skills+'/ に置きます（3行まとめて貼れます）。');
       var cp='unzip insta-ai-all.zip -d insta-ai-all\nmkdir -p '+a.skills+'\ncp -R insta-ai-all/insta-ai-create '+a.skills+'/';
       row(cp,cp);
-      note('⑦ 入っているか確認します。バージョンの数字が出れば成功です。「command not found」と出たら、②へ戻ります。');
+      note('⑦ 入っているか確認します。zipをダウンロードしたフォルダではなく、③で作った作業フォルダのターミナルで打ちます。バージョンの数字が出れば成功です。「command not found」と出たら、②へ戻ります。');
       row('確認　'+a.cmd+' --version',a.cmd+' --version');
       host.appendChild(el('p','start-note',a.after));
       row('起動の言葉　'+a.cmd,a.cmd);
@@ -101,16 +103,16 @@
   }
   $('start-ai').addEventListener('click',function(e){var b=e.target.closest('[data-ai]');if(!b)return;state.ai=b.getAttribute('data-ai');setPressed('start-ai','data-ai',state.ai);renderS2();renderS3();});
   $('start-make').addEventListener('click',function(e){var b=e.target.closest('[data-make]');if(!b)return;state.make=b.getAttribute('data-make');setPressed('start-make','data-make',state.make);renderS3();});
-  ['start-genre','start-format','start-folder'].forEach(function(id){$(id).addEventListener('input',function(){renderS3();renderAnswers();});$(id).addEventListener('change',renderS3);});
+  ['start-genre','start-reader','start-format','start-folder'].forEach(function(id){$(id).addEventListener('input',function(){renderS3();renderAnswers();});$(id).addEventListener('change',renderS3);});
   bindCopy($('start-copy-prompt'),function(){return $('start-prompt').value;},$('start-s3-status'),function(){$('start-prompt').focus();$('start-prompt').select();});
   /* 質問への返し方 */
   function renderAnswers(){
     var host=$('start-answers');host.replaceChildren();var g=genre()||'（あなたのジャンル）';
     var exp='私が実際に試したことは（ここに書く）です。ない場合は、見る人への呼びかけで作ってください。';
-    var all='ジャンルは'+g+'です。見る人は、（どんな場面で何に）困っている人です。使える素材は、スマホで撮れる手元の動画と写真です。ないものは作らないでください。'+exp;
+    var all='ジャンルは'+g+'です。'+(reader()||'見る人は、（どんな場面で何に）困っている人です。')+'使える素材は、スマホで撮れる手元の動画と写真です。ないものは作らないでください。'+exp;
     copyRow(host,'3点まとめて返す　'+all,all);
     copyRow(host,'ジャンルを聞かれたら　ジャンルは'+g+'です。','ジャンルは'+g+'です。');
-    copyRow(host,'誰向けかを聞かれたら　見る人は、（どんな場面で何に）困っている人です。','見る人は、（どんな場面で何に）困っている人です。');
+    copyRow(host,'誰向けかを聞かれたら　見る人は、（どんな場面で何に）困っている人です。',(reader()||'見る人は、（どんな場面で何に）困っている人です。'));
     copyRow(host,'素材を聞かれたら　使える素材は、スマホで撮れる手元の動画と写真です。ないものは作らないでください。','使える素材は、スマホで撮れる手元の動画と写真です。ないものは作らないでください。');
     copyRow(host,'経験を聞かれたら　'+exp,exp);
     copyRow(host,'決まっていないとき　まだ決まっていません。候補を2つ出して、選ばせてください。','まだ決まっていません。候補を2つ出して、選ばせてください。');
