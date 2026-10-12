@@ -39,7 +39,7 @@
   function genre(){return $('start-genre').value.trim();}
   function prefix(){return state.ai==='app'?'いま貼った手順書を使って、':(state.ai==='codex'?'insta-ai-create のスキルで、':'インスタAIのスキル（/insta-ai-create）で、');}
   function TAIL(w){return reader()+'質問せず、足りないところは要確認と書いて仮置きで、'+w+'まで出して。';}
-  function reader(){var r=$('start-reader').value.trim(),t=$('start-trouble').value.trim();return (r?'見る人は、'+r+'です。':'')+(t?(r?'その人':'見る人')+'の困りごとは、'+t+'です。':'');}
+  function reader(){var r=$('start-reader').value.trim(),t=$('start-trouble').value.trim();return (r?'見る人は、'+r+'です。':'')+(t?(r?'その人':'見る人')+'の困りごとは「'+t+'」です。':'');}
   function nameSent(){var n=$('start-name').value.trim();return n?'呼ばれたい名前は、'+n+'です。':'名前は（あなたの名前）と仮置きして。';}
   function prompt(){
     var g=genre(), gn=g?g+'の':'', f=$('start-format').value, fl=f?FMT[f]+'形式の':'', P=prefix();
