@@ -5,6 +5,7 @@
   const root=document.getElementById('reels-gallery'); if(!root) return;
   const ORDER=['ranking','voiceover','vlog','talk','comparison','taidan'];
   const LABEL={ranking:'ランキング',voiceover:'アフレコ',vlog:'VLOG',talk:'トーク',comparison:'比較',taidan:'対談'};
+  const FOR={ranking:'紹介したいもの（ツール・商品・方法）が複数あり、順位をつけて見せたい人。',voiceover:'顔や声を出さず、自分の声（アフレコ）に生活映像を合わせて作りたい人。',talk:'自分が話す映像があり、実績などを部品として差し込みたい人。',comparison:'2つの考え方や2人を並べて、違いを見せたい人。',vlog:'朝から外出までなど、日常を撮って説明につなげたい人。',taidan:'2人で話す形で、題材をひも解いて見せたい人。'};
   const base='assets/reels/';
   const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=text;return n;};
   const fmt1=v=>v==null?'—':(Math.round(v*100)/100).toFixed(2);
@@ -26,8 +27,8 @@
       const parts=['全フレーム（1コマずつ）の平均差 '+fmt1(q.mad_mean),'最大 '+fmt1(q.mad_max),'差が5を超えたコマ '+q.frames_over_5+' / '+q.frames];
       if(q.lufs_ref!=null&&q.lufs_ai!=null) parts.push('音の大きさ（LUFS） '+fmt1(q.lufs_ref)+' → '+fmt1(q.lufs_ai));
       p.textContent=parts.join(' ・ ');
-      p.appendChild(el('small',null,'見本と同じ色変換で全フレームを比べた実測値。差は0〜255で、数値が小さいほど見本に近い。'));
-    }else if(item.approved){ p.textContent='講師の確認済み'; }
+      p.appendChild(el('small',null,'見本と同じ色変換で全フレームを比べた実測値。差は0〜255で、平均差も最大（いちばん差が大きいコマ）も、0に近いほど見本に近い。「5を超えたコマ」は差が大きめのコマの数で、少ないほど近い（5は目安の線）。音は、2つの数字が同じなら音量がそろっている。'));
+    }else if(item.approved){ p.textContent='講師の確認済み（数値の比較は行っていません）'; }
     else{ p.textContent='数値の比較は未実施'; }
     return p;
   }
@@ -66,13 +67,16 @@
     const head=el('div','reel-head');
     head.appendChild(el('p','overline',(LABEL[item.format]||item.format)+(item.nav?' '+item.nav:'')+' / '+(item.account||'')));
     head.appendChild(el('h3',null,item.title||''));
+    if(FOR[item.format]) head.appendChild(el('p','reel-note','こんな人に：'+FOR[item.format]));
     c.appendChild(head);
     const pair=el('div','reel-pair');
     if(item.ref) pair.appendChild(video(item.ref,item,'見本（人の編集）'));
     if(item.ai)  pair.appendChild(video(item.ai,item,'AI再現'+(item.ai.version?'（'+item.ai.version+'）':'')));
     c.appendChild(pair);
     c.appendChild(qcLine(item));
-    if(item.stage) c.appendChild(el('p','reel-stage',item.stage));
+    if(item.stage){ c.appendChild(el('p','reel-stage',item.stage));
+      const SN=item.stage.indexOf('仕上げ中')===0?'途中経過の作例です。AIの失敗例ではなく、見本との差が残る場面を数値で確かめながら直している段階で、数値が大きいのは「直す場所が残っている」という意味です。下の作り方は、見本の編集メモなので同じように読めます。':item.stage.indexOf('見本と同等')===0?'数値の比較で基準内だった作例です。人の目での最終確認とは別の判定です。':'';
+      if(SN) c.appendChild(el('p','reel-note',SN)); }
     c.appendChild(howtoBlock(h,item.format));
     return c;
   }
