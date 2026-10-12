@@ -29,7 +29,7 @@
       p.textContent=parts.join(' ・ ');
       p.appendChild(el('small',null,'見本と同じ色変換で全フレームを比べた実測値。差は0〜255で、平均差も最大（いちばん差が大きいコマ）も、0に近いほど見本に近い。「5を超えたコマ」は差が大きめのコマの数で、少ないほど近い（5は目安の線）。音は、2つの数字が同じなら音量がそろっている。'));
     }else if(item.approved){ p.textContent='講師の確認済み（数値の比較は行っていません）'; }
-    else{ p.textContent='数値の比較は未実施'; }
+    else{ p.textContent='数値の比較は行っていません'; }
     return p;
   }
 

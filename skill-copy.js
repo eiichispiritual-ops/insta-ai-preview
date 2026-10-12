@@ -38,14 +38,15 @@
   var statusEl=document.getElementById('skillcopy-status');
   var manual=document.getElementById('skillcopy-manual');
   var manualBox=document.getElementById('skillcopy-manual-box');
-  function say(m){if(statusEl)statusEl.textContent=m;}
+  var extraSay=null;
+  function say(m){if(statusEl)statusEl.textContent=m;if(extraSay)extraSay.textContent=m;}
   function fallback(text,name){
     if(!manual||!manualBox){say('コピーできませんでした。zipをダウンロードしてください。');return;}
-    manual.value=text;manualBox.hidden=false;manual.focus();manual.select();
+    manual.value=text;manualBox.hidden=false;manual.focus();manual.select();try{manualBox.scrollIntoView({block:'center'});}catch(e){}
     say('自動コピーが使えませんでした。下の全文を選択済みです。コピー操作（長押し／Ctrl・⌘＋C）でコピーしてください：'+name);
   }
-  async function copyKey(key,btn){
-    var e=ENTRIES[key];
+  async function copyKey(key,btn,extra){
+    var e=ENTRIES[key];extraSay=extra||null;
     if(manualBox)manualBox.hidden=true;
     say('読み込んでいます。');
     var text;
@@ -58,7 +59,8 @@
       if(btn){var old=btn.getAttribute('data-label')||btn.textContent;btn.setAttribute('data-label',old);btn.classList.add('is-copied');btn.textContent='コピーしました';setTimeout(function(){btn.textContent=old;btn.classList.remove('is-copied');},2200);}
     }catch(err){fallback(text,e.name);}
   }
-  document.querySelectorAll('[data-skillcopy]').forEach(function(b){
+  window.instaAiCopySkill=function(key,btn,extra){return copyKey(key,btn,extra);};
+  document.querySelectorAll('#get-skill [data-skillcopy]').forEach(function(b){
     b.addEventListener('click',function(){copyKey(b.getAttribute('data-skillcopy'),b);});
   });
 })();
