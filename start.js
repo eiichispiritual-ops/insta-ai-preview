@@ -88,7 +88,7 @@
     }else{
       var note=function(t){host.appendChild(el('p','start-note',t));};
       var row=function(label,text){var r=el('div','start-copyrows');copyRow(r,label,text);host.appendChild(r);};
-      var C='①②③④⑤⑥⑦⑧⑨'.split(''),k=0,nx=function(){return C[k++];};
+      var C='①②③④⑤⑥⑦⑧⑨⑩'.split(''),k=0,nx=function(){return C[k++];};
       var tInst,tFold;
       note(nx()+' ターミナルを開きます。Macは Spotlight（command＋スペース）で「ターミナル」と打って、Enterを押します。Windowsの人は、「ChatGPT・Claudeのアプリ」を選んでください。');
       if(a.pre){note(nx()+' '+a.preNote);row('確認　'+a.pre,a.pre);}
@@ -105,12 +105,15 @@
       note(nx()+' ダウンロードしたzipを、作業フォルダへ移します。Safariは zip を自動で開くことがあります。「No such file」と出たら、Safariの設定「ダウンロード後に安全なファイルを開く」を切って、もう一度ダウンロードするか、Chromeでダウンロードします。ファイル名が違えば、その名前で打ちます（例：insta-ai-all (1).zip のとき）。');
       row('zipを移す　mv ~/Downloads/insta-ai-all.zip .','mv ~/Downloads/insta-ai-all.zip .');
       row('名前が「insta-ai-all (1).zip」のとき　mv ~/Downloads/"insta-ai-all (1).zip" ./insta-ai-all.zip','mv ~/Downloads/"insta-ai-all (1).zip" ./insta-ai-all.zip');
-      note(nx()+' 展開して、手順書を '+a.skills+'/ に置きます（3行まとめて貼れます）。');
+      var tPlace=C[k];note(nx()+' 展開して、手順書を '+a.skills+'/ に置きます（3行まとめて貼れます）。');
       var cp='unzip insta-ai-all.zip -d insta-ai-all\nmkdir -p '+a.skills+'\ncp -R insta-ai-all/insta-ai-create '+a.skills+'/';
       row(cp,cp);
+      var ls='ls '+a.skills;
+      note(nx()+' 入ったか確かめます。この1行は、手で打ちます。insta-ai-create と出れば成功です。');
+      row('確認　'+ls,ls);
       host.appendChild(el('p','start-note',a.after));
       row('起動の言葉　'+a.cmd,a.cmd);
-      note('起動したら、手順書が読めているか確認します。「読めていません」と返ったら、置く3行（'+C[k-1]+'）をやり直して、AIを閉じて開き直します。');
+      note('起動したら、手順書が読めているか確認します。「読めていません」と返ったら、置く3行（'+tPlace+'）をやり直して、AIを閉じて開き直します。');
       var chk=(state.ai==='codex'?'insta-ai-create のスキル':'インスタAIのスキル（/insta-ai-create）')+'は読めていますか。読めていれば「読めています」とだけ答えて。';
       row('確認　'+chk,chk);
     }

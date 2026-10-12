@@ -46,6 +46,10 @@ unzip insta-ai-all.zip -d insta-ai-all
 mkdir -p .claude/skills
 cp -R insta-ai-all/insta-ai-create .claude/skills/
 ```
+入ったか確かめます。この1行は手で打ちます。`insta-ai-create` と出れば成功です。
+```bash
+ls .claude/skills
+```
 `.claude` は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。
 
 **③ AIを開いて、この1行を貼る**
@@ -82,6 +86,10 @@ mv ~/Downloads/insta-ai-all.zip .
 unzip insta-ai-all.zip -d insta-ai-all
 mkdir -p ~/.codex/skills
 cp -R insta-ai-all/insta-ai-create ~/.codex/skills/
+```
+入ったか確かめます。この1行は手で打ちます。`insta-ai-create` と出れば成功です。
+```bash
+ls ~/.codex/skills
 ```
 `.codex` は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。上のコマンドで置きます。
 Codex がすでに開いている場合は、一度閉じて、`codex` を打ち直します。
