@@ -6,8 +6,8 @@
   var state={ai:'cc',make:'reel'};
   var FMT={voiceover:'アフレコ',vlog:'VLOG',talk:'トーク',ranking:'ランキング',comparison:'比較'};
   var AI={
-    cc:{name:'Claude Code',cmd:'claude',skills:'.claude/skills',inst:'curl -fsSL https://claude.ai/install.sh | bash',instNote:'Claude Codeを入れます（すでに入っている人は飛ばします）。',loginNote:'claude と打ち、案内に沿ってログインします。フォルダを信頼するかの英語の確認が出たら「Yes」を選びます。ログインできたら、control＋C を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。',desc:'Macのターミナルで進めます。上から順に、コピーして貼ります。番号は多く見えますが、どれもコピーして貼るだけです。',after:'確認できたら、下の言葉を打って、Claude Codeを起動します。'},
-    codex:{name:'Codex',cmd:'codex',skills:'~/.codex/skills',inst:'npm install -g @openai/codex',instNote:'Codexを入れます（すでに入っている人は飛ばします）。',loginNote:'codex と打ち、案内に沿ってログインします。フォルダを信頼するかの英語の確認が出たら「Yes」を選びます。ログインできたら、control＋C を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。',pre:'node -v',preNote:'先に、Node.js が入っているか確認します。数字が出なければ、nodejs.org から LTS を入れて、ターミナルを開き直します。',desc:'Macのターミナルで進めます。上から順に、コピーして貼ります。番号は多く見えますが、どれもコピーして貼るだけです。',after:'確認できたら、このフォルダ（~/insta-ai）のまま、下の言葉を打って、Codexを起動します。.codex は隠しフォルダなので、Finderでは探さず、上のコマンドで置きます。Codexがすでに開いていた場合は、一度閉じて、打ち直します。'},
+    cc:{name:'Claude Code',cmd:'claude',skills:'.claude/skills',inst:'curl -fsSL https://claude.ai/install.sh | bash',instNote:'Claude Codeを入れます（すでに入っている人は飛ばします）。',loginNote:'claude と打ち、案内に沿ってログインします。「Do you trust the files in this folder?」と出たら、Enter（Yes）を押します。ログインできたら、control＋C（command ではなく、左下の control キー）を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。',desc:'この手順は Mac で行います。iPhone から見ている人は「アプリ」を選んでください。Macのターミナルで進めます。上から順に、コピーして貼ります。番号は多く見えますが、どれもコピーして貼るだけです。',after:'確認できたら、下の言葉を打って、Claude Codeを起動します。.claude は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。'},
+    codex:{name:'Codex',cmd:'codex',skills:'~/.codex/skills',inst:'npm install -g @openai/codex',instNote:'Codexを入れます（すでに入っている人は飛ばします）。',loginNote:'codex と打ち、案内に沿ってログインします。「Do you trust the files in this folder?」と出たら、Enter（Yes）を押します。ログインできたら、control＋C（command ではなく、左下の control キー）を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。',pre:'node -v',preNote:'先に、Node.js が入っているか確認します。数字が出なければ、nodejs.org から LTS を入れて、ターミナルを開き直します。',desc:'この手順は Mac で行います。iPhone から見ている人は「アプリ」を選んでください。Macのターミナルで進めます。上から順に、コピーして貼ります。番号は多く見えますが、どれもコピーして貼るだけです。',after:'確認できたら、このフォルダ（~/insta-ai）のまま、下の言葉を打って、Codexを起動します。.codex は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。上のコマンドで置きます。Codexがすでに開いていた場合は、一度閉じて、打ち直します。'},
     app:{name:'アプリ',desc:'下のボタンで手順書をコピーします（手順3で選ぶ「作りたいもの」用の版です。選び直すと切り替わります）。新しい会話の入力欄に貼って送り、AIの返事が出てから、手順3の「最初に打つ言葉」を貼ります。2つを同時には貼りません。'}
   };
   function copyText(t){
@@ -93,6 +93,8 @@
       if(a.pre){note(nx()+' '+a.preNote);row('確認　'+a.pre,a.pre);}
       tInst=C[k];note(nx()+' '+a.instNote);
       row('入れる　'+a.inst,a.inst);
+      note(nx()+' 入っているか確認します。バージョンの数字が出れば成功です。「command not found」と出たら、'+tInst+'へ戻ります。');
+      row('確認　'+a.cmd+' --version',a.cmd+' --version');
       tFold=C[k];note(nx()+' 作業フォルダを作って、その中へ移ります。以降の手順は、すべてこのフォルダの中で行います。');
       row('作業フォルダ　mkdir -p ~/insta-ai && cd ~/insta-ai','mkdir -p ~/insta-ai && cd ~/insta-ai');
       note(nx()+' '+a.loginNote);
@@ -105,11 +107,9 @@
       note(nx()+' 展開して、手順書を '+a.skills+'/ に置きます（3行まとめて貼れます）。');
       var cp='unzip insta-ai-all.zip -d insta-ai-all\nmkdir -p '+a.skills+'\ncp -R insta-ai-all/insta-ai-create '+a.skills+'/';
       row(cp,cp);
-      note(nx()+' 入っているか確認します。zipをダウンロードしたフォルダではなく、'+tFold+'で作った作業フォルダのターミナルで打ちます。バージョンの数字が出れば成功です。「command not found」と出たら、'+tInst+'へ戻ります。');
-      row('確認　'+a.cmd+' --version',a.cmd+' --version');
       host.appendChild(el('p','start-note',a.after));
       row('起動の言葉　'+a.cmd,a.cmd);
-      note('起動したら、手順書が読めているか確認します。「読めていません」と返ったら、置く3行（'+C[k-2]+'）をやり直して、AIを閉じて開き直します。');
+      note('起動したら、手順書が読めているか確認します。「読めていません」と返ったら、置く3行（'+C[k-1]+'）をやり直して、AIを閉じて開き直します。');
       var chk=(state.ai==='codex'?'insta-ai-create のスキル':'インスタAIのスキル（/insta-ai-create）')+'は読めていますか。読めていれば「読めています」とだけ答えて。';
       row('確認　'+chk,chk);
     }

@@ -5,7 +5,7 @@
   const root=document.getElementById('reels-gallery'); if(!root) return;
   const ORDER=['ranking','voiceover','vlog','talk','comparison'];
   const LABEL={ranking:'ランキング',voiceover:'アフレコ',vlog:'VLOG',talk:'トーク',comparison:'比較'};
-  const FOR={ranking:'紹介したいもの（ツール・商品・方法）が複数あり、順位をつけて見せたい人。',voiceover:'顔や声を出さず、自分の声（アフレコ）に生活映像を合わせて作りたい人。',talk:'自分が話す映像があり、実績などを部品として差し込みたい人。',comparison:'2つの考え方や2人を並べて、違いを見せたい人。',vlog:'朝から外出までなど、日常を撮って説明につなげたい人。'};
+  const FOR={ranking:'紹介したいもの（ツール・商品・方法）が複数あり、順位をつけて見せたい人。',voiceover:'顔を出さず、あとから録った自分の声で、生活映像を合わせて作りたい人。',talk:'自分が話す映像があり、実績などを部品として差し込みたい人。',comparison:'2つの考え方や2人を並べて、違いを見せたい人。',vlog:'朝から外出までなど、日常を撮って説明につなげたい人。'};
   const base='assets/reels/';
   const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=text;return n;};
   const fmt1=v=>v==null?'—':(Math.round(v*100)/100).toFixed(2);
@@ -22,15 +22,19 @@
   }
 
   function qcLine(item){
-    const q=item.qc; const p=el('p','reel-qc');
+    const q=item.qc; const wrap=el('div','reel-qc');
     if(q){
+      const ok=!!(item.stage&&item.stage.indexOf('見本と同等')===0);
+      wrap.appendChild(el('p','reel-qc-main',ok?'見本とほぼ同じ（機械で確認）':'見本との差が残る場面を直している（機械で確認）'));
       const parts=['全フレーム（1コマずつ）の平均差 '+fmt1(q.mad_mean),'最大 '+fmt1(q.mad_max),'差が5を超えたコマ '+q.frames_over_5+' / '+q.frames];
       if(q.lufs_ref!=null&&q.lufs_ai!=null) parts.push('音の大きさ（LUFS） '+fmt1(q.lufs_ref)+' → '+fmt1(q.lufs_ai));
-      p.textContent=parts.join(' ・ ');
+      const d=el('details','reel-qc-detail'); d.appendChild(el('summary',null,'くわしい数値'));
+      const p=el('p',null,parts.join(' ・ '));
       p.appendChild(el('small',null,'見本と同じ色変換で全フレームを比べた実測値。差は0〜255で、平均差も最大（いちばん差が大きいコマ）も、0に近いほど見本に近い。「5を超えたコマ」は差が大きめのコマの数で、少ないほど近い（5は目安の線）。音は、2つの数字が同じなら音量がそろっている。'));
-    }else if(item.approved){ p.textContent='講師の確認済み（数値の比較は行っていません）'; }
-    else{ p.textContent='数値の比較は行っていません'; }
-    return p;
+      d.appendChild(p); wrap.appendChild(d);
+    }else if(item.approved){ wrap.appendChild(el('p','reel-qc-main','講師の確認済み（数値の比較は行っていません）')); }
+    else{ wrap.appendChild(el('p','reel-qc-main','数値の比較は行っていません')); }
+    return wrap;
   }
 
   function copyText(t){
@@ -65,7 +69,7 @@
     if(h.materials&&h.materials.length) d.appendChild(list('見本で使った素材',h.materials));
     if(h.agent_prompt){
       const w=el('div','reel-agent'); w.appendChild(el('h4',null,'Claude Code／Codex で作る'));
-      w.appendChild(el('p','reel-note','下のボタンでコピーして、Claude Code（Opus 5.5）か Codex（Astra）に貼ると、あなたの素材でこの型の編集指示書と動画が作れます。'));
+      w.appendChild(el('p','reel-note','下のボタンでコピーして、Claude Code（モデル名は Opus 5.5）か Codex（モデル名は Astra）に貼ると、あなたの素材でこの型の編集指示書と動画が作れます。'));
       const det=el('details','reel-agent-body'); det.appendChild(el('summary',null,'指示文の本文を見る'));
       const ta=el('textarea','reel-agent-text'); ta.readOnly=true; ta.value=h.agent_prompt; ta.rows=14; ta.setAttribute('aria-label','指示文の本文'); det.appendChild(ta);
       const btn=el('button','reel-copy','指示文をコピー'); btn.type='button';

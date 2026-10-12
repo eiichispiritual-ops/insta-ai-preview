@@ -114,3 +114,8 @@ html{scroll-behavior:auto}
 @media(max-width:760px){.start-section{padding-top:36px;padding-bottom:40px}.start-step{grid-template-columns:28px 1fr;gap:10px}.start-choice,.start-btn{width:100%}.start-copyrow{grid-template-columns:1fr}}
 
 @media(max-width:430px){h1{font-size:40px;letter-spacing:-1.5px}}@media(max-width:380px){h1{font-size:37px}}
+.reel-qc-main{margin:0;font-weight:600}.reel-qc-detail{margin-top:6px}.reel-qc-detail summary{display:inline-flex;font-size:11px;color:var(--muted);text-decoration:underline;cursor:pointer;min-height:32px;align-items:center}.reel-qc-detail p{margin:4px 0 0}
+.hero-sublink{display:block;width:fit-content;margin-top:16px;font-size:13px;color:var(--ink);border-bottom:1px solid currentColor;padding:6px 0 3px}.hero-sublink:hover{color:var(--accent)}
+.preview-disclosure p a{display:inline-flex;align-items:center;min-height:44px;padding:8px 0}
+.reels-section .split-heading h2{flex:none;white-space:nowrap}
+@media(max-width:760px){.reels-section .split-heading h2{white-space:normal}}

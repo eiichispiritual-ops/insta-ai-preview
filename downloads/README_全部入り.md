@@ -14,7 +14,7 @@
 
 ## 1. 3ステップ
 
-先に、使うAIを1つ選びます。Mac のターミナルで進めます（サイトの「はじめる」と同じ順・同じ言葉です）。
+先に、使うAIを1つ選びます。迷ったら「ChatGPT・Claude のアプリ」で始めてください。あとから切り替えても無駄になりません。ターミナル（文字で Mac に指示を出す画面。打ち間違えても壊れません）を使うのは Claude Code と Codex だけです。この手順は Mac で行います（サイトの「はじめる」と同じ順・同じ言葉です）。
 Windows の人は、「ChatGPT・Claude のアプリを使う人」を選んでください。
 
 ### Claude Code を使う人
@@ -24,9 +24,16 @@ Windows の人は、「ChatGPT・Claude のアプリを使う人」を選んで�
 ターミナルは、Spotlight（command＋スペース）で「ターミナル」と打って、Enter で開きます。
 ```bash
 curl -fsSL https://claude.ai/install.sh | bash
+```
+入っているか確認します。バージョンの数字が出れば成功です。「command not found」と出たら、上の1行へ戻ります。
+```bash
+claude --version
+```
+作業フォルダを作って、その中へ移ります。
+```bash
 mkdir -p ~/insta-ai && cd ~/insta-ai
 ```
-入れたら `claude` と打ち、案内に沿ってログインします。フォルダを信頼するかの英語の確認が出たら「Yes」を選びます。ログインできたら、control＋C を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）（すでに入っている人は、1行目は飛ばします）。以降の手順は、すべてこの作業フォルダ（`~/insta-ai`）の中で行います。
+次に `claude` と打ち、案内に沿ってログインします。「Do you trust the files in this folder?」と出たら、Enter（Yes）を押します。ログインできたら、control＋C（command ではなく、左下の control キー）を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）（すでに入っている人は、1行目は飛ばします）。以降の手順は、すべてこの作業フォルダ（`~/insta-ai`）の中で行います。
 
 **② zip を置いて、展開する**
 
@@ -39,10 +46,7 @@ unzip insta-ai-all.zip -d insta-ai-all
 mkdir -p .claude/skills
 cp -R insta-ai-all/insta-ai-create .claude/skills/
 ```
-入っているか確認します。バージョンの数字が出れば成功です。「command not found」と出たら、①へ戻ります。
-```bash
-claude --version
-```
+`.claude` は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。
 
 **③ AIを開いて、この1行を貼る**
 ```bash
@@ -61,9 +65,16 @@ claude
 ```bash
 node -v
 npm install -g @openai/codex
+```
+入っているか確認します。バージョンの数字が出れば成功です。「command not found」と出たら、上の `npm install` の行へ戻ります。
+```bash
+codex --version
+```
+作業フォルダを作って、その中へ移ります。
+```bash
 mkdir -p ~/insta-ai && cd ~/insta-ai
 ```
-入れたら `codex` と打ち、案内に沿ってログインします。フォルダを信頼するかの英語の確認が出たら「Yes」を選びます。ログインできたら、control＋C を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）（すでに入っている人は、1行目は飛ばします）。`~/insta-ai` が作業フォルダです。以降の手順は、このフォルダでターミナルを開いたまま行い、`codex` もこのフォルダで打ちます。
+次に `codex` と打ち、案内に沿ってログインします。「Do you trust the files in this folder?」と出たら、Enter（Yes）を押します。ログインできたら、control＋C（command ではなく、左下の control キー）を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）（すでに入っている人は、1行目は飛ばします）。`~/insta-ai` が作業フォルダです。以降の手順は、このフォルダでターミナルを開いたまま行い、`codex` もこのフォルダで打ちます。
 
 **② zip を置いて、展開する**
 ```bash
@@ -72,10 +83,7 @@ unzip insta-ai-all.zip -d insta-ai-all
 mkdir -p ~/.codex/skills
 cp -R insta-ai-all/insta-ai-create ~/.codex/skills/
 ```
-`.codex` は隠しフォルダです。Finder で探さず、上のコマンドで置きます。
-```bash
-codex --version
-```
+`.codex` は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。上のコマンドで置きます。
 Codex がすでに開いている場合は、一度閉じて、`codex` を打ち直します。
 
 **③ AIを開いて、この1行を貼る**
@@ -139,7 +147,7 @@ video-edit/            （動画編集用）
   examples.md           作例の題名・形式・こんな人に
 ```
 
-- `video-edit/prompt_voiceover.md`：顔や声を出さず、自分の声（アフレコ）に生活映像を合わせて作りたい人。
+- `video-edit/prompt_voiceover.md`：顔を出さず、あとから録った自分の声で、生活映像を合わせて作りたい人。
 - `video-edit/prompt_vlog.md`：朝から外出までなど、日常を撮って説明につなげたい人。
 - `video-edit/prompt_talk.md`：自分が話す映像があり、実績などを部品として差し込みたい人。
 - `video-edit/prompt_ranking.md`：紹介したいもの（ツール・商品・方法）が複数あり、順位をつけて見せたい人。
