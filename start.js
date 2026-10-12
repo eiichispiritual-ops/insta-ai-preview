@@ -70,22 +70,24 @@
     }else{
       var note=function(t){host.appendChild(el('p','start-note',t));};
       var row=function(label,text){var r=el('div','start-copyrows');copyRow(r,label,text);host.appendChild(r);};
-      note('① ターミナルを開きます。Macは Spotlight（command＋スペース）で「ターミナル」と打って、Enterを押します。Windowsの人は、「ChatGPT・Claudeのアプリ」を選んでください。');
-      if(a.pre){note('② の前に　'+a.preNote);row('確認　'+a.pre,a.pre);}
-      note('② '+a.instNote);
+      var C='①②③④⑤⑥⑦⑧⑨'.split(''),k=0,nx=function(){return C[k++];};
+      var tInst,tFold;
+      note(nx()+' ターミナルを開きます。Macは Spotlight（command＋スペース）で「ターミナル」と打って、Enterを押します。Windowsの人は、「ChatGPT・Claudeのアプリ」を選んでください。');
+      if(a.pre){note(nx()+' '+a.preNote);row('確認　'+a.pre,a.pre);}
+      tInst=C[k];note(nx()+' '+a.instNote);
       row('入れる　'+a.inst,a.inst);
-      note('③ 作業フォルダを作って、その中へ移ります。以降の手順は、すべてこのフォルダの中で行います。');
+      tFold=C[k];note(nx()+' 作業フォルダを作って、その中へ移ります。以降の手順は、すべてこのフォルダの中で行います。');
       row('作業フォルダ　mkdir -p ~/insta-ai && cd ~/insta-ai','mkdir -p ~/insta-ai && cd ~/insta-ai');
-      note('④ '+a.loginNote);
+      note(nx()+' '+a.loginNote);
       row('ログイン　'+a.cmd,a.cmd);
-      note('⑤ zipをダウンロードします。');
+      note(nx()+' zipをダウンロードします。');
       var z=el('a','start-btn primary','全部入りzipをダウンロード');z.href='downloads/insta-ai-all.zip';z.setAttribute('download','');host.appendChild(z);
-      note('⑥ ダウンロードしたzipを、作業フォルダへ移します。Safariは zip を自動で開くことがあります。「No such file」と出たら、Safariの設定「ダウンロード後に安全なファイルを開く」を切って、もう一度ダウンロードするか、Chromeでダウンロードします。');
+      note(nx()+' ダウンロードしたzipを、作業フォルダへ移します。Safariは zip を自動で開くことがあります。「No such file」と出たら、Safariの設定「ダウンロード後に安全なファイルを開く」を切って、もう一度ダウンロードするか、Chromeでダウンロードします。');
       row('zipを移す　mv ~/Downloads/insta-ai-all.zip .','mv ~/Downloads/insta-ai-all.zip .');
-      note('⑦ 展開して、手順書を '+a.skills+'/ に置きます（3行まとめて貼れます）。');
+      note(nx()+' 展開して、手順書を '+a.skills+'/ に置きます（3行まとめて貼れます）。');
       var cp='unzip insta-ai-all.zip -d insta-ai-all\nmkdir -p '+a.skills+'\ncp -R insta-ai-all/insta-ai-create '+a.skills+'/';
       row(cp,cp);
-      note('⑧ 入っているか確認します。zipをダウンロードしたフォルダではなく、③で作った作業フォルダのターミナルで打ちます。バージョンの数字が出れば成功です。「command not found」と出たら、②へ戻ります。');
+      note(nx()+' 入っているか確認します。zipをダウンロードしたフォルダではなく、'+tFold+'で作った作業フォルダのターミナルで打ちます。バージョンの数字が出れば成功です。「command not found」と出たら、'+tInst+'へ戻ります。');
       row('確認　'+a.cmd+' --version',a.cmd+' --version');
       host.appendChild(el('p','start-note',a.after));
       row('起動の言葉　'+a.cmd,a.cmd);
