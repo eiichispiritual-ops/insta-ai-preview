@@ -232,6 +232,37 @@
       "stage": "仕上げ中"
     },
     {
+      "format": "talk",
+      "key": "talk3",
+      "nav": "トーク③",
+      "label": "トーク（抽象マーケ②）",
+      "account": "さき",
+      "title": "Claudeでバズリール100本一括分析",
+      "ref": {
+        "file": "talk3_ref.mp4",
+        "poster": "talk3_ref.jpg",
+        "size_mb": 11.0,
+        "duration_sec": 95.37
+      },
+      "ai": {
+        "file": "talk3_ai.mp4",
+        "poster": "talk3_ai.jpg",
+        "size_mb": 11.78,
+        "duration_sec": 95.47,
+        "version": "v14"
+      },
+      "qc": {
+        "mad_mean": 5.396,
+        "mad_max": 14.63,
+        "frames_over_5": 1428,
+        "lufs_ref": -14.1,
+        "lufs_ai": -14.1,
+        "frames": 2861
+      },
+      "approved": null,
+      "stage": "仕上げ中"
+    },
+    {
       "format": "taidan",
       "key": "taidan",
       "nav": "対談",
