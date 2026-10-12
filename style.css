@@ -77,3 +77,9 @@ html{scroll-behavior:auto}
 .skillcopy-all{font-weight:500;border-color:var(--ink)}
 #skillcopy-manual-box{margin-top:12px}#skillcopy-manual-box label{display:block;font-size:12px;margin-bottom:6px}#skillcopy-manual{width:100%;box-sizing:border-box;font-size:12px;line-height:1.6}
 .getskill-steps code{font-size:11px;background:var(--soft);padding:1px 5px;border-radius:3px;word-break:break-all}
+.allpack{padding-bottom:18px;margin-bottom:18px;border-bottom:1px solid var(--line)}
+.allpack-btn{display:block;padding:16px 18px;background:var(--ink);color:var(--paper);border-radius:4px;max-width:560px}
+.allpack-btn b{display:block;font-size:15px;font-weight:600;margin-bottom:4px}
+.allpack-btn span{display:block;font-size:12px;line-height:1.8;color:#e6e4dc}
+.allpack-btn:hover,.allpack-btn:focus-visible{background:#3c3c37}
+.allpack-sub{margin:6px 0 0}
