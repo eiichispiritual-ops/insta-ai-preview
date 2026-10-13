@@ -162,6 +162,8 @@
   fixes.forEach(function(t){copyRow($('start-fixes'),t,t);});
   copyRow($('start-edit-next'),'素材の場所を伝える（台本.txt も同じフォルダに置く）　素材のフォルダの場所は、'+'（ここにパスを入れる）です。',function(){return '素材のフォルダの場所は、'+($('start-folder').value.trim()||'（ここにパスを入れる）')+' です。';});
   copyRow($('start-edit-next'),'表を見てよければ　表でOKです。書き出してください。','表でOKです。書き出してください。');
+  copyRow($('start-edit-next'),'素材が足りないと言われたら　今ある素材だけで、入点を変えて再利用して、出力/out.mp4 を書き出してください。','今ある素材だけで、入点を変えて再利用して、出力/out.mp4 を書き出してください。');
+  copyRow($('start-edit-next'),'表が違ったら　○行目だけ、字幕を短くして。','○行目だけ、字幕を短くして。');
   /* 編集の指示文（howto.json） */
   var howto=null;
   function loadHowto(){
