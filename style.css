@@ -295,3 +295,13 @@ code,.start-cmd,textarea,input{word-break:normal}
 .next-line{margin:0 auto;padding-top:28px;padding-bottom:8px;font-size:14px;color:var(--muted);line-height:1.8}
 .next-line a{color:var(--accent);font-weight:700;text-decoration:underline;text-underline-offset:3px;display:inline-block;min-height:44px;line-height:44px;margin:-14px 0}
 .next-line a:hover{color:var(--accent-dark)}
+
+/* デザイン8巡目 */
+@media(min-width:761px){.workbench-body{background:linear-gradient(to right,var(--paper) 50%,#f4f3ed 50%)}}
+#output{font-size:14px;line-height:1.9}
+#output pre{font-size:13px}
+@media(max-width:760px){#output{font-size:15px}}
+.workbench input{min-height:44px}
+@media(min-width:761px) and (max-width:1050px){#start-make2{display:grid;grid-template-columns:repeat(3,1fr)}#start-make2 .start-choice{padding-left:8px;padding-right:8px}}
+.start-fields label{justify-content:flex-end}
+.start-fields input,.start-fields select{height:51px}
