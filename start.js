@@ -32,10 +32,11 @@
     });
   }
   function el(tag,cls,text){var n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=text;return n;}
-  function copyRow(host,label,text){
+  function copyRow(host,label,text,split){
     var row=el('div','start-copyrow');
     var s=label?label:text,i=s.indexOf('　'),sp=el('span','start-copytext');
     if(i>0&&/^[ -~]/.test(s.slice(i+1))){sp.appendChild(el('b','start-copylabel',s.slice(0,i)));sp.appendChild(el('code','start-cmd',s.slice(i+1)));}
+    else if(split&&i>0){sp.appendChild(el('b','start-copylabel',s.slice(0,i)));sp.appendChild(el('span','start-copybody',s.slice(i+1)));}
     else if(/^[\x20-\x7e\n]+$/.test(s)){sp.appendChild(el('code','start-cmd',s));}
     else sp.textContent=s;
     row.appendChild(sp);
@@ -166,19 +167,19 @@
     var host=$('start-answers');host.replaceChildren();var g=genre()||'（あなたのジャンル）';
     var exp='私が実際に試したことは（ここに書く）です。ない場合は、見る人への呼びかけで作ってください。';
     var all='ジャンルは'+g+'です。'+(reader()||'見る人は、（どんな場面で何に）困っている人です。')+'使える素材は、スマホで撮れる手元の動画と写真です。ないものは作らないでください。'+exp;
-    copyRow(host,'3点まとめて返す　'+all,all);
-    copyRow(host,'ジャンルを聞かれたら　ジャンルは'+g+'です。','ジャンルは'+g+'です。');
-    copyRow(host,'誰向けかを聞かれたら　見る人は、（どんな場面で何に）困っている人です。',(reader()||'見る人は、（どんな場面で何に）困っている人です。'));
-    copyRow(host,'素材を聞かれたら　使える素材は、スマホで撮れる手元の動画と写真です。ないものは作らないでください。','使える素材は、スマホで撮れる手元の動画と写真です。ないものは作らないでください。');
-    copyRow(host,'経験を聞かれたら　'+exp,exp);
-    copyRow(host,'決まっていないとき　まだ決まっていません。候補を2つ出して、選ばせてください。','まだ決まっていません。候補を2つ出して、選ばせてください。');
+    copyRow(host,'3点まとめて返す　'+all,all,true);
+    copyRow(host,'ジャンルを聞かれたら　ジャンルは'+g+'です。','ジャンルは'+g+'です。',true);
+    copyRow(host,'誰向けかを聞かれたら　見る人は、（どんな場面で何に）困っている人です。',(reader()||'見る人は、（どんな場面で何に）困っている人です。'),true);
+    copyRow(host,'素材を聞かれたら　使える素材は、スマホで撮れる手元の動画と写真です。ないものは作らないでください。','使える素材は、スマホで撮れる手元の動画と写真です。ないものは作らないでください。',true);
+    copyRow(host,'経験を聞かれたら　'+exp,exp,true);
+    copyRow(host,'決まっていないとき　まだ決まっていません。候補を2つ出して、選ばせてください。','まだ決まっていません。候補を2つ出して、選ばせてください。',true);
   }
   var fixes=['冒頭の1行だけ、別の案を3つ出して。','30秒で話せる長さに短くして。','です・ます調の、やわらかい話し方に直して。'];
   fixes.forEach(function(t){copyRow($('start-fixes'),t,t);});
-  copyRow($('start-edit-next'),'素材の場所を伝える（台本.txt も同じフォルダに置く）　素材のフォルダの場所は、'+'（ここにパスを入れる）です。',function(){return '素材のフォルダの場所は、'+($('start-folder').value.trim()||'（ここにパスを入れる）')+' です。';});
-  copyRow($('start-edit-next'),'表を見てよければ　表でOKです。書き出してください。','表でOKです。書き出してください。');
-  copyRow($('start-edit-next'),'素材が足りないと言われたら　今ある素材だけで、入点を変えて再利用して、出力/out.mp4 を書き出してください。','今ある素材だけで、入点を変えて再利用して、出力/out.mp4 を書き出してください。');
-  copyRow($('start-edit-next'),'表が違ったら　○行目だけ、字幕を短くして。','○行目だけ、字幕を短くして。');
+  copyRow($('start-edit-next'),'素材の場所を伝える（台本.txt も同じフォルダに置く）　素材のフォルダの場所は、'+'（ここにパスを入れる）です。',function(){return '素材のフォルダの場所は、'+($('start-folder').value.trim()||'（ここにパスを入れる）')+' です。';},true);
+  copyRow($('start-edit-next'),'表を見てよければ　表でOKです。書き出してください。','表でOKです。書き出してください。',true);
+  copyRow($('start-edit-next'),'素材が足りないと言われたら　今ある素材だけで、入点を変えて再利用して、出力/out.mp4 を書き出してください。','今ある素材だけで、入点を変えて再利用して、出力/out.mp4 を書き出してください。',true);
+  copyRow($('start-edit-next'),'表が違ったら　○行目だけ、字幕を短くして。','○行目だけ、字幕を短くして。',true);
   /* 編集の指示文（howto.json） */
   var howto=null;
   function loadHowto(){
