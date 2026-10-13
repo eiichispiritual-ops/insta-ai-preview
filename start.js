@@ -51,7 +51,7 @@
       case 'story': var td=$('start-today').value.trim(); return P+gs+'ストーリーを、1枚ずつの本文と使う素材で作って。'+(td?'今日あったことは「'+td+'」です。':'出来事は（今日あったこと）と仮置きして。')+TAIL('本文');
       default:
         var fo=$('start-folder').value.trim();
-        return P+gs+reader()+(f?'形式は'+FMT[f]+'です。':'')+'動画編集を進めて。'+(f?'':'形式は素材を見て決めて。')+(fo?'撮った素材は '+fo+' に入っています。':'撮った素材の場所は、あとで伝えます。')+'まず編集指示書の表だけ見せて、私がOKと言うまで進めないで。';
+        return P+gs+reader()+(f?'形式は'+FMT[f]+'です。':'')+'動画編集を進めて。'+(state.ai==='app'?'':'作業フォルダは ~/insta-ai です。完成動画は ~/insta-ai/出力/out.mp4 に出してください。')+(f?'':'形式は素材を見て決めて。')+(fo?'撮った素材は '+fo+' に入っています。':'撮った素材の場所は、あとで伝えます。')+'まず編集指示書の表だけ見せて、私がOKと言うまで進めないで。';
     }
   }
   var OUT={
@@ -160,7 +160,7 @@
   }
   var fixes=['冒頭の1行だけ、別の案を3つ出して。','30秒で話せる長さに短くして。','です・ます調の、やわらかい話し方に直して。'];
   fixes.forEach(function(t){copyRow($('start-fixes'),t,t);});
-  copyRow($('start-edit-next'),'素材の場所を伝える　素材のフォルダの場所は、'+'（ここにパスを入れる）です。',function(){return '素材のフォルダの場所は、'+($('start-folder').value.trim()||'（ここにパスを入れる）')+' です。';});
+  copyRow($('start-edit-next'),'素材の場所を伝える（台本.txt も同じフォルダに置く）　素材のフォルダの場所は、'+'（ここにパスを入れる）です。',function(){return '素材のフォルダの場所は、'+($('start-folder').value.trim()||'（ここにパスを入れる）')+' です。';});
   copyRow($('start-edit-next'),'表を見てよければ　表でOKです。書き出してください。','表でOKです。書き出してください。');
   /* 編集の指示文（howto.json） */
   var howto=null;
