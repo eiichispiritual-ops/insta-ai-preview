@@ -34,7 +34,11 @@
   function el(tag,cls,text){var n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=text;return n;}
   function copyRow(host,label,text){
     var row=el('div','start-copyrow');
-    row.appendChild(el('span','start-copytext',label?label:text));
+    var s=label?label:text,i=s.indexOf('　'),sp=el('span','start-copytext');
+    if(i>0&&/^[ -~]/.test(s.slice(i+1))){sp.appendChild(el('b','start-copylabel',s.slice(0,i)));sp.appendChild(el('code','start-cmd',s.slice(i+1)));}
+    else if(/^[\x20-\x7e\n]+$/.test(s)){sp.appendChild(el('code','start-cmd',s));}
+    else sp.textContent=s;
+    row.appendChild(sp);
     var b=el('button','start-btn','コピー');b.type='button';
     var st=el('span','start-status','');st.setAttribute('role','status');
     bindCopy(b,function(){return typeof text==='function'?text():text;},st);

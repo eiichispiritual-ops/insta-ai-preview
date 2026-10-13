@@ -25,7 +25,7 @@
     const q=item.qc; const wrap=el('div','reel-qc');
     if(q){
       const ok=!!(item.stage&&item.stage.indexOf('見本と同等')===0);
-      wrap.appendChild(el('p','reel-qc-main',ok?'見本とほぼ同じ（機械で確認）':'見本との差が残る場面を直している（機械で確認）'));
+      if(!item.stage) wrap.appendChild(el('p','reel-qc-main',ok?'見本とほぼ同じ（機械で確認）':'見本との差が残る場面を直している（機械で確認）'));
       const parts=['全フレーム（1コマずつ）の平均差 '+fmt1(q.mad_mean),'最大 '+fmt1(q.mad_max),'差が5を超えたコマ '+q.frames_over_5+' / '+q.frames];
       if(q.lufs_ref!=null&&q.lufs_ai!=null) parts.push('音の大きさ（LUFS） '+fmt1(q.lufs_ref)+' → '+fmt1(q.lufs_ai));
       const d=el('details','reel-qc-detail'); d.appendChild(el('summary',null,'くわしい数値'));
@@ -84,7 +84,7 @@
   function card(item,h){
     const c=el('article','reel-card'); c.id='reel-'+(item.key||item.format);
     const head=el('div','reel-head');
-    head.appendChild(el('p','overline',(LABEL[item.format]||item.format)+(item.nav?' '+item.nav:'')+' / '+(item.account||'')));
+    head.appendChild(el('p','overline',(item.nav||LABEL[item.format]||item.format)+' / '+(item.account||'')));
     head.appendChild(el('h3',null,item.title||''));
     if(FOR[item.format]) head.appendChild(el('p','reel-note','こんな人に：'+FOR[item.format]));
     head.appendChild(el('p','reel-note','あなたのジャンルに置き換えて作ります。'));
@@ -93,10 +93,11 @@
     if(item.ref) pair.appendChild(video(item.ref,item,'見本（人の編集）'));
     if(item.ai)  pair.appendChild(video(item.ai,item,'AI再現'));
     c.appendChild(pair);
-    c.appendChild(qcLine(item));
-    if(item.stage){ c.appendChild(el('p','reel-stage',item.stage.indexOf('仕上げ中')===0?'改善を続けている作例（数値は見本との差）':item.stage));
+    const info=el('div','reel-info'); const qcNode=qcLine(item); c.appendChild(info);
+    if(item.stage&&!(item.approved&&!item.qc)){ info.appendChild(el('p','reel-stage',item.stage.indexOf('仕上げ中')===0?'改善を続けている作例（数値は見本との差）':item.stage));
       const SN=item.stage.indexOf('仕上げ中')===0?'見本との差が残る場面を、数値で確かめながら直し続けている作例です。数値が大きいほど、見本との差が大きいことを表します。下の作り方は、見本の編集メモです。':item.stage.indexOf('見本と同等')===0?'数値の比較で基準内だった作例です。人の目での最終確認とは別の判定です。':'';
-      if(SN) c.appendChild(el('p','reel-note',SN)); }
+      if(SN) info.appendChild(el('p','reel-note',SN)); }
+    info.appendChild(qcNode);
     c.appendChild(howtoBlock(h,item.format));
     return c;
   }

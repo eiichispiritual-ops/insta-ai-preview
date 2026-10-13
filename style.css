@@ -3,7 +3,7 @@
 .toolbar-format{display:flex;gap:17px;align-items:center}.toolbar-format a{color:var(--muted);font-size:9px;border-bottom:1px solid #a8afa1}@media(max-width:760px){.format-tabs span{font-size:10.5px;white-space:nowrap;letter-spacing:-.1px}}@media(max-width:380px){.format-tabs button{padding-left:3px;padding-right:3px}.format-tabs span{font-size:10px}}
 [hidden]{display:none!important}.service-tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.service-tabs button{position:relative;text-align:left;background:transparent;padding:20px 14px;color:var(--muted);font-size:10px;border-right:1px solid var(--line)}.service-tabs button:first-child{padding-left:0}.service-tabs button:last-child{border-right:0}.service-tabs span{display:block;font-size:16px;color:var(--ink);font-weight:600;margin:5px 0}.service-tabs small{font-size:10px;color:var(--muted)}.service-tabs button[aria-selected=true]{color:var(--accent)}.service-tabs button[aria-selected=true]:after{content:"";position:absolute;bottom:-1px;left:0;right:0;height:2px;background:var(--accent)}.service-tabs button:hover{background:var(--soft)}.reel-format-picker{margin-top:24px}.picker-label{font-size:11px;color:var(--muted);margin:0 0 12px}.concept-branch{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid var(--line);padding:17px 0;font-size:11px;color:var(--muted)}.concept-branch button{background:transparent;color:var(--ink);font-size:11px;border-bottom:1px solid currentColor;padding:2px 0}.concept-branch button[aria-pressed=true]{color:var(--accent)}@media(max-width:760px){.service-tabs button{padding:14px 5px;font-size:9px}.service-tabs span{font-size:10.5px;white-space:nowrap;letter-spacing:-.02em}.service-tabs small{font-size:8px;line-height:1.6;display:block}.concept-branch{align-items:flex-start;font-size:10px;flex-direction:column;gap:8px}.concept-branch button{font-size:11px}}@media(max-width:380px){.service-tabs button{padding-left:3px;padding-right:3px}.service-tabs span{font-size:9.5px;letter-spacing:-.03em}.service-tabs small{font-size:7.5px}}
 
-.instagram-brand-icon{width:32px;height:32px;display:block;flex:none;margin-right:10px}.workbench-brand{display:inline-flex;align-items:center;letter-spacing:-.5px}.workbench-brand .instagram-brand-icon{width:22px;height:22px;margin-right:8px}.workbench-brand small{margin-left:9px}@media(max-width:760px){.logo .instagram-brand-icon{width:28px;height:28px}.workbench-brand .instagram-brand-icon{width:20px;height:20px}}
+.workbench-brand{display:inline-flex;align-items:center;letter-spacing:-.5px}
 
 .field-help{font-size:12px;color:var(--muted);margin:0 0 20px}.brief-next{font-size:12px;line-height:1.9;padding:16px 0;border-top:1px solid var(--line);margin-top:18px}.brief-detail summary{font-size:12px;cursor:pointer;padding:10px 0}.output-actions{flex-wrap:wrap}#materials,#original{min-height:100px;resize:vertical}#post-date{max-width:100%}
 
@@ -121,3 +121,113 @@ html{scroll-behavior:auto}
 @media(max-width:760px){.reels-section .split-heading h2{white-space:normal}}
 
 .header-start{display:none}@media(max-width:760px){.header-start{display:block;margin-left:auto;font-size:12px;font-weight:700;color:var(--accent);white-space:nowrap}}
+
+/* ===== 2026-10-13 デザイン実装（採点 29/50 の直し）===== */
+/* 4-1 文字：本文14px（スマホ15px）、補足は最小11px */
+.start-note,.getskill-steps p,.getskill-steps li li,.method-list p,.faq details p,.split-heading p,.feed-copy>p:not(.overline),.skills-section>div>p:not(.overline),.getskill-intro>p:not(.overline),.format-description>p,.howto-lead,.howto-points ul,.howto-detail ul,.reel-howto ul,.reel-summary,.reel-note,.reel-qc,.edit-guide,.start-copytext,.field-help,.brief-next{font-size:14px;line-height:1.9}
+.overline{font-size:11px}
+.hero-meta{font-size:12px}
+.art-label,.paper-heading,.screen-label,.desk-bottom,.page-number,.form-kicker,.output-heading,.package-files span,.package-note,.footer p,.toolbar-format a,.storyboard-head small,.method-footnote small,.storyboard li>span,.service-tabs small,.reel-qc small,.reel-timeline th,.reel-side figcaption{font-size:11px!important}
+.desk-top,.shot-plan,.format-facts p,.storyboard li p,.format-note,.preview-disclosure,.preview-disclosure p,#output .sample-caption,.package-files p,.action-status,.concept-branch,.footer>a:last-child,.header-cta{font-size:12px}
+label{font-size:13px}
+.discipline-strip>div{font-size:12px;letter-spacing:.3px}
+.format-tabs button,.service-tabs button{font-size:11px}
+.feed-page p{font-size:11px}
+.reel-timeline{font-size:12px}
+.reel-qc-detail summary{font-size:12px!important}
+@media(max-width:760px){
+  body{font-size:15px}
+  .start-note,.getskill-steps p,.getskill-steps li li,.method-list p,.faq details p,.split-heading p,.howto-lead,.howto-points ul,.howto-detail ul,.reel-howto ul,.reel-summary,.reel-note,.reel-qc,.start-copytext,.field-help,.brief-next,.format-description>p,.feed-copy>p:not(.overline){font-size:15px;line-height:1.85}
+  .edit-guide{font-size:13px}
+  .discipline-strip>div{font-size:11px}
+  .format-tabs span,.service-tabs span{font-size:11px}
+  .reel-timeline{font-size:12px}.reel-timeline td{font-size:12px}
+  .reel-timeline td:not(:first-child)::before,.reel-timeline td:first-child::before{font-size:11px}
+  .reel-timeline td:first-child{font-size:13px}
+  .preview-disclosure,.preview-disclosure p,.format-note,.shot-plan,.storyboard li p,.format-facts p{font-size:13px}
+  .page-two h3{font-size:18px}
+}
+@media(max-width:430px){.service-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}.service-tabs button{padding:12px 4px}.service-tabs button:first-child{padding-left:4px}.service-tabs button:nth-child(3){border-right:0}.service-tabs button:nth-child(n+4){border-top:1px solid var(--line)}.service-tabs small{display:none}}
+@media(max-width:480px){.page-two h3{font-size:17px}}
+
+/* 4-2 階層：コマンドを等幅の箱で本文から分ける（横にはみ出す行は箱の中でスクロール） */
+.start-copytext{min-width:0}
+.start-copylabel{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:4px}
+.start-cmd{display:block;font:13px/1.7 ui-monospace,Menlo,Consolas,monospace;background:var(--soft);border:1px solid var(--line);border-radius:3px;padding:8px 10px;white-space:pre;overflow-x:auto;color:var(--ink);word-break:normal;-webkit-overflow-scrolling:touch}
+@media(max-width:760px){.start-copyrow{grid-template-columns:minmax(0,1fr) auto}.start-copyrow .start-btn{width:auto;min-width:84px}.start-cmd{font-size:12.5px}}
+
+/* 4-3 余白：PCは作例を左=動画ペア／右=判定の2列に、受け取り方の左カラムは追従 */
+@media(min-width:1051px){
+  .getskill-intro{position:sticky;top:24px}
+  #reels-gallery .reel-card{display:grid;grid-template-columns:560px minmax(0,1fr);column-gap:48px;align-items:start}
+  #reels-gallery .reel-card>.reel-head{grid-column:1/-1}
+  #reels-gallery .reel-card>.reel-pair{grid-column:1;grid-row:2;margin-top:18px}
+  #reels-gallery .reel-card>.reel-info{grid-column:2;grid-row:2;margin-top:18px;align-self:start}
+  #reels-gallery .reel-info>.reel-qc{margin-top:8px}
+  #reels-gallery .reel-card>.reel-howto{grid-column:1/-1}
+}
+@media(min-width:761px) and (max-width:1050px){.feed-inner{grid-template-columns:1fr}.feed-preview{max-width:520px}}
+
+/* 4-4 ボタン：主ボタンは朱1色／タップ領域44px／hover */
+.primary-cta{background:var(--accent);color:#fff;font-size:15px;min-height:48px}
+.primary-cta:hover{background:#9d3f25}
+form .primary-cta{font-size:14px}
+.start-btn.is-copied{background:var(--night);border-color:var(--night)}
+.text-link{min-height:44px;padding:10px 0 4px;font-size:13px}
+.form-bottom .text-link{font-size:13px}
+.output-actions button,.toolbar-format a,.header-cta,.concept-branch button,.footer>a:last-child,.header nav a,.reel-nav button,.format-tabs button,.skillcopy-btn,.allpack-sub .text-link{min-height:44px;display:inline-flex;align-items:center}
+.output-actions button{font-size:13px;padding:8px 2px}
+.hero-sublink{display:flex;min-height:44px;align-items:center;padding:10px 0 4px}
+.header nav a{padding:10px 0}
+.header-start{min-height:44px;align-items:center}
+@media(max-width:760px){.header-start{display:inline-flex}}
+.concept-branch button{font-size:13px;padding:6px 0}
+.reel-nav button{font-size:13px;padding:8px 16px}
+.faq summary,.howto-detail summary,.reel-howto summary,.reel-agent-body summary,.brief-detail summary,.reel-qc-detail summary{min-height:44px;display:flex;align-items:center}
+.faq summary{font-size:15px}.howto-detail summary,.reel-agent-body summary{font-size:13px}
+.reel-qc-detail summary{display:inline-flex}
+.getskill-steps li li .text-link,.getskill-steps p .text-link{display:inline;margin-top:0;padding:4px 0;min-height:0}
+.getskill-steps p .text-link{display:inline-flex;min-height:44px}
+.start-choice:not([aria-pressed="true"]):hover,.start-btn:not(.primary):not(.is-copied):hover{border-color:var(--ink);background:var(--soft)}
+.start-btn.primary:hover,.reel-copy:hover{background:#9d3f25;border-color:#9d3f25}
+.reel-nav button:hover,.format-tabs button:hover{border-color:var(--ink);color:var(--ink)}
+.format-tabs button:hover{background:var(--soft)}
+.faq summary:hover,.reel-howto summary:hover{color:var(--accent)}
+.header nav a:hover,.header-cta:hover,.footer a:hover{color:var(--accent)}
+.allpack-btn:hover,.allpack-btn:focus-visible{background:#3c3c37}
+.reel-copy{min-height:44px}
+
+/* 4-5 崩れ */
+.getskill-steps code{font-size:12px}
+
+/* 4-7 使い方動画：再生前は操作バーを出さず、poster の文字を隠さない */
+.howto-video{position:relative}
+.howto-play{position:absolute;right:16px;top:50%;transform:translateY(-50%);width:56px;height:56px;border-radius:50%;background:var(--accent);color:#fff;font-size:18px;padding:0 0 0 3px;box-shadow:0 4px 14px #20201e33}
+.howto-play:hover{background:#9d3f25}
+.howto-play:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+
+/* 4-8 ロゴ：自前の印 */
+.workbench-brand .logo-mark{width:20px;height:24px;font-size:17px;margin-right:8px}
+.footer .logo-mark{margin-right:10px}
+
+/* 4-9 飾り：傾き・英字を外す */
+.hero-art,.page-one,.page-two{transform:none}
+.format-en{display:none}
+.phrase{display:inline-block}
+h1,h2,h3{word-break:auto-phrase;text-wrap:balance}
+.split-heading h2{flex:none}
+.reels-section .split-heading h2{white-space:normal}
+
+.reel-side figcaption small{font-size:11px}
+.reels-section .split-heading small{font-size:12px;line-height:1.8}
+.reel-timeline,.reel-timeline td{font-size:13px}
+.hero-meta{font-size:13px}
+.start-fields label,.start-label{font-size:13px}
+.reel-howto .text-link{font-size:14px}
+.logo{min-height:44px}
+@media(max-width:760px){.reel-timeline td{font-size:13px}.reel-timeline td:first-child{font-size:14px}}
+/* 文節で改行（1文字だけ次行に落ちるのを防ぐ） */
+body{word-break:auto-phrase}
+p,li,dd,summary,label,small{text-wrap:pretty}
+code,.start-cmd,textarea,input{word-break:normal}
+@media(max-width:430px){.format-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.format-tabs button{padding:12px 6px;display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-width:0}.format-tabs button:nth-child(n+4){border-top:1px solid var(--line)}.format-tabs button:nth-child(3){border-right:0}}
