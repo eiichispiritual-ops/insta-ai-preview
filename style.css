@@ -317,3 +317,4 @@ code,.start-cmd,textarea,input{word-break:normal}
 
 /* デザイン10巡目：07 の skill-use.txt リンク（li li の中）も下線を文字に付け、本文と同じ文字サイズに */
 .getskill-steps li li .text-link{min-height:auto;padding:0;margin:0;line-height:inherit;font-size:inherit;border-bottom:0;text-decoration:underline;text-underline-offset:3px;display:inline}
+.getskill-steps li li .text-link{padding:13px 0}
