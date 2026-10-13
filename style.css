@@ -243,3 +243,19 @@ code,.start-cmd,textarea,input{word-break:normal}
 .reel-brief h4{margin:0 0 8px;font-size:12px;color:var(--muted);letter-spacing:.06em}
 .reel-brief-text{margin:0 0 8px;font-size:13px;line-height:1.9;color:var(--ink)}
 @media(max-width:1050px){.reel-brief{display:none}}
+
+/* デザイン3巡目 */
+.getskill-steps code{word-break:normal;overflow-wrap:normal}
+.nw{white-space:nowrap}
+.start-copytext,.start-note,.getskill-steps p,.getskill-steps li{word-break:auto-phrase;text-wrap:pretty}
+.phrase{display:inline-block}
+.start-extra,.workbench-body{align-items:start}
+.workbench-body>form{align-self:stretch}
+.start-more{margin:4px 0 0}
+.start-more summary{display:inline-flex;align-items:center;min-height:44px;font-size:13px;color:var(--accent);cursor:pointer;border-bottom:0}
+.start-more summary::after{content:"＋";margin-left:8px}
+.start-more[open] summary::after{content:"－"}
+@media(min-width:761px){.method-grid>div:first-child{position:sticky;top:100px;align-self:start}}
+@media(max-width:1050px){.header{gap:16px}.header nav{gap:14px}.header nav a{white-space:nowrap}}
+@media(max-width:900px){.header nav{display:none}.header-start{display:inline-flex;margin-left:auto;font-size:12px;font-weight:700;color:var(--accent);white-space:nowrap}}
+.getskill-steps p a.dl-link{display:inline;min-height:0;padding:10px 0;line-height:2.2}

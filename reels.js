@@ -147,3 +147,11 @@
     root.querySelectorAll('video').forEach(v=>v.addEventListener('play',()=>{root.querySelectorAll('video').forEach(o=>{if(o!==v)o.pause();});}));
   });
 })();
+
+// 作例と使い方動画をまたいで、再生は常に1本だけにする
+(function(){
+  document.addEventListener('play',function(e){
+    var t=e.target; if(!t||t.tagName!=='VIDEO') return;
+    document.querySelectorAll('video').forEach(function(o){ if(o!==t&&!o.paused) o.pause(); });
+  },true);
+})();
