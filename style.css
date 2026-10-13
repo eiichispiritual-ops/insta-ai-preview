@@ -272,7 +272,7 @@ code,.start-cmd,textarea,input{word-break:normal}
 :root{--muted:#55574f;--accent-dark:#9d3f25;--accent-bright:#b64b31}
 .start-head h2{font-weight:600}
 @media(min-width:761px) and (max-width:1050px){.start-extra{grid-template-columns:1fr}.start-extra>.start-card:nth-child(2){position:static}}
-.start-btn:active,.start-choice:active,.skillcopy-btn:active,.allpack-btn:active,.howto-play:active,.primary-cta:active,.reel-copy:active{transform:translateY(1px);filter:brightness(.92)}
+.start-btn:active,.start-choice:active,.skillcopy-btn:active,.allpack-btn:active,.primary-cta:active,.reel-copy:active{transform:translateY(1px);filter:brightness(.92)}
 .reel-play:active{transform:translate(-50%,-50%) translateY(1px);filter:brightness(.92)}
 .getskill-steps code{white-space:nowrap;word-break:normal;display:inline-block;max-width:100%;overflow-x:auto;vertical-align:bottom}
 .reel-qc-detail summary,.reel-qc-detail p,.scene-list li,.package-note,.package-files span,.reel-two h4,.reel-howto h4,.reel-agent h4,#output h4,.feed-page p,.discipline-strip span,.desk-bottom,.overline,.method-footnote,.storyboard-head small,.storyboard-head span,.reel-stage,.reel-tag,.reel-side small,.howto-label,.output-heading span,.toolbar-format a,.toolbar-format span,.footer p,.page-number,.screen-label,.art-label span,.paper-heading span,.form-kicker,.service-tabs span,.service-tabs small,.service-tabs button,.format-tabs button,.format-tabs span,.storyboard li>span,.method-list article>span,.getskill-steps li>span,.reel-side figcaption,.reel-qc small,.reel-timeline th,.discipline-strip>div,.workbench-toolbar,.hero-meta,.feed-signature,.paper-code,.start-extra small{font-size:12px!important}
@@ -282,3 +282,16 @@ code,.start-cmd,textarea,input{word-break:normal}
 .reel-play:active{transform:translateX(-50%) translateY(1px)}
 #reel-talk .reel-play{left:auto;right:8px;top:30%;bottom:auto;transform:none}
 #reel-talk .reel-play:active{transform:translateY(1px)}
+
+.howto-play:not(.reel-play):active{transform:translateY(-50%) translateY(1px);filter:brightness(.92)}
+
+/* デザイン6巡目 */
+.getskill-steps li li .text-link{display:inline-block;min-height:44px;padding:10px 0;margin:-10px 0}
+.getskill-steps p a.dl-link{display:inline-block;min-height:44px;padding:10px 0;line-height:1.6;margin:-6px 0}
+.workbench select{min-height:44px}
+@media(min-width:761px){.output-panel{position:sticky;top:100px;align-self:start}}
+@media(min-width:761px) and (max-width:1050px){#reels .reel-pair{max-width:none}}
+@media(min-width:761px){.start-note,.getskill-steps p,.getskill-steps li li,.method-list p,.faq details p,.split-heading p,.feed-copy>p:not(.overline),.skills-section>div>p:not(.overline),.getskill-intro>p:not(.overline),.format-description>p,.howto-lead,.howto-points ul,.howto-detail ul,.reel-howto ul,.reel-summary,.reel-note,.reel-qc,.edit-guide,.start-copytext,.field-help,.brief-next,.howto-lead,#howto li,#reels li,#reels p.reel-note,.getskill-section li,.getskill-section p,.faq p{font-size:15px}.reel-timeline td{font-size:14px}}
+.next-line{margin:0 auto;padding-top:28px;padding-bottom:8px;font-size:14px;color:var(--muted);line-height:1.8}
+.next-line a{color:var(--accent);font-weight:700;text-decoration:underline;text-underline-offset:3px;display:inline-block;min-height:44px;line-height:44px;margin:-14px 0}
+.next-line a:hover{color:var(--accent-dark)}
