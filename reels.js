@@ -12,10 +12,18 @@
 
   function video(side,item,label){
     const box=el('figure','reel-side');
+    const frame=el('div','reel-vframe');
     const v=document.createElement('video');
-    v.src=base+side.file; v.poster=base+side.poster; v.controls=true; v.playsInline=true; v.preload='metadata';
+    v.src=base+side.file; v.poster=base+side.poster; v.controls=false; v.playsInline=true; v.preload='metadata';
     v.setAttribute('aria-label',label+'：'+item.title);
-    box.appendChild(v);
+    const b=el('button','howto-play reel-play','▶'); b.type='button'; b.setAttribute('aria-label',label+'を再生');
+    // 再生中だけ標準の操作バーを出す。止まったら▶に戻す（字幕に被せない）
+    v.addEventListener('play',()=>{v.controls=true;b.hidden=true;});
+    v.addEventListener('pause',()=>{v.controls=false;b.hidden=false;});
+    v.addEventListener('ended',()=>{v.controls=false;b.hidden=false;});
+    b.addEventListener('click',()=>{v.play();});
+    v.addEventListener('click',()=>{ if(!v.controls) v.play(); });
+    frame.appendChild(v); frame.appendChild(b); box.appendChild(frame);
     const cap=el('figcaption'); cap.appendChild(el('span','reel-tag',label));
     if(side.duration_sec) cap.appendChild(el('small',null,Math.round(side.duration_sec)+'秒'));
     box.appendChild(cap); return box;
@@ -81,6 +89,15 @@
     return d;
   }
 
+  function brief(h){
+    const w=el('div','reel-brief'); w.appendChild(el('h4',null,'このカードの作り方'));
+    if(!h||!h.summary){ w.appendChild(el('p','reel-note','この形式の作り方の記録は、まだ公開していません。')); return w; }
+    w.appendChild(el('p','reel-brief-text',h.summary));
+    if(h.first_step){const p=el('p','reel-brief-text');p.appendChild(el('strong',null,'最初の一手：'));p.appendChild(document.createTextNode(h.first_step));w.appendChild(p);}
+    w.appendChild(el('p','reel-note','くわしい手順・時間順の流れ・指示文は、下の「この動画の作り方」を開きます。'));
+    return w;
+  }
+
   function card(item,h){
     const c=el('article','reel-card'); c.id='reel-'+(item.key||item.format);
     const head=el('div','reel-head');
@@ -98,6 +115,7 @@
       const SN=item.stage.indexOf('仕上げ中')===0?'見本との差が残る場面を、数値で確かめながら直し続けている作例です。数値が大きいほど、見本との差が大きいことを表します。下の作り方は、見本の編集メモです。':item.stage.indexOf('見本と同等')===0?'数値の比較で基準内だった作例です。人の目での最終確認とは別の判定です。':'';
       if(SN) info.appendChild(el('p','reel-note',SN)); }
     info.appendChild(qcNode);
+    info.appendChild(brief(h));
     c.appendChild(howtoBlock(h,item.format));
     return c;
   }
@@ -110,13 +128,21 @@
     const items=(m.items||[]).map((x,i)=>({x,i})).sort((a,b)=>(ORDER.indexOf(a.x.format)-ORDER.indexOf(b.x.format))||(a.i-b.i)).map(o=>o.x);
     root.replaceChildren();
     if(!items.length){ root.appendChild(el('p','reel-note','表示できる動画がありません。')); return; }
-    // 形式のタブ
+    // 形式のチップ：選んだ1件だけ表示（初期は先頭＝ランキング）
     const nav=el('nav','reel-nav'); nav.setAttribute('aria-label','形式を選ぶ');
-    items.forEach((it,i)=>{const b=el('button',null,it.nav||LABEL[it.format]||it.format); b.type='button'; b.dataset.target='reel-'+(it.key||it.format); if(i===0)b.setAttribute('aria-current','true');
-      b.addEventListener('click',()=>{nav.querySelectorAll('button').forEach(x=>x.removeAttribute('aria-current'));b.setAttribute('aria-current','true');document.getElementById(b.dataset.target).scrollIntoView({behavior:'smooth',block:'start'});});
-      nav.appendChild(b);});
     root.appendChild(nav);
-    items.forEach(it=>root.appendChild(card(it,how[it.format])));
+    const cards=items.map(it=>card(it,how[it.format]));
+    const chips=[];
+    const show=i=>{
+      cards.forEach((c,j)=>{c.hidden=j!==i; if(j!==i) c.querySelectorAll('video').forEach(v=>v.pause());});
+      chips.forEach((b,j)=>{b.setAttribute('aria-pressed',String(j===i)); if(j===i)b.setAttribute('aria-current','true'); else b.removeAttribute('aria-current');});
+    };
+    items.forEach((it,i)=>{const b=el('button',null,it.nav||LABEL[it.format]||it.format); b.type='button'; b.addEventListener('click',()=>show(i)); chips.push(b); nav.appendChild(b);});
+    cards.forEach(c=>root.appendChild(c));
+    show(0);
+    // #reel-○○ で来た場合は、その1件を出す
+    const fromHash=()=>{const id=(location.hash||'').slice(1);const i=cards.findIndex(c=>c.id===id);if(i>=0)show(i);};
+    window.addEventListener('hashchange',fromHash); fromHash();
     // 同時再生を1本に（ページが重くならないように）
     root.querySelectorAll('video').forEach(v=>v.addEventListener('play',()=>{root.querySelectorAll('video').forEach(o=>{if(o!==v)o.pause();});}));
   });
