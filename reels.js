@@ -87,10 +87,11 @@
     head.appendChild(el('p','overline',(LABEL[item.format]||item.format)+(item.nav?' '+item.nav:'')+' / '+(item.account||'')));
     head.appendChild(el('h3',null,item.title||''));
     if(FOR[item.format]) head.appendChild(el('p','reel-note','こんな人に：'+FOR[item.format]));
+    head.appendChild(el('p','reel-note','あなたのジャンルに置き換えて作ります。'));
     c.appendChild(head);
     const pair=el('div','reel-pair');
     if(item.ref) pair.appendChild(video(item.ref,item,'見本（人の編集）'));
-    if(item.ai)  pair.appendChild(video(item.ai,item,'AI再現'+(item.ai.version?'（'+item.ai.version+'）':'')));
+    if(item.ai)  pair.appendChild(video(item.ai,item,'AI再現'));
     c.appendChild(pair);
     c.appendChild(qcLine(item));
     if(item.stage){ c.appendChild(el('p','reel-stage',item.stage.indexOf('仕上げ中')===0?'改善を続けている作例（数値は見本との差）':item.stage));

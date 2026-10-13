@@ -3,7 +3,11 @@
 (function(){
   var root=document.getElementById('start'); if(!root)return;
   var $=function(id){return document.getElementById(id);};
-  var state={ai:'cc',make:'reel'};
+  var state={ai:'app',make:'reel'};
+  var KEY='instaAiStart.v1';
+  var FIELDS=['start-genre','start-reader','start-trouble','start-name','start-today','start-format','start-folder','start-tip'];
+  function save(){try{var o={ai:state.ai,make:state.make,f:{}};FIELDS.forEach(function(id){o.f[id]=$(id).value;});localStorage.setItem(KEY,JSON.stringify(o));}catch(e){}}
+  function restore(){try{var o=JSON.parse(localStorage.getItem(KEY)||'null');if(!o)return;if(AI[o.ai])state.ai=o.ai;if(MAKE_NAME[o.make])state.make=o.make;FIELDS.forEach(function(id){if(o.f&&typeof o.f[id]==='string'){var n=$(id);if(n.tagName==='SELECT'){var ok=Array.prototype.some.call(n.options,function(x){return x.value===o.f[id];});if(ok)n.value=o.f[id];}else n.value=o.f[id];}});}catch(e){}}
   var FMT={voiceover:'アフレコ',vlog:'VLOG',talk:'トーク',ranking:'ランキング',comparison:'比較',abstract:'抽象マーケ'};
   var AI={
     cc:{name:'Claude Code',cmd:'claude',skills:'.claude/skills',inst:'curl -fsSL https://claude.ai/install.sh | bash',instNote:'Claude Codeを入れます（すでに入っている人は飛ばします）。',loginNote:'claude と打ち、案内に沿ってログインします。「Do you trust the files in this folder?」と出たら、Enter（Yes）を押します。ログインできたら、control＋C（command ではなく、左下の control キー）を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。',desc:'この手順は Mac で行います。iPhone から見ている人は「アプリ」を選んでください。Macのターミナルで進めます。上から順に、コピーして貼ります。番号は多く見えますが、どれもコピーして貼るだけです。',after:'確認できたら、下の言葉を打って、Claude Codeを起動します。.claude は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。'},
@@ -38,20 +42,20 @@
   }
   function genre(){return $('start-genre').value.trim();}
   function prefix(){return state.ai==='app'?'いま貼った手順書を使って、':(state.ai==='codex'?'insta-ai-create のスキルで、':'インスタAIのスキル（/insta-ai-create）で、');}
-  function TAIL(w,x){return reader()+(x||'')+'質問せず、足りないところは要確認と書いて仮置きで、'+w+'まで出して。';}
+  function TAIL(w,x,ask){return reader()+(x||'')+(ask?'形式が決まったら':'')+'質問せず、足りないところは要確認と書いて仮置きで、'+w+'まで出して。';}
   function reader(){var r=$('start-reader').value.trim(),t=$('start-trouble').value.trim();return (r?'見る人は、'+r+'です。':'')+(t?(r?'その人':'見る人')+'の困りごとは「'+t+'」です。':'');}
   function tipSent(){var t=$('start-tip').value.trim();return t?'私が見る人に伝えたい工夫は「'+t+'」です。':'';}
   function nameSent(){var n=$('start-name').value.trim();return n?'呼ばれたい名前は、'+n+'です。':'名前は（あなたの名前）と仮置きして。';}
   function prompt(){
     var g=genre(), gs=g?'ジャンルは'+g+'。':'', f=$('start-format').value, fl=f?FMT[f]+'形式の':'', P=prefix();
     switch(state.make){
-      case 'reel': return P+gs+fl+'リール台本を1本作って。'+(f?'':'形式は2案出して、私に選ばせて。')+'私の経験は書いていないので、作らずに、見る人への呼びかけで入って。'+(f==='vlog'?'出来事は撮影予定として仮置きして、実際に撮った順に差し替える箇所も書いて。':'')+TAIL('台本',tipSent());
+      case 'reel': return P+gs+fl+'リール台本を1本作って。'+(f?'':'形式は2案出して、理由をつけて。私が選んだら台本まで出して。')+'私の経験は書いていないので、作らずに、見る人への呼びかけで入って。'+(f==='vlog'?'出来事は撮影予定として仮置きして、実際に撮った順に差し替える箇所も書いて。':'')+TAIL('台本',tipSent(),!f);
       case 'profile': return P+gs+'プロフィールの表示名と紹介文を作って。'+nameSent()+TAIL('案');
       case 'feed': return P+gs+'フィード投稿を、1ページずつの原稿で作って。'+TAIL('原稿');
       case 'story': var td=$('start-today').value.trim(); return P+gs+'ストーリーを、1枚ずつの本文と使う素材で作って。'+(td?'今日あったことは「'+td+'」です。':'出来事は（今日あったこと）と仮置きして。')+TAIL('本文');
       default:
         var fo=$('start-folder').value.trim();
-        return P+gs+reader()+(f?'形式は'+FMT[f]+'です。':'')+'動画編集を進めて。'+(state.ai==='app'?'':'作業フォルダは ~/insta-ai です。完成動画は ~/insta-ai/出力/out.mp4 に出してください。')+(f?'':'形式は素材を見て決めて。')+(fo?'撮った素材は '+fo+' に入っています。':'撮った素材の場所は、あとで伝えます。')+'まず編集指示書の表だけ見せて、私がOKと言うまで進めないで。';
+        return P+gs+reader()+(f?'形式は'+FMT[f]+'です。':'')+'動画編集を進めて。'+(state.ai==='app'?'':'作業フォルダは ~/insta-ai です。完成動画は ~/insta-ai/出力/out.mp4 に出してください。')+(f?'':'形式は素材を見て決めて。')+(state.ai==='app'?'撮った素材は、ファイル名と何が映っているかを文で伝えます。':(fo?'撮った素材は '+fo+' に入っています。':'撮った素材の場所は、あとで伝えます。'))+'まず編集指示書の表だけ見せて、私がOKと言うまで進めないで。';
     }
   }
   var OUT={
@@ -121,10 +125,10 @@
   function renderS3(){
     $('start-prompt').value=prompt();
     var out=OUT[state.make];
-    if(state.make==='edit'&&state.ai==='app')out='出てくるもの：編集指示書の表まで。動画の書き出しはClaude CodeかCodexで行います。';
+    if(state.make==='edit'&&state.ai==='app')out='出てくるもの：編集指示書の表まで。素材は文で伝え、表を見ながら CapCut などの編集アプリで並べます。書き出しまで自動でやるのは Claude Code か Codex です。';
     $('start-s3-out').textContent=out;
     $('start-format-wrap').hidden=!(state.make==='reel'||state.make==='edit');
-    $('start-folder-wrap').hidden=state.make!=='edit';
+    $('start-folder-wrap').hidden=!(state.make==='edit'&&state.ai!=='app');
     $('start-name-wrap').hidden=state.make!=='profile';
     $('start-today-wrap').hidden=state.make!=='story';
     $('start-tip-wrap').hidden=state.make!=='reel';
@@ -132,18 +136,24 @@
     if(state.make==='profile'&&!$('start-reader').value.trim())hint='プロフィールは、見る人を入れると、紹介文の（ ）が減ります。';
     if(state.make==='feed'&&!$('start-trouble').value.trim())hint='フィードは、見る人の困りごとを入れると、2ページ目の「迷う場面」が具体的になります。';
     $('start-field-hint').textContent=hint;$('start-field-hint').hidden=!hint;
+    var isApp=state.ai==='app';
     $('start-edit-card').hidden=state.make!=='edit';
-    $('start-edit-app').hidden=!(state.make==='edit'&&state.ai==='app');
+    $('start-edit-agent').hidden=isApp;
+    $('start-edit-app').hidden=!(state.make==='edit'&&isApp);
+    $('start-make-label').hidden=isApp;$('start-make').hidden=isApp;
+    var fx=$('start-make-fixed');fx.hidden=!isApp;fx.textContent='作りたいもの：'+MAKE_NAME[state.make]+'（手順2で選んだもの。変えるときは手順2で選び直します）';
+    $('start-s2-editnote').hidden=!(isApp&&state.make==='edit');
+    $('start-s2-phone').hidden=!isApp;$('start-s3-phone').hidden=!isApp;
     $('start-s3-status').textContent='';
   }
   function setPressed(groupId,attr,val){
     $(groupId).querySelectorAll('['+attr+']').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute(attr)===val?'true':'false');});
   }
-  function setMake(){setPressed('start-make','data-make',state.make);setPressed('start-make2','data-make',state.make);if(state.ai==='app')renderS2();renderS3();}
-  $('start-ai').addEventListener('click',function(e){var b=e.target.closest('[data-ai]');if(!b)return;state.ai=b.getAttribute('data-ai');setPressed('start-ai','data-ai',state.ai);renderS2();renderS3();});
+  function setMake(){save();setPressed('start-make','data-make',state.make);setPressed('start-make2','data-make',state.make);if(state.ai==='app')renderS2();renderS3();}
+  $('start-ai').addEventListener('click',function(e){var b=e.target.closest('[data-ai]');if(!b)return;state.ai=b.getAttribute('data-ai');setPressed('start-ai','data-ai',state.ai);save();renderS2();renderS3();});
   $('start-make').addEventListener('click',function(e){var b=e.target.closest('[data-make]');if(!b)return;state.make=b.getAttribute('data-make');setMake();});
   $('start-make2').addEventListener('click',function(e){var b=e.target.closest('[data-make]');if(!b)return;state.make=b.getAttribute('data-make');setMake();});
-  ['start-genre','start-reader','start-trouble','start-name','start-today','start-format','start-folder','start-tip'].forEach(function(id){$(id).addEventListener('input',function(){renderS3();renderAnswers();});$(id).addEventListener('change',renderS3);});
+  ['start-genre','start-reader','start-trouble','start-name','start-today','start-format','start-folder','start-tip'].forEach(function(id){$(id).addEventListener('input',function(){save();renderS3();renderAnswers();});$(id).addEventListener('change',function(){save();renderS3();});});
   $('start-format').addEventListener('change',function(){if(state.ai==='app')renderS2();});
   bindCopy($('start-copy-prompt'),function(){return $('start-prompt').value;},$('start-s3-status'),function(){$('start-prompt').focus();$('start-prompt').select();});
   /* 質問への返し方 */
@@ -181,5 +191,6 @@
       return copyText(p).then(function(ok){agentSt.textContent=ok?'コピーしました（'+FMT[f]+'）。AIに貼って送ります。':'コピーできませんでした。下の「作り方」から指示文を選んでコピーしてください。';});
     }).catch(function(){agentSt.textContent='読み込めませんでした。ページを開き直してください。';});
   });
+  restore();setPressed('start-ai','data-ai',state.ai);setPressed('start-make','data-make',state.make);setPressed('start-make2','data-make',state.make);
   renderS2();renderS3();renderAnswers();
 })();

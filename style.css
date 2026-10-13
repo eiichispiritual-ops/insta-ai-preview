@@ -119,3 +119,5 @@ html{scroll-behavior:auto}
 .preview-disclosure p a{display:inline-flex;align-items:center;min-height:44px;padding:8px 0}
 .reels-section .split-heading h2{flex:none;white-space:nowrap}
 @media(max-width:760px){.reels-section .split-heading h2{white-space:normal}}
+
+.header-start{display:none}@media(max-width:760px){.header-start{display:block;margin-left:auto;font-size:12px;font-weight:700;color:var(--accent);white-space:nowrap}}
