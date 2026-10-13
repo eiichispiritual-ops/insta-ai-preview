@@ -109,7 +109,7 @@
       var cp='unzip insta-ai-all.zip -d insta-ai-all\nmkdir -p '+a.skills+'\ncp -R insta-ai-all/insta-ai-create '+a.skills+'/';
       row(cp,cp);
       var ls='ls '+a.skills;
-      note(nx()+' 入ったか確かめます。この1行は、手で打ちます。insta-ai-create と出れば成功です。');
+      note(nx()+' 入ったか確かめます。この1行も、コピーして貼って Enter。insta-ai-create と出れば成功です。');
       row('確認　'+ls,ls);
       host.appendChild(el('p','start-note',a.after));
       row('起動の言葉　'+a.cmd,a.cmd);
