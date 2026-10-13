@@ -25,6 +25,10 @@ Windows の人は、「ChatGPT・Claude のアプリを使う人」を選んで�
 ```bash
 curl -fsSL https://claude.ai/install.sh | bash
 ```
+入れたあとに「PATH」の案内（`~/.local/bin is not in your PATH`）が出たら、その案内に書かれた1行をコピーして貼り、Enter を押して、ターミナルを閉じて開き直します。案内が出なかった人は飛ばします。案内と同じ中身の1行は、次のとおりです（ユーザー名は入れなくて大丈夫です）。
+```bash
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc && source ~/.zshrc
+```
 入っているか確認します。バージョンの数字が出れば成功です。「command not found」と出たら、上の1行へ戻ります。
 ```bash
 claude --version
@@ -148,7 +152,7 @@ insta-ai-create のスキルで、私のプロフィールの、表示名と紹�
 ```
 README.md
 全部入り_アプリ用.md   アプリに貼る連結済みの1ファイル（サイトの「手順書を全部コピー」と同じ内容。スキルのフォルダの外に置いてあります）
-insta-ai-create/        手順書の本体（SKILL.md と references/ の27本、合計28ファイル）。これだけを cp -R します
+insta-ai-create/        手順書の本体（SKILL.md と references/ の30本、合計31ファイル）。これだけを cp -R します
 video-edit/            （動画編集用）
   howto_<形式>.md       形式ごとの作り方（6本）
   prompt_<形式>.md      AIに貼る指示文（6本）
