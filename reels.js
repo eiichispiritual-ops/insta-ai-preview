@@ -128,7 +128,7 @@
     const items=(m.items||[]).map((x,i)=>({x,i})).sort((a,b)=>(ORDER.indexOf(a.x.format)-ORDER.indexOf(b.x.format))||(a.i-b.i)).map(o=>o.x);
     root.replaceChildren();
     if(!items.length){ root.appendChild(el('p','reel-note','表示できる動画がありません。')); return; }
-    // 形式のチップ：選んだ1件だけ表示（初期は先頭＝ランキング）
+    // 形式のチップ：選んだ1件だけ表示（初期は、さき以外の先頭）
     const nav=el('nav','reel-nav'); nav.setAttribute('aria-label','形式を選ぶ');
     root.appendChild(nav);
     const cards=items.map(it=>card(it,how[it.format]));
@@ -139,7 +139,9 @@
     };
     items.forEach((it,i)=>{const b=el('button',null,it.nav||LABEL[it.format]||it.format); b.type='button'; b.addEventListener('click',()=>show(i)); chips.push(b); nav.appendChild(b);});
     cards.forEach(c=>root.appendChild(c));
-    show(0);
+    // 初期表示は、さき以外のアカウントの作例にする（さきの写真を最初に出さない）
+    const first=Math.max(0,items.findIndex(it=>it.account!=='さき'));
+    show(first);
     // #reel-○○ で来た場合は、その1件を出す
     const fromHash=()=>{const id=(location.hash||'').slice(1);const i=cards.findIndex(c=>c.id===id);if(i>=0)show(i);};
     window.addEventListener('hashchange',fromHash); fromHash();
