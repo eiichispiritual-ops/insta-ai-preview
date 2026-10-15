@@ -12,7 +12,7 @@
   var AI={
     cc:{name:'Claude Code',cmd:'claude',skills:'.claude/skills',inst:'curl -fsSL https://claude.ai/install.sh | bash',pathNote:'入れたあとに「PATH」の案内（~/.local/bin is not in your PATH）が出たら、その案内に書かれた1行をコピーして貼り、Enter を押して、ターミナルを閉じて開き直します。案内が出なかった人は、飛ばします。下の1行は、その案内と同じ中身です（ユーザー名は入れなくて大丈夫です）。',pathCmd:'echo \'export PATH="$HOME/.local/bin:$PATH"\' >> ~/.zshrc && source ~/.zshrc',instNote:'Claude Codeを入れます（すでに入っている人は飛ばします）。',loginNote:'claude と打ち、案内に沿ってログインします。「Do you trust the files in this folder?」と出たら、Enter（Yes）を押します。ログインできたら、control＋C（command ではなく、左下の control キー）を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。',desc:'この手順は Mac で行います。iPhone から見ている人は「アプリ」を選んでください。Macのターミナルで進めます。A・B・C の3つを上から順に。どれも「コピー」を押して、ターミナルに貼って（command＋V）、Enter するだけです。',after:'確認できたら、下の言葉を打って、Claude Codeを起動します。.claude は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。'},
     codex:{name:'Codex',cmd:'codex',skills:'~/.agents/skills',inst:'npm install -g @openai/codex',instNote:'Codexを入れます（すでに入っている人は飛ばします）。',loginNote:'codex と打ち、案内に沿ってログインします。「Do you trust the files in this folder?」と出たら、Enter（Yes）を押します。ログインできたら、control＋C（command ではなく、左下の control キー）を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。',pre:'node -v',preNote:'先に、Node.js が入っているか確認します。数字が出なければ、nodejs.org から LTS を入れて、ターミナルを開き直します。',desc:'この手順は Mac で行います。iPhone から見ている人は「アプリ」を選んでください。Macのターミナルで進めます。A・B・C の3つを上から順に。どれも「コピー」を押して、ターミナルに貼って（command＋V）、Enter するだけです。',after:'確認できたら、このフォルダ（~/insta-ai）のまま、下の言葉を打って、Codexを起動します。.agents は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。古い版の Codex で「insta-ai-create のスキル」が効かないときだけ、同じ cp の行の ~/.agents/skills を ~/.codex/skills に変えて、もう一度貼ります。Codexがすでに開いていた場合は、一度閉じて、打ち直します。'},
-    app:{name:'アプリ',desc:'① 下のボタンでコピー → ② AIアプリで新しい会話を開き、貼って送信 → ③ 返事が出たら、手順3へ。とても長い文ですが、そのまま送って大丈夫です（作りたいものを選び直すと、中身も切り替わります）。'}
+    app:{name:'アプリ',desc:'① 下のボタンでコピー → ② AIアプリで新しい会話を開き、貼って送信 → ③ 返事が出たら、手順3へ。かなり長い文ですが、そのまま送ってください。'}
   };
   function copyText(t){
     var fb=function(){try{var x=document.createElement('textarea');x.value=t;x.style.position='fixed';x.style.opacity='0';document.body.appendChild(x);x.select();var ok=document.execCommand('copy');x.remove();return ok;}catch(e){return false;}};
@@ -102,7 +102,7 @@
       var help=function(title,items){var d=el('details','start-more start-help');d.appendChild(el('summary',null,title));items.forEach(function(it){var p=el('p','start-note');p.appendChild(el('b',null,it[0]+'：'));p.appendChild(document.createTextNode(it[1]));d.appendChild(p);if(it[2]){var r=el('div','start-copyrows');copyRow(r,null,it[2]);d.appendChild(r);}});host.appendChild(d);};
       var isCodex=state.ai==='codex';
       head('A　ターミナルを開いて、'+a.name+'を入れる（初回だけ）');
-      note('command＋スペースを押し、「ターミナル」と打って Enter。白か黒の、文字だけの画面が開きます（打ち間違えても壊れません）。すでに '+a.name+' が入っている人は、B へ進みます。');
+      note('command＋スペースで「ターミナル」と打って Enter。文字だけの画面が開きます。打ち間違えても Mac は壊れないので、安心してください。すでに '+a.name+' が入っている人は、B へ進みます。');
       if(isCodex){note('Codex には Node.js が要ります。先に次の1行で確認します。数字（例：v22.11.0）が出ればOK。出なければ nodejs.org で「LTS」をダウンロードして入れ、ターミナルを開き直します。');row('確認　node -v','node -v');}
       var inst=a.inst+' && '+a.cmd+' --version';
       row('入れる　'+inst,inst);
@@ -114,7 +114,7 @@
         ['「~/.local/bin is not in your PATH」や「command not found: claude」','次の1行を貼って Enter。そのあと、ターミナルを閉じて開き直し、もう一度「入れる」を貼ります。',a.pathCmd],
         ['何も出ずに止まって見える','ダウンロード中です。1〜2分待ちます。']]);
       head('B　手順書（zip）を受け取って、入れる');
-      note('まず下のボタンで zip をダウンロードします（ダウンロードフォルダに入ります。開かなくて大丈夫です）。貼ったあとに「“ターミナル”が“ダウンロード”フォルダ内のファイルにアクセスしようとしています」と出たら「許可」を押します。');
+      note('まず下のボタンで zip をダウンロードします（ダウンロードフォルダに入ります。開かなくてかまいません）。貼ったあとに「“ターミナル”が“ダウンロード”フォルダ内のファイルにアクセスしようとしています」と出たら「許可」を押します。');
       var z=el('a','start-btn primary','全部入りzipをダウンロード');z.href='downloads/insta-ai-all.zip';z.setAttribute('download','');host.appendChild(z);
       var sk=isCodex?'~/.agents/skills':'.claude/skills';
       var put='mkdir -p ~/insta-ai && cd ~/insta-ai && Z=$(ls -t ~/Downloads | grep "^insta-ai-all.*\\.zip$" | head -1); D=$(ls -t ~/Downloads | grep "^insta-ai-all" | grep -v "\\.zip$" | head -1); if [ -n "$Z" ]; then unzip -oq ~/Downloads/"$Z" -d insta-ai-all; elif [ -n "$D" ]; then rm -rf insta-ai-all && cp -R ~/Downloads/"$D" insta-ai-all; fi; if [ -d insta-ai-all/insta-ai-create ]; then mkdir -p '+sk+' && cp -R insta-ai-all/insta-ai-create '+sk+'/ && ls '+sk+'; else echo "zip が見つかりません。ダウンロードし直してください"; fi';
@@ -212,3 +212,9 @@
 })();
 /* 入口の振り分け：ヒーローのボタンで手順1のAIを選んでから「はじめる」へ進む */
 (function(){document.querySelectorAll('.route-btn[data-route]').forEach(function(a){a.addEventListener('click',function(){var b=document.querySelector('#start-ai [data-ai="'+a.getAttribute('data-route')+'"]');if(b)b.click();});});})();
+/* 自分の動画の型：コピーボタン */
+(function(){document.querySelectorAll('.ms-btn[data-copy]').forEach(function(b){b.addEventListener('click',function(){var t=document.getElementById(b.getAttribute('data-copy'));if(!t)return;var st=b.parentNode.querySelector('.ms-status');var done=function(ok){if(st)st.textContent=ok?'コピーしました。':'コピーできませんでした。上の文を長押し（選択）してコピーしてください。';};var fb=function(){try{t.focus();t.select();return document.execCommand('copy');}catch(e){return false;}};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t.value).then(function(){done(true);},function(){done(fb());});}else done(fb());});});})();
+/* 進み具合：各手順でボタンを押したら印を付ける（このブラウザだけに保存） */
+(function(){var K='instaAiProgress.v1',done={};try{done=JSON.parse(localStorage.getItem(K)||'{}')}catch(e){}
+function paint(){var n=0;[1,2,3].forEach(function(i){var d=document.querySelector('.sp-dots [data-sp="'+i+'"]');if(d)d.classList.toggle('on',!!done[i]);if(done[i])n++;});var t=document.getElementById('sp-text');if(t)t.textContent=n===3?'3/3　1本目の下書きまで来ました':n+'/3';}
+document.querySelectorAll('.start-step').forEach(function(li,idx){li.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;if(idx===0&&!b.closest('#start-ai'))return;if(idx>0&&!/コピー|ダウンロード/.test(b.textContent))return;done[idx+1]=1;try{localStorage.setItem(K,JSON.stringify(done))}catch(_){}paint();});});paint();})();
