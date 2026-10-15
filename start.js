@@ -101,6 +101,7 @@
       var row=function(label,text){var r=el('div','start-copyrows');copyRow(r,label,text);host.appendChild(r);};
       var help=function(title,items){var d=el('details','start-more start-help');d.appendChild(el('summary',null,title));items.forEach(function(it){var p=el('p','start-note');p.appendChild(el('b',null,it[0]+'：'));p.appendChild(document.createTextNode(it[1]));d.appendChild(p);if(it[2]){var r=el('div','start-copyrows');copyRow(r,null,it[2]);d.appendChild(r);}});host.appendChild(d);};
       var isCodex=state.ai==='codex';
+      var quick=el('details','start-more start-quick');quick.appendChild(el('summary',null,'慣れている人向け：コマンドだけ見る'));host.appendChild(quick);
       head('A　ターミナルを開いて、'+a.name+'を入れる（初回だけ）');
       note('command＋スペースで「ターミナル」と打って Enter。文字だけの画面が開きます。打ち間違えても Mac は壊れないので、安心してください。すでに '+a.name+' が入っている人は、B へ進みます。');
       if(isCodex){note('Codex には Node.js が要ります。先に次の1行で確認します。数字（例：v22.11.0）が出ればOK。出なければ nodejs.org で「LTS」をダウンロードして入れ、ターミナルを開き直します。');row('確認　node -v','node -v');}
@@ -135,6 +136,8 @@
       help('うまくいかないとき',[
         ['「読めていません」と返ってきた','control＋C を2回押して AI を閉じ、B の1行をもう一度貼ってから、C の「起動」を貼り直します。'],
         ['次の日に続きをやる','ターミナルを開いて、C の「起動」を貼るだけです。']]);
+      (function(){var qn=el('p','start-note','ターミナルに上から順に貼ります。zip は先に「全部入りzipをダウンロード」で受け取っておきます。');quick.appendChild(qn);
+        [['1 入れる',inst],['2 手順書を置く',put],['3 起動',run],['4 確認（AIに貼る）',chk]].forEach(function(x){var r=el('div','start-copyrows');copyRow(r,x[0],x[1]);quick.appendChild(r);});})();
     }
   }
   function renderS3(){
@@ -217,4 +220,4 @@
 /* 進み具合：各手順でボタンを押したら印を付ける（このブラウザだけに保存） */
 (function(){var K='instaAiProgress.v1',done={};try{done=JSON.parse(localStorage.getItem(K)||'{}')}catch(e){}
 function paint(){var n=0;[1,2,3].forEach(function(i){var d=document.querySelector('.sp-dots [data-sp="'+i+'"]');if(d)d.classList.toggle('on',!!done[i]);if(done[i])n++;});var t=document.getElementById('sp-text');if(t)t.textContent=n===3?'3/3　1本目の下書きができました':n+'/3';}
-document.querySelectorAll('.start-step').forEach(function(li,idx){li.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;if(idx===0&&!b.closest('#start-ai'))return;if(idx>0&&!/コピー|ダウンロード/.test(b.textContent))return;done[idx+1]=1;try{localStorage.setItem(K,JSON.stringify(done))}catch(_){}paint();});});paint();})();
+document.querySelectorAll('.start-step').forEach(function(li,idx){li.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;if(idx===0&&!b.closest('#start-ai'))return;if(idx>0&&!/コピー|ダウンロード/.test(b.textContent))return;done[idx+1]=1;try{localStorage.setItem(K,JSON.stringify(done))}catch(_){}paint();});});paint();var rb=document.getElementById('sp-resume');var steps=document.querySelectorAll('.start-step');var any=done[1]||done[2]||done[3];if(rb&&any&&!(done[1]&&done[2]&&done[3])){var nx=!done[1]?0:!done[2]?1:2;rb.hidden=false;rb.textContent='前回の続きから（手順'+(nx+1)+'）';rb.addEventListener('click',function(){steps[nx].scrollIntoView({behavior:'smooth',block:'start'});});}})();

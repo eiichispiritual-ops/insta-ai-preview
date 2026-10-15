@@ -186,3 +186,47 @@ body{padding-bottom:56px}
 .hero.hx{background:linear-gradient(180deg,#fff0f5 0%,#fff 70%)!important}
 .mystyle-section,.start-section,.reels-section{margin-left:0!important;margin-right:0!important;width:100%!important;box-sizing:border-box}
 }
+/* ===== loop 6: colour blocks + imagery for lower sections ===== */
+#formats{background:linear-gradient(180deg,#fff0f5 0%,#fff 100%)!important;max-width:none!important;padding:72px max(24px,calc((100% - 1180px)/2))!important}
+.fmt-gallery{display:flex;gap:16px;justify-content:flex-end;margin-top:8px}
+.fmt-gallery figure{margin:0;width:128px;background:#141018;border-radius:18px;padding:6px;box-shadow:0 18px 40px rgba(176,16,90,.22)}
+.fmt-gallery img{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:13px;display:block}
+.fmt-gallery figcaption{color:#fff;font-size:14px;font-weight:700;text-align:center;padding:6px 0 2px}
+#workbench{background:#141018!important;color:#fff}
+#workbench h2,#workbench .workbench-heading p{color:#fff!important}
+#workbench .workbench-heading{align-items:center}
+.wb-shot{margin:20px 0 0;max-width:420px}
+.wb-shot img{width:100%;border-radius:14px;box-shadow:0 24px 60px rgba(0,0,0,.5);display:block}
+.wb-shot figcaption{font-size:14px;color:#ffd6e7;margin-top:8px}
+#workbench form,#workbench .workbench-card,#workbench .wb-form{background:#fff;color:#141018;border-radius:20px}
+#get-skill{background:#fff8d6!important;max-width:none!important;padding:72px max(24px,calc((100% - 1180px)/2))!important}
+#get-skill .skill-package{box-shadow:0 20px 50px rgba(201,166,0,.28)!important;background:#fff!important}
+.finder-fig{margin:24px 0;display:grid;grid-template-columns:340px 1fr;gap:24px;align-items:center}
+.finder-win{background:#ececec;border-radius:12px;box-shadow:0 20px 50px rgba(0,0,0,.25);overflow:hidden;font-family:-apple-system,"Noto Sans JP",sans-serif}
+.finder-bar{display:flex;align-items:center;gap:7px;padding:10px 12px;background:#dcdcdc}
+.finder-bar i{width:12px;height:12px;border-radius:50%;background:#ff5f57}.finder-bar i:nth-child(2){background:#febc2e}.finder-bar i:nth-child(3){background:#28c840}
+.finder-bar span{margin-left:8px;font-size:14px;font-weight:700;color:#333}
+.finder-body{padding:18px}
+.finder-input{background:#fff;border:3px solid #6aa7ff;border-radius:7px;padding:8px 10px;font:600 15px ui-monospace,Menlo,monospace;color:#141018}
+.finder-hint{font-size:14px;color:#555;margin:10px 0}
+.finder-btns{display:flex;justify-content:flex-end;gap:8px}.finder-btns span{font-size:14px;padding:4px 14px;border-radius:6px;background:#fff;border:1px solid #bbb}.finder-btns .go{background:#0a64d8;color:#fff;border-color:#0a64d8}
+.finder-fig figcaption b{display:block;font-size:18px;margin-bottom:6px}
+.finder-fig small{display:block;font-size:14px;color:#555;margin-top:6px}
+.finder-fig kbd{border:1px solid #bbb;border-bottom-width:3px;border-radius:5px;padding:0 6px;background:#fff;font-size:14px}
+.sp-resume{margin-left:12px;min-height:44px;padding:0 18px;border-radius:999px;border:0;background:var(--rd-grad,#d6246e);color:#fff;font-weight:700;font-size:15px;cursor:pointer}
+.sp-save{display:block;font-size:14px;color:#555;margin-top:6px;width:100%}
+.start-quick{border:2px solid #141018;border-radius:14px;padding:4px 14px;margin:0 0 18px;background:#fff}
+.start-quick summary{font-weight:900;min-height:44px;display:flex;align-items:center}
+@media(max-width:760px){
+ .fmt-gallery{justify-content:center}.fmt-gallery figure{width:30%}
+ .finder-fig{grid-template-columns:1fr}
+ #formats,#get-skill{padding:48px 16px!important}
+ .wb-shot{max-width:none}
+}
+#formats .section-intro{display:grid!important;grid-template-columns:1fr auto;gap:32px;align-items:end}
+#formats .split-heading{display:block!important}#formats .split-heading p{margin-top:16px;text-align:left!important}
+.fmt-gallery{margin-top:0}
+#workbench .workbench-heading{display:grid!important;grid-template-columns:1fr 1fr;gap:40px;align-items:end}
+.wb-shot{max-width:none}
+.finder-fig{grid-template-columns:1fr!important;max-width:460px}
+@media(max-width:760px){#formats .section-intro,#workbench .workbench-heading{grid-template-columns:1fr}}
