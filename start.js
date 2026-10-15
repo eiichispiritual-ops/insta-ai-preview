@@ -11,8 +11,8 @@
   var FMT={voiceover:'アフレコ',vlog:'VLOG',talk:'トーク',ranking:'ランキング',comparison:'比較',abstract:'抽象マーケ'};
   var AI={
     cc:{name:'Claude Code',cmd:'claude',skills:'.claude/skills',inst:'curl -fsSL https://claude.ai/install.sh | bash',pathNote:'入れたあとに「~/.local/bin is not in your PATH」と出たら、下の1行を貼って Enter。ターミナルを閉じて開き直せば反映されます。この表示が出なければ、ここは飛ばしてかまいません。下の1行は案内に書かれているものと同じで、ユーザー名を書き換える必要はありません。',pathCmd:'echo \'export PATH="$HOME/.local/bin:$PATH"\' >> ~/.zshrc && source ~/.zshrc',instNote:'Claude Code を入れます。入っていれば飛ばしてください。',loginNote:'claude と打ち、案内どおりにログインします。「Do you trust the files in this folder?」と聞かれたら Enter。ログインが済んだら、左下の control キーと C を2回押して元の画面に戻ってください（command キーではありません）。戻らずに次の行を貼ると、AIへの質問として送られてしまいます。',desc:'この手順は Mac で行います。iPhone から見ている人は「アプリ」を選んでください。Macのターミナルで進めます。A・B・C の3つを上から順に。どれも「コピー」を押して、ターミナルに貼って（command＋V）、Enter するだけです。',after:'確認できたら、下の言葉を打って、Claude Codeを起動します。.claude は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。'},
-    codex:{name:'Codex',cmd:'codex',skills:'~/.agents/skills',inst:'npm install -g @openai/codex',instNote:'Codex を入れます。入っていれば飛ばしてください。',loginNote:'codex と打ち、案内どおりにログインします。「Do you trust the files in this folder?」と聞かれたら Enter。ログインが済んだら、左下の control キーと C を2回押して元の画面に戻ってください（command キーではありません）。戻らずに次の行を貼ると、AIへの質問として送られてしまいます。',pre:'node -v',preNote:'先に、Node.js が入っているか確認します。数字が出なければ、nodejs.org から LTS を入れて、ターミナルを開き直します。',desc:'この手順は Mac で行います。iPhone から見ている人は「アプリ」を選んでください。Macのターミナルで進めます。A・B・C の3つを上から順に。どれも「コピー」を押して、ターミナルに貼って（command＋V）、Enter するだけです。',after:'確認できたら、このフォルダ（~/insta-ai）のまま、下の言葉を打って、Codexを起動します。.agents は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。古い版の Codex で「insta-ai-create のスキル」が効かないときだけ、同じ cp の行の ~/.agents/skills を ~/.codex/skills に変えて、もう一度貼ります。Codexがすでに開いていた場合は、一度閉じて、打ち直します。'},
-    app:{name:'アプリ',desc:'① 下のボタンでコピー → ② AIアプリで新しい会話を開き、貼って送信 → ③ 返事が出たら、手順3へ。かなり長い文ですが、そのまま送ってください。'}
+    codex:{name:'Codex',cmd:'codex',skills:'~/.agents/skills',inst:'npm install -g @openai/codex',instNote:'Codex を入れます。入っていれば飛ばしてください。',loginNote:'codex と打ち、案内どおりにログインします。「Do you trust the files in this folder?」と聞かれたら Enter。ログインが済んだら、左下の control キーと C を2回押して元の画面に戻ってください（command キーではありません）。戻らずに次の行を貼ると、AIへの質問として送られてしまいます。',pre:'node -v',preNote:'先に、Node.js が入っているか確認します。数字が出なければ、nodejs.org から LTS を入れて、ターミナルを開き直します。',desc:'この手順は Mac で行います。iPhone から見ている人は「アプリ」を選んでください。Macのターミナルで進めます。A・B・C の3つを上から順に。どれも「コピー」を押して、ターミナルに貼って（command＋V）、Enter するだけです。',after:'確認できたら、このフォルダ（~/insta-ai）のまま、下の言葉を打って、Codexを起動します。.agents は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。古い版の Codex で「インスタAIの手順書」が効かないときだけ、同じ cp の行の ~/.agents/skills を ~/.codex/skills に変えて、もう一度貼ります。Codexがすでに開いていた場合は、一度閉じて、打ち直します。'},
+    app:{name:'アプリ',desc:'① 下のボタンでコピー → ② AIアプリで新しい会話を開き、貼って送信 → ③ 返事が出たら、手順3へ。長い文なので、貼ると「ファイル」のように表示されることがあります。そのまま送信して大丈夫です。'}
   };
   function copyText(t){
     var fb=function(){try{var x=document.createElement('textarea');x.value=t;x.style.position='fixed';x.style.opacity='0';document.body.appendChild(x);x.select();var ok=document.execCommand('copy');x.remove();return ok;}catch(e){return false;}};
@@ -46,7 +46,7 @@
     row.appendChild(b);row.appendChild(st);host.appendChild(row);return row;
   }
   function genre(){return $('start-genre').value.trim();}
-  function prefix(){return state.ai==='app'?'いま貼った手順書を使って、':(state.ai==='codex'?'insta-ai-create のスキルで、':'インスタAIのスキル（/insta-ai-create）で、');}
+  function prefix(){return state.ai==='app'?'いま貼った手順書を使って、':'インスタAIの手順書（insta-ai-create）で、';}
   function TAIL(w,x,ask){return reader()+(x||'')+(ask?'形式が決まったら':'')+'質問せず、足りないところは要確認と書いて仮置きで、'+w+'まで出して。';}
   function reader(){var r=$('start-reader').value.trim(),t=$('start-trouble').value.trim();return (r?'見る人は、'+r+'です。':'')+(t?(r?'その人':'見る人')+'の困りごとは「'+t+'」です。':'');}
   function tipSent(){var t=$('start-tip').value.trim();return t?'私が見る人に伝えたい工夫は「'+t+'」です。':'';}
@@ -54,7 +54,7 @@
   function prompt(){
     var g=genre(), gs=g?'ジャンルは'+g+'。':'', f=$('start-format').value, fl=f?FMT[f]+'形式の':'', P=prefix();
     switch(state.make){
-      case 'reel': return P+gs+fl+'リール台本を1本作って。'+(f?'':'形式は2案出して、理由をつけて。私が選んだら台本まで出して。')+'私の経験は書いていないので、作らずに、見る人への呼びかけで入って。'+(f==='vlog'?'出来事は撮影予定として仮置きして、実際に撮った順に差し替える箇所も書いて。':'')+TAIL('台本',tipSent(),!f);
+      case 'reel': return P+gs+fl+'リール台本を1本作って。'+reader()+tipSent()+(f?'':'形式を2案、理由つきで出して。私が選んだら、')+'質問せずに台本まで出して。私の体験談は作らず、見る人への問いかけで始めて。'+(f==='vlog'?'出来事は撮影予定として仮に置き、実際に撮った順に差し替える箇所も書いて。':'')+'分からないところは【要確認】と書いて仮に入れて。';
       case 'profile': return P+gs+'プロフィールの表示名と紹介文を作って。'+nameSent()+TAIL('案');
       case 'feed': return P+gs+'フィード投稿を、1ページずつの原稿で作って。'+TAIL('原稿');
       case 'story': var td=$('start-today').value.trim(); return P+gs+'ストーリーを、1枚ずつの本文と使う素材で作って。'+(td?'今日あったことは「'+td+'」です。':'出来事は（今日あったこと）と仮置きして。')+TAIL('本文');
@@ -91,7 +91,9 @@
         }).catch(function(){});
         return b;
       };
-      mk(key,'手順書をコピー',nm+'用','start-btn primary');
+      (function(){var p=el('p','start-note','アプリがまだないとき：');var l1=el('a',null,'App Store で ChatGPT');l1.href='https://apps.apple.com/app/chatgpt/id6448311069';l1.target='_blank';l1.rel='noopener';var l2=el('a',null,'Google Play で ChatGPT');l2.href='https://play.google.com/store/apps/details?id=com.openai.chatgpt';l2.target='_blank';l2.rel='noopener';var l3=el('a',null,'ブラウザ版（chatgpt.com）');l3.href='https://chatgpt.com/';l3.target='_blank';l3.rel='noopener';p.append(l1,' ／ ',l2,'（どちらも無料）。アプリを入れずに使うなら、',l3,'でも同じです。');host.appendChild(p);})();
+      if(key.indexOf('reel-')===0){mk(key+'-lite','手順書をコピー',nm+'・短い版','start-btn primary');mk(key,'くわしい版をコピー',nm+'・長い','start-btn');host.appendChild(el('p','start-note','まずは短い版で大丈夫です。台本の質を上げたいときは、くわしい版（参照資料つき）を貼ります。'));}
+      else mk(key,'手順書をコピー',nm+'用','start-btn primary');
       host.appendChild(el('p','start-note','「全部」は、すべての入口の手順書です。長いので、入力欄に入らないときは、上のボタンを使います。'));
       mk('all','手順書を全部コピー','全部入り','start-btn');
     }else{
@@ -102,8 +104,9 @@
       var help=function(title,items){var d=el('details','start-more start-help');d.appendChild(el('summary',null,title));items.forEach(function(it){var p=el('p','start-note');p.appendChild(el('b',null,it[0]+'：'));p.appendChild(document.createTextNode(it[1]));d.appendChild(p);if(it[2]){var r=el('div','start-copyrows');copyRow(r,null,it[2]);d.appendChild(r);}});host.appendChild(d);};
       var isCodex=state.ai==='codex';
       var quick=el('details','start-more start-quick');quick.appendChild(el('summary',null,'慣れている人向け：コマンドだけ見る'));host.appendChild(quick);
+      note(isCodex?'Codex は ChatGPT の有料プラン（Plus 以上）か、OpenAI の API キーで使えます。':'Claude Code は Claude の有料プラン（Pro 以上）か、Anthropic の API キーで使えます。無料プランでは使えません。');
       head('A　ターミナルを開いて、'+a.name+'を入れる（初回だけ）');
-      note('command＋スペースで「ターミナル」と打って Enter。文字だけの画面が開きます。打ち間違えても Mac は壊れないので、安心してください。すでに '+a.name+' が入っている人は、B へ進みます。');
+      note('command＋スペースで「ターミナル」と打って Enter。文字だけの画面が開きます。打ち間違えても Mac は壊れません。すでに '+a.name+' が入っている人は、B へ進みます。');
       if(isCodex){note('Codex には Node.js が要ります。先に次の1行で確認します。数字（例：v22.11.0）が出ればOK。出なければ nodejs.org で「LTS」をダウンロードして入れ、ターミナルを開き直します。');row('確認　node -v','node -v');}
       var inst=a.inst+' && '+a.cmd+' --version';
       row('入れる　'+inst,inst);
@@ -129,15 +132,17 @@
       var run='cd ~/insta-ai && '+a.cmd;
       row('起動　'+run,run);
       note('初回はログインが必要です。ブラウザが開いたら、いつものアカウントで許可してください。英語で何か聞かれたら、文字の色の設定も含めて Enter で進めてかまいません。');
-      var chk=(isCodex?'insta-ai-create のスキル':'インスタAIのスキル（/insta-ai-create）')+'は読めていますか。読めていれば「読めています」とだけ答えて。';
+      var chk='インスタAIの手順書（insta-ai-create）は読めていますか。読めていれば「読めています」とだけ答えて。';
       note('起動したら、この1行を貼って Enter。');
       row('確認　'+chk,chk);
       ok('「読めています」と返ってきたら、手順3へ進みます。');
+      note('「読めています」と返らないとき：'+(isCodex?'「~/.agents/skills/insta-ai-create/SKILL.md を読んでから進めて」':'「.claude/skills/insta-ai-create/SKILL.md を読んでから進めて」')+'と貼れば、ファイルを直接読ませて進められます。');
       help('うまくいかないとき',[
         ['「読めていません」と返ってきた','control＋C を2回押して AI を閉じ、B の1行をもう一度貼ってから、C の「起動」を貼り直します。'],
+        ['動画の書き出しで「ffmpeg がない」と言われた','AI に「ffmpeg を Homebrew で入れて」と頼めば入れてくれます。途中で Mac のパスワードを聞かれたら、入力して Enter（画面には表示されません）。'],
         ['次の日に続きをやる','ターミナルを開いて、C の「起動」を貼るだけです。']]);
-      (function(){var qn=el('p','start-note','ターミナルに上から順に貼ります。zip は先に「全部入りzipをダウンロード」で受け取っておきます。');quick.appendChild(qn);
-        [['1 入れる',inst],['2 手順書を置く',put],['3 起動',run],['4 確認（AIに貼る）',chk]].forEach(function(x){var r=el('div','start-copyrows');copyRow(r,x[0],x[1]);quick.appendChild(r);});})();
+      (function(){var qn=el('p','start-note','ターミナルに上から順に貼ります。2 の行で zip をダウンロードフォルダに取ります（ボタンで受け取ってあれば飛ばせます）。');quick.appendChild(qn);
+        [['1 入れる',inst],['2 zip を取る','curl -fsSLo ~/Downloads/insta-ai-all.zip '+new URL('downloads/insta-ai-all.zip',location.href).href],['3 手順書を置く',put],['4 起動',run],['5 確認（AIに貼る）',chk]].forEach(function(x){var r=el('div','start-copyrows');copyRow(r,x[0],x[1]);quick.appendChild(r);});})();
     }
   }
   function renderS3(){
@@ -159,7 +164,7 @@
     $('start-edit-agent').hidden=isApp;
     $('start-edit-app').hidden=!(state.make==='edit'&&isApp);
     $('start-make-label').hidden=isApp;$('start-make').hidden=isApp;
-    var fx=$('start-make-fixed');fx.hidden=!isApp;fx.textContent='作りたいもの：'+MAKE_NAME[state.make]+'手順2で選んだもの。変えるときは手順2へ';
+    var fx=$('start-make-fixed');fx.hidden=!isApp;fx.textContent='作りたいもの：'+MAKE_NAME[state.make]+'（手順2で選んだもの。変えるときは手順2へ）';
     $('start-s2-editnote').hidden=!(isApp&&state.make==='edit');
     $('start-s2-phone').hidden=!isApp;$('start-s3-phone').hidden=!isApp;
     $('start-s3-status').textContent='';

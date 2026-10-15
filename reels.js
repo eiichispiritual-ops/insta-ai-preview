@@ -40,7 +40,7 @@
       const p=el('p',null,parts.join(' ・ '));
       p.appendChild(el('small',null,'見本と同じ色変換で全フレームを比べた実測値。差は0〜255で、平均差も最大（いちばん差が大きいコマ）も、0に近いほど見本に近い。「5を超えたコマ」は差が大きめのコマの数で、少ないほど近い（5は目安の線）。音は、2つの数字が同じなら音量がそろっている。'));
       d.appendChild(p); wrap.appendChild(d);
-    }else if(item.approved){ wrap.appendChild(el('p','reel-qc-main','講師の確認済み（数値比較なし）')); }
+    }else if(item.approved){ wrap.appendChild(el('p','reel-qc-main','制作側の確認済み（数値比較なし）')); }
     else{ wrap.appendChild(el('p','reel-qc-main','数値の比較は行っていません')); }
     return wrap;
   }

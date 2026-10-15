@@ -111,10 +111,10 @@
     "version": "v31"
    },
    "qc": null,
-   "approved": "2026-09-19 講師の確認済み",
+   "approved": "2026-09-19 制作側の確認済み",
    "key": "talk",
    "nav": "抽象マーケ①",
-   "stage": "講師の確認済み"
+   "stage": "制作側の確認済み"
   },
   {
    "format": "comparison",
@@ -135,8 +135,8 @@
     "version": "v05"
    },
    "qc": null,
-   "approved": "2026-09-18 講師の確認済み",
-   "stage": "講師の確認済み"
+   "approved": "2026-09-18 制作側の確認済み",
+   "stage": "制作側の確認済み"
   },
   {
    "format": "abstract",

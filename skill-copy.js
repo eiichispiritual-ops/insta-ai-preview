@@ -25,6 +25,8 @@
     'edit-any':{name:'動画編集（形式は相談）',refs:['edit-common.md','conversation-flow.md','edit-voiceover.md','edit-vlog.md','edit-talk.md','video-edit/edit-abstract.md','edit-ranking.md','edit-comparison.md']},
     all:{name:'全部入り（SKILL.md と参照資料すべて）',refs:null}
   };
+  /* 軽量版（スマホ・アプリ向け、1万字以下）：SKILL.md＋会話の進め方＋その形式の資料だけ。全部入りの版も残す。 */
+  Object.keys(ENTRIES).forEach(function(k){if(k.indexOf('reel-')!==0)return;var e=ENTRIES[k];var fmt=e.refs.filter(function(n){return ['voiceover.md','vlog.md','talk.md','abstract.md','ranking.md','comparison.md'].indexOf(n)>=0;});ENTRIES[k+'-lite']={name:e.name+'・短い版',refs:['conversation-flow.md'].concat(fmt.length?fmt:['format-taxonomy.md'])};});
   var bundle=null;
   function load(){
     if(bundle)return Promise.resolve(bundle);
@@ -61,7 +63,7 @@
     try{
       if(!navigator.clipboard||!navigator.clipboard.writeText)throw Error('unavailable');
       await Promise.race([navigator.clipboard.writeText(text),new Promise(function(_,rej){setTimeout(function(){rej(Error('timeout'));},2500);})]);
-      say('コピーしました（'+e.name+'・'+text.length.toLocaleString('ja-JP')+'文字）。AIの入力欄、またはSKILL.mdのファイルへ貼り付けてください。');
+      say('コピーしました（'+e.name+'・'+text.length.toLocaleString('ja-JP')+'文字）。ChatGPT か Claude の新しい会話に貼って、送信してください。'+(text.length>10000?'長いので、貼ると「ファイル」のように表示されることがあります。そのまま送信して大丈夫です。':''));
       if(btn){var old=btn.getAttribute('data-label')||btn.textContent;btn.setAttribute('data-label',old);btn.classList.add('is-copied');btn.textContent='コピーしました';setTimeout(function(){btn.textContent=old;btn.classList.remove('is-copied');},2200);}
     }catch(err){fallback(text,e.name);}
   }
