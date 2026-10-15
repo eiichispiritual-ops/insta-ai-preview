@@ -64,7 +64,7 @@
     }
   }
   var OUT={
-    reel:'形式を「相談して決める」のままにした人は、先に形式の案が2つ出ます。下の「形式の案が2つ出たら」をコピーして返すと、台本が出ます（AIがそのまま台本まで出すこともあります）。出てくるもの：「日付とタイトル」と「台本の本文」の2つのコピー用ブロック。そのあとに撮影メモ（撮れる素材か、要確認かの欄つき）。作りたいものを変えると、この説明も切り替わります。',
+    reel:'形式を相談にした場合は、先に案が2つ出ます。下の「形式の案が2つ出たら」を返してください。\n出てくるもの：・日付とタイトル　・台本の本文　・撮影メモ（撮れる素材か、要確認かの欄つき）',
     profile:'出てくるもの：表示名と紹介文の案と、選んだ理由。（ ）や「要確認」の括弧は、プロフィール欄へ貼る前に書き換えるか消します。',
     feed:'出てくるもの：ページごとの見出し・本文・配置。',
     story:'出てくるもの：1枚ごとの本文・使う素材・その画面の役割。材料が1つの日は1枚で終わります。枚数を増やすには、出来事をもう1つか、見る人の困りごとを入れてください。「今日あったこと」を空欄にすると、本文の（ ）は自分で書き換える場所になります。',
@@ -94,8 +94,8 @@
       (function(){var p=el('p','start-note','アプリがまだないとき：');var l1=el('a',null,'App Store で ChatGPT');l1.href='https://apps.apple.com/app/chatgpt/id6448311069';l1.target='_blank';l1.rel='noopener';var l2=el('a',null,'Google Play で ChatGPT');l2.href='https://play.google.com/store/apps/details?id=com.openai.chatgpt';l2.target='_blank';l2.rel='noopener';var l3=el('a',null,'ブラウザ版（chatgpt.com）');l3.href='https://chatgpt.com/';l3.target='_blank';l3.rel='noopener';p.append(l1,' ／ ',l2,'（どちらも無料）。アプリを入れずに使うなら、',l3,'でも同じです。');host.appendChild(p);})();
       if(key.indexOf('reel-')===0){mk(key+'-lite','手順書をコピー',nm+'・短い版','start-btn primary');mk(key,'くわしい版をコピー',nm+'・長い','start-btn');host.appendChild(el('p','start-note','まずは短い版で大丈夫です。台本の質を上げたいときは、くわしい版（参照資料つき）を貼ります。'));}
       else mk(key,'手順書をコピー',nm+'用','start-btn primary');
-      host.appendChild(el('p','start-note','「全部」は、すべての入口の手順書です。長いので、入力欄に入らないときは、上のボタンを使います。'));
       mk('all','手順書を全部コピー','全部入り','start-btn');
+      host.appendChild(el('p','start-note','「全部」はふつうは使いません。すべての入口をまとめた長い版です。'));
     }else{
       var note=function(t){host.appendChild(el('p','start-note',t));};
       var ok=function(t){host.appendChild(el('p','start-note start-ok','【成功の目安】'+t));};
@@ -166,7 +166,7 @@
     $('start-make-label').hidden=isApp;$('start-make').hidden=isApp;
     var fx=$('start-make-fixed');fx.hidden=!isApp;fx.textContent='作りたいもの：'+MAKE_NAME[state.make]+'（手順2で選んだもの。変えるときは手順2へ）';
     $('start-s2-editnote').hidden=!(isApp&&state.make==='edit');
-    $('start-s2-phone').hidden=!isApp;$('start-s3-phone').hidden=!isApp;
+    $('start-s3-phone').hidden=!isApp;
     $('start-s3-status').textContent='';
   }
   function setPressed(groupId,attr,val){
@@ -224,5 +224,6 @@
 (function(){document.querySelectorAll('.ms-btn[data-copy]').forEach(function(b){b.addEventListener('click',function(){var t=document.getElementById(b.getAttribute('data-copy'));if(!t)return;var st=b.parentNode.querySelector('.ms-status');var done=function(ok){if(st)st.textContent=ok?'コピーしました。':'コピーできませんでした。上の文を長押し（選択）してコピーしてください。';};var fb=function(){try{t.focus();t.select();return document.execCommand('copy');}catch(e){return false;}};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t.value).then(function(){done(true);},function(){done(fb());});}else done(fb());});});})();
 /* 進み具合：各手順でボタンを押したら印を付ける（このブラウザだけに保存） */
 (function(){var K='instaAiProgress.v1',done={};try{done=JSON.parse(localStorage.getItem(K)||'{}')}catch(e){}
-function paint(){var n=0;[1,2,3].forEach(function(i){var d=document.querySelector('.sp-dots [data-sp="'+i+'"]');if(d)d.classList.toggle('on',!!done[i]);if(done[i])n++;});var t=document.getElementById('sp-text');if(t)t.textContent=n===3?'3/3　1本目の下書きができました':n+'/3';}
-document.querySelectorAll('.start-step').forEach(function(li,idx){li.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;if(idx===0&&!b.closest('#start-ai'))return;if(idx>0&&!/コピー|ダウンロード/.test(b.textContent))return;done[idx+1]=1;try{localStorage.setItem(K,JSON.stringify(done))}catch(_){}paint();});});paint();var rb=document.getElementById('sp-resume');var steps=document.querySelectorAll('.start-step');var any=done[1]||done[2]||done[3];if(rb&&any&&!(done[1]&&done[2]&&done[3])){var nx=!done[1]?0:!done[2]?1:2;rb.hidden=false;rb.textContent='前回の続きから（手順'+(nx+1)+'）';rb.addEventListener('click',function(){steps[nx].scrollIntoView({behavior:'smooth',block:'start'});});}})();
+function paint(){var n=0;[1,2,3].forEach(function(i){var on=done[i]===1;var d=document.querySelector('.sp-dots [data-sp="'+i+'"]');if(d)d.classList.toggle('on',on);if(on)n++;});var t=document.getElementById('sp-text');if(t)t.textContent=n===3?'3/3　1本目の下書きができました':(done[3]==='copied'?n+'/3　ひと言をコピーしました。AIに貼って送信すると台本が出ます':n+'/3');var cf=document.getElementById('sp-confirm');if(cf)cf.hidden=done[3]!=='copied';}
+(function(){var st=document.querySelectorAll('.start-step')[2];if(!st)return;var b=document.createElement('button');b.type='button';b.id='sp-confirm';b.className='sp-confirm';b.textContent='AIから台本が出た';b.hidden=true;b.addEventListener('click',function(e){e.stopPropagation();done[3]=1;try{localStorage.setItem(K,JSON.stringify(done))}catch(_){}paint();});var h=st.querySelector('h3')||st.firstElementChild;var wrap=document.createElement('p');wrap.className='sp-confirm-wrap';wrap.appendChild(b);st.appendChild(wrap);})();
+document.querySelectorAll('.start-step').forEach(function(li,idx){li.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;if(idx===0&&!b.closest('#start-ai'))return;if(b.id==='sp-confirm')return;if(idx>0&&!/コピー|ダウンロード/.test(b.textContent))return;if(idx===2){if(done[3]!==1)done[3]='copied';}else done[idx+1]=1;try{localStorage.setItem(K,JSON.stringify(done))}catch(_){}paint();});});paint();var rb=document.getElementById('sp-resume');var steps=document.querySelectorAll('.start-step');var any=done[1]||done[2]||done[3];if(rb&&any&&!(done[1]===1&&done[2]===1&&done[3]===1)){var nx=done[1]!==1?0:done[2]!==1?1:2;rb.hidden=false;rb.textContent='前回の続きから（手順'+(nx+1)+'）';rb.addEventListener('click',function(){steps[nx].scrollIntoView({behavior:'smooth',block:'start'});});}})();

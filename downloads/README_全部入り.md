@@ -129,7 +129,7 @@ insta-ai-create のスキルで、私のプロフィールの、表示名と紹�
 ```
 README.md
 全部入り_アプリ用.md   アプリに貼る連結済みの1ファイル（サイトの「手順書を全部コピー」と同じ内容。スキルのフォルダの外に置いてあります）
-insta-ai-create/        手順書の本体（SKILL.md と references/ の34本、合計35ファイル）。これだけを cp -R します
+insta-ai-create/        手順書の本体（SKILL.md と references/ の35本、合計36ファイル）。これだけを cp -R します
 video-edit/            （動画編集用）
   howto_<形式>.md       形式ごとの作り方（6形式：アフレコ・VLOG・トーク・抽象マーケ・ランキング・比較）
   prompt_<形式>.md      AIに貼る指示文（6本）

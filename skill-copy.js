@@ -26,7 +26,7 @@
     all:{name:'全部入り（SKILL.md と参照資料すべて）',refs:null}
   };
   /* 軽量版（スマホ・アプリ向け、1万字以下）：SKILL.md＋会話の進め方＋その形式の資料だけ。全部入りの版も残す。 */
-  Object.keys(ENTRIES).forEach(function(k){if(k.indexOf('reel-')!==0)return;var e=ENTRIES[k];var fmt=e.refs.filter(function(n){return ['voiceover.md','vlog.md','talk.md','abstract.md','ranking.md','comparison.md'].indexOf(n)>=0;});ENTRIES[k+'-lite']={name:e.name+'・短い版',refs:['conversation-flow.md'].concat(fmt.length?fmt:['format-taxonomy.md'])};});
+  Object.keys(ENTRIES).forEach(function(k){if(k.indexOf('reel-')!==0)return;var e=ENTRIES[k];var fmt=e.refs.filter(function(n){return ['voiceover.md','vlog.md','talk.md','abstract.md','ranking.md','comparison.md'].indexOf(n)>=0;});ENTRIES[k+'-lite']={name:e.name+'・短い版',refs:['hook-patterns-lite.md'].concat(fmt.length?fmt:['format-taxonomy.md'])};});
   var bundle=null;
   function load(){
     if(bundle)return Promise.resolve(bundle);
@@ -34,9 +34,10 @@
   }
   function build(key,b){
     var e=ENTRIES[key];
-    var names=e.refs||Object.keys(b.references).filter(function(n){return !/-short\.md$/.test(n);}).sort(); /* 全部入りは本体を載せ、アプリ用の短縮版（-short.md）は重ねない */
+    var names=e.refs||Object.keys(b.references).filter(function(n){return !/-(short|lite)\.md$/.test(n);}).sort(); /* 全部入りは本体を載せ、アプリ用の短縮版（-short.md）は重ねない */
     /* 先頭はSKILL.mdそのまま（frontmatter付き）。SKILL.mdファイルへそのまま貼っても動く並び。 */
     var out=[b.skill.replace(/\s+$/,''),'','---','','（以下は、'+e.name+'の入口で使う参照資料です。上の本文にある references/○○.md への言及は、下の「## 参照：」の見出しを指します。'+(names.some(function(n){return /-short\.md$/.test(n);})?'hook-patterns.md と examples-buzz.md は、短縮版（-short.md）を載せています。':'')+'下にない参照は、この入口では使いません。）'];
+    if(names.some(function(n){return /-lite\.md$/.test(n);}))out.push('','（短い版です。上の本文が挙げる参照資料のうち、下に載っていないもの（構成の型・具体性の基準・完成例など）は読まずに、この本文の決まりと下の資料だけで完成稿まで出す。冒頭の型は hook-patterns-lite.md を使う。読んでいない資料を読んだことにしない。）');
     names.forEach(function(n){
       if(!b.references[n])throw Error('missing-reference');
       out.push('','## 参照：references/'+n,'',b.references[n]);

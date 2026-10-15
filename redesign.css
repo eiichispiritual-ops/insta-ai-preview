@@ -313,3 +313,11 @@ section.faq details p{padding:0 0 18px 46px}
 code,kbd,pre,textarea.ms-cmd,.finder-input,.start-copytext{font-family:ui-monospace,Menlo,Consolas,"Noto Sans JP",monospace!important}
 .finder-win{font-family:"Noto Sans JP",sans-serif!important}
 .ss2{background:linear-gradient(160deg,#b8430a,#b0105a)!important;background-color:#b0105a!important}.ss1{background-color:#b0105a}
+.sp-confirm-wrap{margin:16px 0 0}.sp-confirm{min-height:48px;padding:0 22px;border-radius:999px;border:2px solid #141018;background:#fff;font-weight:900;font-size:16px;cursor:pointer}.sp-confirm::before{content:"✓ ";color:#b0105a}
+#start-s3-out{white-space:pre-line}.ms-flow small{margin-left:.4em}.workbench-actions,.brief-actions{gap:16px}
+#show-example{margin-left:16px}
+.start-req .req-tag{display:inline-block;margin-left:8px;font-size:14px;font-weight:700;color:#fff;background:#b0105a;border-radius:999px;padding:1px 10px}
+.start-opt{grid-column:1/-1;border:1px dashed #c9b8c2;border-radius:12px;padding:0 14px;margin:4px 0}
+.start-opt summary{min-height:48px;display:flex;align-items:center;font-weight:700;cursor:pointer}
+.start-opt[open]{padding-bottom:12px}
+@media(max-width:1100px){.hx-notes{display:none!important}}

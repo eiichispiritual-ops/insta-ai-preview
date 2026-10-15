@@ -112,7 +112,7 @@
     c.appendChild(pair);
     const info=el('div','reel-info'); const qcNode=qcLine(item); c.appendChild(info);
     if(item.stage&&!(item.approved&&!item.qc)){ info.appendChild(el('p','reel-stage',item.stage.indexOf('仕上げ中')===0?'改善を続けている作例（数値は見本との差）':item.stage));
-      const SN=item.stage.indexOf('仕上げ中')===0?'見本との差が残る場面を、数値で確かめながら直し続けている作例です。数値が大きいほど、見本との差が大きいことを表します。下の作り方は、見本の編集メモです。':item.stage.indexOf('見本と同等')===0?'数値の比較で基準内に収まった作例です。人の目による確認とは別に判定しています。':'';
+      const SN=item.stage.indexOf('仕上げ中')===0?'見本との差が残る場面を、数値で確かめながら直し続けている作例です。数値が大きいほど、見本との差が大きいことを表します。下の作り方は、見本の編集メモです。':item.stage.indexOf('見本と同等')===0?'数値の比較で基準内に収まった作例です。':'';
       if(SN) info.appendChild(el('p','reel-note',SN)); }
     info.appendChild(qcNode);
     info.appendChild(brief(h));
