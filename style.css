@@ -570,3 +570,21 @@ h2{font-weight:700;letter-spacing:.01em}
 .start-btn.primary,.primary-cta,.allpack-btn{background:#0095f6!important;color:#fff!important;border-color:#0095f6!important;box-shadow:none!important}
 .allpack-btn span{color:#eaf6ff!important}
 .start-choice[aria-pressed="true"]{background:#000!important;color:#fff!important;border-color:#000!important}
+@media (max-width:860px){
+.hero{display:flex!important;flex-direction:column}
+.hero-copy{display:contents}
+.hero h1{order:1}.hero-description{order:2}.hero-visual{order:3;margin:4px 0 8px;max-width:none}
+.hero .route-pick{order:4}.hero .ms-hero-link{order:5}.hero .hero-sublink{order:6}
+.ig-profile{padding:8px}.ig-grid li:nth-child(n+4){display:none}.hand{font-size:15px;margin-top:8px}
+}
+h2::after,h2::before{display:none!important}
+@media (max-width:860px){.hero{gap:14px!important}.hero h1{margin-bottom:0}.hero-description{margin:0}.ig-head span{display:none}.hero .route-pick{margin-top:6px}}
+.hero .route-pick{border-top:1px solid var(--line);max-width:30em}
+.hero .route-btn{border:0!important;border-bottom:1px solid var(--line)!important;border-radius:0!important;margin:0!important;padding:14px 28px 14px 2px!important;position:relative;background:none!important}
+.hero .route-btn::after{content:"›";position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:22px;color:#999}
+.hero .route-btn:hover b{text-decoration:underline}
+.hero .ms-hero-link{background:none!important;border:0!important;padding:14px 0 0!important;box-shadow:none!important;display:block}
+.hero .ms-hero-link b{text-decoration:underline;text-underline-offset:3px}
+@media (min-width:861px){.hero-visual{margin-top:40px}}
+.hero .route-title{margin-bottom:8px}.hero .route-pick{border-top:0}.hero .route-btn:first-of-type{border-top:1px solid var(--line)!important}
+.hero .ms-hero-link b{display:block;margin-bottom:2px}
