@@ -23,7 +23,7 @@
     'edit-ranking':{name:'動画編集（ランキング）',refs:['edit-common.md','conversation-flow.md','edit-ranking.md']},
     'edit-comparison':{name:'動画編集（比較）',refs:['edit-common.md','conversation-flow.md','edit-comparison.md']},
     'edit-any':{name:'動画編集（形式は相談）',refs:['edit-common.md','conversation-flow.md','edit-voiceover.md','edit-vlog.md','edit-talk.md','video-edit/edit-abstract.md','edit-ranking.md','edit-comparison.md']},
-    all:{name:'全部（SKILL.md＋全 references）',refs:null}
+    all:{name:'全部入り（SKILL.md と参照資料すべて）',refs:null}
   };
   var bundle=null;
   function load(){
@@ -54,10 +54,10 @@
   async function copyKey(key,btn,extra){
     var e=ENTRIES[key];extraSay=extra||null;
     if(manualBox)manualBox.hidden=true;
-    say('読み込んでいます。');
+    say('読み込み中…');
     var text;
     try{text=build(key,await load());}
-    catch(err){say('スキルの読み込みに失敗しました。ページを再読み込みするか、zipをダウンロードしてください。');return;}
+    catch(err){say('手順書を読み込めませんでした。ページを再読み込みするか、zip をダウンロードしてください。');return;}
     try{
       if(!navigator.clipboard||!navigator.clipboard.writeText)throw Error('unavailable');
       await Promise.race([navigator.clipboard.writeText(text),new Promise(function(_,rej){setTimeout(function(){rej(Error('timeout'));},2500);})]);

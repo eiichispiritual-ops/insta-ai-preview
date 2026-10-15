@@ -5,7 +5,7 @@
   const root=document.getElementById('reels-gallery'); if(!root) return;
   const ORDER=['ranking','voiceover','vlog','talk','abstract','comparison'];
   const LABEL={ranking:'ランキング',voiceover:'アフレコ',vlog:'VLOG',talk:'トーク',abstract:'抽象マーケ',comparison:'比較'};
-  const FOR={ranking:'紹介したいもの（ツール・商品・方法）が複数あり、順位をつけて見せたい人。',voiceover:'顔を出さず、あとから録った自分の声で、生活映像を合わせて作りたい人。',talk:'自分が話す映像があり、強調字幕や図を入れて、ひとつの話を伝えたい人。',abstract:'身近な題材を入口に、人が反応する理由を解説し、権威性や実績を部品として差し込みたい人。',comparison:'2つの考え方や2人を並べて、違いを見せたい人。',vlog:'朝から外出までなど、日常を撮って説明につなげたい人。'};
+  const FOR={ranking:'ツールや商品、やり方をいくつか紹介して、順位を付けたいとき。',voiceover:'顔を出さずに、あとから録った声と生活の映像で作りたいとき。',talk:'自分が話している映像に、大きな字幕や図を入れたいとき。',abstract:'身近な題材から反応される理由を説明して、実績の画像も入れたいとき。',comparison:'2つの考え方や2人を並べて、違いを見せたいとき。',vlog:'朝から外出までの日常を撮って、話につなげたいとき。'};
   const base='assets/reels/';
   const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=text;return n;};
   const fmt1=v=>v==null?'—':(Math.round(v*100)/100).toFixed(2);
@@ -33,14 +33,14 @@
     const q=item.qc; const wrap=el('div','reel-qc');
     if(q){
       const ok=!!(item.stage&&item.stage.indexOf('見本と同等')===0);
-      if(!item.stage) wrap.appendChild(el('p','reel-qc-main',ok?'見本とほぼ同じ（機械で確認）':'見本との差が残る場面を直している（機械で確認）'));
+      if(!item.stage) wrap.appendChild(el('p','reel-qc-main',ok?'見本とほぼ同じ（数値で確認）':'差が残っている場面を修正中（数値で確認）'));
       const parts=['全フレーム（1コマずつ）の平均差 '+fmt1(q.mad_mean),'最大 '+fmt1(q.mad_max),'差が5を超えたコマ '+q.frames_over_5+' / '+q.frames];
       if(q.lufs_ref!=null&&q.lufs_ai!=null) parts.push('音の大きさ（LUFS） '+fmt1(q.lufs_ref)+' → '+fmt1(q.lufs_ai));
       const d=el('details','reel-qc-detail'); d.appendChild(el('summary',null,'くわしい数値'));
       const p=el('p',null,parts.join(' ・ '));
       p.appendChild(el('small',null,'見本と同じ色変換で全フレームを比べた実測値。差は0〜255で、平均差も最大（いちばん差が大きいコマ）も、0に近いほど見本に近い。「5を超えたコマ」は差が大きめのコマの数で、少ないほど近い（5は目安の線）。音は、2つの数字が同じなら音量がそろっている。'));
       d.appendChild(p); wrap.appendChild(d);
-    }else if(item.approved){ wrap.appendChild(el('p','reel-qc-main','講師の確認済み（数値の比較は行っていません）')); }
+    }else if(item.approved){ wrap.appendChild(el('p','reel-qc-main','講師の確認済み（数値比較なし）')); }
     else{ wrap.appendChild(el('p','reel-qc-main','数値の比較は行っていません')); }
     return wrap;
   }
@@ -60,7 +60,7 @@
       d.appendChild(w);}
     const two=el('div','reel-two');
     const list=(title,arr)=>{const w=el('div');w.appendChild(el('h4',null,title));const ul=el('ul');(arr||[]).forEach(x=>ul.appendChild(el('li',null,x)));w.appendChild(ul);return w;};
-    if(h.fixed&&h.fixed.length) two.appendChild(list('この型の決まり（最初はここだけ守れば形になる）',h.fixed));
+    if(h.fixed&&h.fixed.length) two.appendChild(list('この型の決まり',h.fixed));
     if(h.rules&&h.rules.length) two.appendChild(list('字幕と音のコツ',h.rules));
     d.appendChild(two);
     if(h.timeline&&h.timeline.length){
@@ -77,15 +77,15 @@
     if(h.materials&&h.materials.length) d.appendChild(list('見本で使った素材',h.materials));
     if(h.agent_prompt){
       const w=el('div','reel-agent'); w.appendChild(el('h4',null,'Claude Code／Codex で作る'));
-      w.appendChild(el('p','reel-note','下のボタンでコピーして、Claude Code か Codex に貼ると、あなたの素材でこの型の編集指示書と動画が作れます。'));
+      w.appendChild(el('p','reel-note','コピーして Claude Code か Codex に貼ると、自分の素材でこの型の編集指示書と動画を作ります。'));
       const det=el('details','reel-agent-body'); det.appendChild(el('summary',null,'指示文の本文を見る'));
       const ta=el('textarea','reel-agent-text'); ta.readOnly=true; ta.value=h.agent_prompt; ta.rows=14; ta.setAttribute('aria-label','指示文の本文'); det.appendChild(ta);
       const btn=el('button','reel-copy','指示文をコピー'); btn.type='button';
       const st=el('span','reel-copy-state',''); st.setAttribute('role','status');
-      btn.addEventListener('click',()=>copyText(h.agent_prompt).then(ok=>{st.textContent=ok?'コピーしました':'コピーできなかったため、下の本文を選んでコピーしてください';if(!ok)det.open=true;}));
+      btn.addEventListener('click',()=>copyText(h.agent_prompt).then(ok=>{st.textContent=ok?'コピーしました':'コピーできませんでした。下の本文を選んでコピーしてください。';if(!ok)det.open=true;}));
       w.appendChild(btn); w.appendChild(st); w.appendChild(det); d.appendChild(w);
     }
-    const a=el('a','text-link','作り方をテキストで保存（AIに貼って相談できる） ↓'); a.href=base+'howto_'+format+'.md'; a.download='作り方_'+LABEL[format]+'.md'; d.appendChild(a);
+    const a=el('a','text-link','作り方をテキストで保存 ↓'); a.href=base+'howto_'+format+'.md'; a.download='作り方_'+LABEL[format]+'.md'; d.appendChild(a);
     return d;
   }
 
@@ -94,7 +94,7 @@
     if(!h||!h.summary){ w.appendChild(el('p','reel-note','この形式の作り方の記録は、まだ公開していません。')); return w; }
     w.appendChild(el('p','reel-brief-text',h.summary));
     if(h.first_step){const p=el('p','reel-brief-text');p.appendChild(el('strong',null,'最初の一手：'));p.appendChild(document.createTextNode(h.first_step));w.appendChild(p);}
-    w.appendChild(el('p','reel-note','くわしい手順・時間順の流れ・指示文は、下の「この動画の作り方」を開きます。'));
+    w.appendChild(el('p','reel-note','手順と指示文は、下の「この動画の作り方」にあります。'));
     return w;
   }
 
@@ -103,8 +103,8 @@
     const head=el('div','reel-head');
     head.appendChild(el('p','overline',(item.nav||LABEL[item.format]||item.format)+' / '+(item.account||'')));
     head.appendChild(el('h3',null,item.title||''));
-    if(FOR[item.format]) head.appendChild(el('p','reel-note','こんな人に：'+FOR[item.format]));
-    head.appendChild(el('p','reel-note','あなたのジャンルに置き換えて作ります。'));
+    if(FOR[item.format]) head.appendChild(el('p','reel-note','使う場面：'+FOR[item.format]));
+    head.appendChild(el('p','reel-note','自分のジャンルに置き換えて作ります。'));
     c.appendChild(head);
     const pair=el('div','reel-pair');
     if(item.ref) pair.appendChild(video(item.ref,item,'見本（人の編集）'));
@@ -112,7 +112,7 @@
     c.appendChild(pair);
     const info=el('div','reel-info'); const qcNode=qcLine(item); c.appendChild(info);
     if(item.stage&&!(item.approved&&!item.qc)){ info.appendChild(el('p','reel-stage',item.stage.indexOf('仕上げ中')===0?'改善を続けている作例（数値は見本との差）':item.stage));
-      const SN=item.stage.indexOf('仕上げ中')===0?'見本との差が残る場面を、数値で確かめながら直し続けている作例です。数値が大きいほど、見本との差が大きいことを表します。下の作り方は、見本の編集メモです。':item.stage.indexOf('見本と同等')===0?'数値の比較で基準内だった作例です。人の目での最終確認とは別の判定です。':'';
+      const SN=item.stage.indexOf('仕上げ中')===0?'見本との差が残る場面を、数値で確かめながら直し続けている作例です。数値が大きいほど、見本との差が大きいことを表します。下の作り方は、見本の編集メモです。':item.stage.indexOf('見本と同等')===0?'数値の比較で基準内に収まった作例です。人の目による確認とは別に判定しています。':'';
       if(SN) info.appendChild(el('p','reel-note',SN)); }
     info.appendChild(qcNode);
     info.appendChild(brief(h));

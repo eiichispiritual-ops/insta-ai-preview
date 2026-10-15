@@ -10,7 +10,7 @@
   function restore(){try{var o=JSON.parse(localStorage.getItem(KEY)||'null');if(!o)return;if(AI[o.ai])state.ai=o.ai;if(MAKE_NAME[o.make])state.make=o.make;FIELDS.forEach(function(id){if(o.f&&typeof o.f[id]==='string'){var n=$(id);if(n.tagName==='SELECT'){var ok=Array.prototype.some.call(n.options,function(x){return x.value===o.f[id];});if(ok)n.value=o.f[id];}else n.value=o.f[id];}});}catch(e){}}
   var FMT={voiceover:'アフレコ',vlog:'VLOG',talk:'トーク',ranking:'ランキング',comparison:'比較',abstract:'抽象マーケ'};
   var AI={
-    cc:{name:'Claude Code',cmd:'claude',skills:'.claude/skills',inst:'curl -fsSL https://claude.ai/install.sh | bash',pathNote:'入れたあとに「PATH」の案内（~/.local/bin is not in your PATH）が出たら、その案内に書かれた1行をコピーして貼り、Enter を押して、ターミナルを閉じて開き直します。案内が出なかった人は、飛ばします。下の1行は、その案内と同じ中身です（ユーザー名は入れなくて大丈夫です）。',pathCmd:'echo \'export PATH="$HOME/.local/bin:$PATH"\' >> ~/.zshrc && source ~/.zshrc',instNote:'Claude Codeを入れます（すでに入っている人は飛ばします）。',loginNote:'claude と打ち、案内に沿ってログインします。「Do you trust the files in this folder?」と出たら、Enter（Yes）を押します。ログインできたら、control＋C（command ではなく、左下の control キー）を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。',desc:'この手順は Mac で行います。iPhone から見ている人は「アプリ」を選んでください。Macのターミナルで進めます。A・B・C の3つを上から順に。どれも「コピー」を押して、ターミナルに貼って（command＋V）、Enter するだけです。',after:'確認できたら、下の言葉を打って、Claude Codeを起動します。.claude は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。'},
+    cc:{name:'Claude Code',cmd:'claude',skills:'.claude/skills',inst:'curl -fsSL https://claude.ai/install.sh | bash',pathNote:'入れたあとに「PATH」の案内（~/.local/bin is not in your PATH）が出たら、その案内に書かれた1行をコピーして貼り、Enter を押して、ターミナルを閉じて開き直します。案内が出なかった人は、飛ばします。下の1行は、その案内と同じ中身です（ユーザー名は入れなくて大丈夫です）。',pathCmd:'echo \'export PATH="$HOME/.local/bin:$PATH"\' >> ~/.zshrc && source ~/.zshrc',instNote:'Claude Code を入れます。入っていれば飛ばしてください。',loginNote:'claude と打ち、案内に沿ってログインします。「Do you trust the files in this folder?」と出たら、Enter（Yes）を押します。ログインできたら、control＋C（command ではなく、左下の control キー）を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。',desc:'この手順は Mac で行います。iPhone から見ている人は「アプリ」を選んでください。Macのターミナルで進めます。A・B・C の3つを上から順に。どれも「コピー」を押して、ターミナルに貼って（command＋V）、Enter するだけです。',after:'確認できたら、下の言葉を打って、Claude Codeを起動します。.claude は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。'},
     codex:{name:'Codex',cmd:'codex',skills:'~/.agents/skills',inst:'npm install -g @openai/codex',instNote:'Codexを入れます（すでに入っている人は飛ばします）。',loginNote:'codex と打ち、案内に沿ってログインします。「Do you trust the files in this folder?」と出たら、Enter（Yes）を押します。ログインできたら、control＋C（command ではなく、左下の control キー）を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。',pre:'node -v',preNote:'先に、Node.js が入っているか確認します。数字が出なければ、nodejs.org から LTS を入れて、ターミナルを開き直します。',desc:'この手順は Mac で行います。iPhone から見ている人は「アプリ」を選んでください。Macのターミナルで進めます。A・B・C の3つを上から順に。どれも「コピー」を押して、ターミナルに貼って（command＋V）、Enter するだけです。',after:'確認できたら、このフォルダ（~/insta-ai）のまま、下の言葉を打って、Codexを起動します。.agents は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。古い版の Codex で「insta-ai-create のスキル」が効かないときだけ、同じ cp の行の ~/.agents/skills を ~/.codex/skills に変えて、もう一度貼ります。Codexがすでに開いていた場合は、一度閉じて、打ち直します。'},
     app:{name:'アプリ',desc:'① 下のボタンでコピー → ② AIアプリで新しい会話を開き、貼って送信 → ③ 返事が出たら、手順3へ。かなり長い文ですが、そのまま送ってください。'}
   };
@@ -119,11 +119,11 @@
       var sk=isCodex?'~/.agents/skills':'.claude/skills';
       var put='mkdir -p ~/insta-ai && cd ~/insta-ai && Z=$(ls -t ~/Downloads | grep "^insta-ai-all.*\\.zip$" | head -1); D=$(ls -t ~/Downloads | grep "^insta-ai-all" | grep -v "\\.zip$" | head -1); if [ -n "$Z" ]; then unzip -oq ~/Downloads/"$Z" -d insta-ai-all; elif [ -n "$D" ]; then rm -rf insta-ai-all && cp -R ~/Downloads/"$D" insta-ai-all; fi; if [ -d insta-ai-all/insta-ai-create ]; then mkdir -p '+sk+' && cp -R insta-ai-all/insta-ai-create '+sk+'/ && ls '+sk+'; else echo "zip が見つかりません。ダウンロードし直してください"; fi';
       note('次に、下の「コピー」を押して、ターミナルに貼って Enter（作業フォルダ ~/insta-ai を作り、zip を開いて、手順書を置くところまで自動でやります。「insta-ai-all (1).zip」のような名前や、Safari が先に開いてしまった場合も、そのまま動きます）。');
-      row('入れる（手順書を置く1行。長いので中身は表示していません）',put);
-      ok('最後に insta-ai-create と出る。');
+      row('入れる（長いので中身は省略しています）',put);
+      ok('最後に insta-ai-create と出れば成功です。');
       help('うまくいかないとき',[
-        ['「zip が見つかりません」と出た','zip がダウンロードフォルダにありません。上のボタンでもう一度ダウンロードして、同じ1行を貼り直します。'],
-        ['違う場所に保存した','その zip をダウンロードフォルダ（Finder の「ダウンロード」）に移してから、もう一度貼ります。']].concat(isCodex?[['あとで「スキルが見つからない」と言われた（古い版の Codex）','次の1行で、古い置き場所にも置きます。','mkdir -p ~/.codex/skills && cp -R ~/insta-ai/insta-ai-all/insta-ai-create ~/.codex/skills/']]:[]));
+        ['「zip が見つかりません」と出た','ダウンロードフォルダに zip がありません。上のボタンでダウンロードし直してから、同じ1行を貼ってください。'],
+        ['違う場所に保存した','zip を Finder の「ダウンロード」に移してから、もう一度貼ります。']].concat(isCodex?[['古い版の Codex で「スキルが見つからない」と出た','次の1行で、古い置き場所にもコピーします。','mkdir -p ~/.codex/skills && cp -R ~/insta-ai/insta-ai-all/insta-ai-create ~/.codex/skills/']]:[]));
       head('C　'+a.name+'を起動して、ログインする');
       var run='cd ~/insta-ai && '+a.cmd;
       row('起動　'+run,run);
@@ -131,10 +131,10 @@
       var chk=(isCodex?'insta-ai-create のスキル':'インスタAIのスキル（/insta-ai-create）')+'は読めていますか。読めていれば「読めています」とだけ答えて。';
       note('起動したら、この1行を貼って Enter。');
       row('確認　'+chk,chk);
-      ok('「読めています」と返ってくる。そのまま、下の手順3へ。');
+      ok('「読めています」と返ってきたら、手順3へ進みます。');
       help('うまくいかないとき',[
         ['「読めていません」と返ってきた','control＋C を2回押して AI を閉じ、B の1行をもう一度貼ってから、C の「起動」を貼り直します。'],
-        ['次の日に続きをやる','ターミナルを開いて、C の「起動」だけを貼れば始められます。']]);
+        ['次の日に続きをやる','ターミナルを開いて、C の「起動」を貼るだけです。']]);
     }
   }
   function renderS3(){
@@ -148,7 +148,7 @@
     $('start-today-wrap').hidden=state.make!=='story';
     $('start-tip-wrap').hidden=state.make!=='reel';
     var hint='';
-    if(state.make==='profile'&&!$('start-reader').value.trim())hint='プロフィールは、見る人を入れると、紹介文の（ ）が減ります。';
+    if(state.make==='profile'&&!$('start-reader').value.trim())hint='プロフィールは「見る人」を書くと、紹介文の空欄が減ります。';
     if(state.make==='feed'&&!$('start-trouble').value.trim())hint='フィードは、見る人の困りごとを入れると、2ページ目の「迷う場面」が具体的になります。';
     $('start-field-hint').textContent=hint;$('start-field-hint').hidden=!hint;
     var isApp=state.ai==='app';
@@ -156,7 +156,7 @@
     $('start-edit-agent').hidden=isApp;
     $('start-edit-app').hidden=!(state.make==='edit'&&isApp);
     $('start-make-label').hidden=isApp;$('start-make').hidden=isApp;
-    var fx=$('start-make-fixed');fx.hidden=!isApp;fx.textContent='作りたいもの：'+MAKE_NAME[state.make]+'（手順2で選んだもの。変えるときは手順2で選び直します）';
+    var fx=$('start-make-fixed');fx.hidden=!isApp;fx.textContent='作りたいもの：'+MAKE_NAME[state.make]+'手順2で選んだもの。変えるときは手順2へ';
     $('start-s2-editnote').hidden=!(isApp&&state.make==='edit');
     $('start-s2-phone').hidden=!isApp;$('start-s3-phone').hidden=!isApp;
     $('start-s3-status').textContent='';
@@ -179,14 +179,14 @@
     copyRow(host,'3点まとめて返す　'+all,all,true);
     copyRow(host,'形式の案が2つ出たら　おすすめの方で、台本まで出してください。','おすすめの方で、台本まで出してください。',true);
     copyRow(host,'ジャンルを聞かれたら　ジャンルは'+g+'です。','ジャンルは'+g+'です。',true);
-    copyRow(host,'誰向けかを聞かれたら　見る人は、（どんな場面で何に）困っている人です。',(reader()||'見る人は、（どんな場面で何に）困っている人です。'),true);
+    copyRow(host,'見る人を聞かれたら　見る人は、（どんな場面で何に）困っている人です。',(reader()||'見る人は、（どんな場面で何に）困っている人です。'),true);
     copyRow(host,'素材を聞かれたら　使える素材は、スマホで撮れる手元の動画と写真です。ないものは作らないでください。','使える素材は、スマホで撮れる手元の動画と写真です。ないものは作らないでください。',true);
     copyRow(host,'経験を聞かれたら　'+exp,exp,true);
     copyRow(host,'決まっていないとき　まだ決まっていません。候補を2つ出して、選ばせてください。','まだ決まっていません。候補を2つ出して、選ばせてください。',true);
   }
   var fixes=['冒頭の1行だけ、別の案を3つ出して。','30秒で話せる長さに短くして。','です・ます調の、やわらかい話し方に直して。'];
   fixes.forEach(function(t){copyRow($('start-fixes'),t,t);});
-  copyRow($('start-edit-next'),'素材の場所を伝える（台本.txt も同じフォルダに置く）　素材のフォルダの場所は、'+'（ここにパスを入れる）です。',function(){return '素材のフォルダの場所は、'+($('start-folder').value.trim()||'（ここにパスを入れる）')+' です。';},true);
+  copyRow($('start-edit-next'),'素材の場所を伝える。台本.txt も同じフォルダへ　素材のフォルダの場所は、'+'（ここにパスを入れる）です。',function(){return '素材のフォルダの場所は、'+($('start-folder').value.trim()||'（ここにパスを入れる）')+' です。';},true);
   copyRow($('start-edit-next'),'表を見てよければ　表でOKです。書き出してください。','表でOKです。書き出してください。',true);
   copyRow($('start-edit-next'),'素材が足りないと言われたら　今ある素材だけで、入点を変えて再利用して、出力/out.mp4 を書き出してください。','今ある素材だけで、入点を変えて再利用して、出力/out.mp4 を書き出してください。',true);
   copyRow($('start-edit-next'),'表が違ったら　○行目だけ、字幕を短くして。','○行目だけ、字幕を短くして。',true);
@@ -199,7 +199,7 @@
   var agentSt=$('start-agent-status');
   $('start-copy-agent').addEventListener('click',function(){
     var f=$('start-format').value;
-    if(!f){agentSt.textContent='上の「形式」を選んでから、もう一度押してください。';return;}
+    if(!f){agentSt.textContent='先に「形式」を選んでください。';return;}
     var btn=$('start-copy-agent');
     loadHowto().then(function(h){
       var p=h[f]&&h[f].agent_prompt;
@@ -216,5 +216,5 @@
 (function(){document.querySelectorAll('.ms-btn[data-copy]').forEach(function(b){b.addEventListener('click',function(){var t=document.getElementById(b.getAttribute('data-copy'));if(!t)return;var st=b.parentNode.querySelector('.ms-status');var done=function(ok){if(st)st.textContent=ok?'コピーしました。':'コピーできませんでした。上の文を長押し（選択）してコピーしてください。';};var fb=function(){try{t.focus();t.select();return document.execCommand('copy');}catch(e){return false;}};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t.value).then(function(){done(true);},function(){done(fb());});}else done(fb());});});})();
 /* 進み具合：各手順でボタンを押したら印を付ける（このブラウザだけに保存） */
 (function(){var K='instaAiProgress.v1',done={};try{done=JSON.parse(localStorage.getItem(K)||'{}')}catch(e){}
-function paint(){var n=0;[1,2,3].forEach(function(i){var d=document.querySelector('.sp-dots [data-sp="'+i+'"]');if(d)d.classList.toggle('on',!!done[i]);if(done[i])n++;});var t=document.getElementById('sp-text');if(t)t.textContent=n===3?'3/3　1本目の下書きまで来ました':n+'/3';}
+function paint(){var n=0;[1,2,3].forEach(function(i){var d=document.querySelector('.sp-dots [data-sp="'+i+'"]');if(d)d.classList.toggle('on',!!done[i]);if(done[i])n++;});var t=document.getElementById('sp-text');if(t)t.textContent=n===3?'3/3　1本目の下書きができました':n+'/3';}
 document.querySelectorAll('.start-step').forEach(function(li,idx){li.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;if(idx===0&&!b.closest('#start-ai'))return;if(idx>0&&!/コピー|ダウンロード/.test(b.textContent))return;done[idx+1]=1;try{localStorage.setItem(K,JSON.stringify(done))}catch(_){}paint();});});paint();})();
