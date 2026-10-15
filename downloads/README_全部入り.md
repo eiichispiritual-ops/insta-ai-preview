@@ -14,14 +14,14 @@
 
 ## 1. 3ステップ
 
-先に、使うAIを1つ選びます。迷ったら「ChatGPT・Claude のアプリ」で始めてください。あとから切り替えても無駄になりません。ターミナル（文字で Mac に指示を出す画面。打ち間違えても壊れません）を使うのは Claude Code（Opus 5.5）と Codex（Astra）だけです。この手順は Mac で行います（サイトの「はじめる」と同じ順・同じ言葉です）。
+先に、使うAIを1つ選びます。迷ったら「ChatGPT・Claude のアプリ」で始めてください。あとから切り替えても無駄になりません。ターミナル（文字で Mac に指示を出す画面。打ち間違えても壊れません）を使うのは Claude Code と Codexだけです。この手順は Mac で行います（サイトの「はじめる」と同じ順・同じ言葉です）。
 Windows の人は、「ChatGPT・Claude のアプリを使う人」を選んでください。
 
 ### Claude Code を使う人
 
 **① 準備する**（ターミナルを開く → Claude Code を入れる → 作業フォルダを作る）
 
-ターミナルは、Spotlight（command＋スペース）で「ターミナル」と打って、Enter で開きます。
+ターミナルは、Spotlight（command＋スペース）で「ターミナル」と打って、Enter で開きます。すでに Claude Code が入っている人は、次の1行（インストール）は飛ばします。
 ```bash
 curl -fsSL https://claude.ai/install.sh | bash
 ```
@@ -37,7 +37,7 @@ claude --version
 ```bash
 mkdir -p ~/insta-ai && cd ~/insta-ai
 ```
-次に `claude` と打ち、案内に沿ってログインします。「Do you trust the files in this folder?」と出たら、Enter（Yes）を押します。ログインできたら、control＋C（command ではなく、左下の control キー）を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）（すでに入っている人は、1行目は飛ばします）。以降の手順は、すべてこの作業フォルダ（`~/insta-ai`）の中で行います。
+次に `claude` と打ち、案内に沿ってログインします。「Do you trust the files in this folder?」と出たら、Enter（Yes）を押します。ログインできたら、control＋C（command ではなく、左下の control キー）を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。以降の手順は、すべてこの作業フォルダ（`~/insta-ai`）の中で行います。
 
 **② zip を置いて、展開する**
 
@@ -70,6 +70,7 @@ claude
 **① 準備する**
 
 先に `node -v` と打ちます。数字が出なければ、https://nodejs.org から LTS を入れて、ターミナルを開き直します。
+すでに Codex が入っている人は、`npm install` の行は飛ばします。
 ```bash
 node -v
 npm install -g @openai/codex
@@ -82,20 +83,26 @@ codex --version
 ```bash
 mkdir -p ~/insta-ai && cd ~/insta-ai
 ```
-次に `codex` と打ち、案内に沿ってログインします。「Do you trust the files in this folder?」と出たら、Enter（Yes）を押します。ログインできたら、control＋C（command ではなく、左下の control キー）を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）（すでに入っている人は、1行目は飛ばします）。`~/insta-ai` が作業フォルダです。以降の手順は、このフォルダでターミナルを開いたまま行い、`codex` もこのフォルダで打ちます。
+次に `codex` と打ち、案内に沿ってログインします。「Do you trust the files in this folder?」と出たら、Enter（Yes）を押します。ログインできたら、control＋C（command ではなく、左下の control キー）を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。`~/insta-ai` が作業フォルダです。以降の手順は、このフォルダでターミナルを開いたまま行い、`codex` もこのフォルダで打ちます。
 
 **② zip を置いて、展開する**
 ```bash
 mv ~/Downloads/insta-ai-all.zip .
 unzip insta-ai-all.zip -d insta-ai-all
-mkdir -p ~/.codex/skills
-cp -R insta-ai-all/insta-ai-create ~/.codex/skills/
+mkdir -p ~/.agents/skills
+cp -R insta-ai-all/insta-ai-create ~/.agents/skills/
 ```
 入ったか確かめます。この1行は手で打ちます。`insta-ai-create` と出れば成功です。
 ```bash
-ls ~/.codex/skills
+ls ~/.agents/skills
 ```
-`.codex` は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。上のコマンドで置きます。
+`.agents` は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。
+
+（古い版の Codex で「insta-ai-create のスキル」が効かないときだけ、次の2行で古い置き場所にも置きます。）
+```bash
+mkdir -p ~/.codex/skills
+cp -R insta-ai-all/insta-ai-create ~/.codex/skills/
+```
 Codex がすでに開いている場合は、一度閉じて、`codex` を打ち直します。
 
 **③ AIを開いて、この1行を貼る**
@@ -154,7 +161,7 @@ README.md
 全部入り_アプリ用.md   アプリに貼る連結済みの1ファイル（サイトの「手順書を全部コピー」と同じ内容。スキルのフォルダの外に置いてあります）
 insta-ai-create/        手順書の本体（SKILL.md と references/ の33本、合計34ファイル）。これだけを cp -R します
 video-edit/            （動画編集用）
-  howto_<形式>.md       形式ごとの作り方（6本）
+  howto_<形式>.md       形式ごとの作り方（6形式：アフレコ・VLOG・トーク・抽象マーケ・ランキング・比較）
   prompt_<形式>.md      AIに貼る指示文（6本）
   examples.md           作例の題名・形式・こんな人に
 ```
@@ -168,7 +175,7 @@ video-edit/            （動画編集用）
 
 ## 4. 動画編集の使い方
 
-編集ソフトは使いません。AIが動画を組み立てます。Claude Code か Codex を、素材を置いたフォルダで開いて使います。
+編集ソフトは使いません。AIが動画を組み立てます。動画の書き出しまでできるのは Mac の Claude Code か Codex です（Windows・スマホの人は、アプリで編集指示書の表まで作り、CapCut などで並べます）。Claude Code か Codex を、素材を置いたフォルダで開いて使います。
 
 1. `video-edit/examples.md` の「こんな人に」を読んで、形式を1つ選びます。
 2. `video-edit/howto_<形式>.md` の「用意するもの」を見て、素材を1つのフォルダに集めます。
@@ -178,9 +185,9 @@ video-edit/            （動画編集用）
 
 ## 5. 詰まったとき3点
 
-1. **貼ったのに動かない**：置き場所が違う場合が多いです。Claude Code は `.claude/skills/insta-ai-create/SKILL.md`、Codex は `~/.codex/skills/insta-ai-create/SKILL.md` があるか、作業フォルダ（`~/insta-ai`）の中で、次で確認します。
+1. **貼ったのに動かない**：置き場所が違う場合が多いです。Claude Code は `.claude/skills/insta-ai-create/SKILL.md`、Codex は `~/.agents/skills/insta-ai-create/SKILL.md`（古い版の Codex は `~/.codex/skills/insta-ai-create/SKILL.md`）があるか、作業フォルダ（`~/insta-ai`）の中で、次で確認します。
 ```bash
-ls .claude/skills/insta-ai-create/SKILL.md ~/.codex/skills/insta-ai-create/SKILL.md
+ls .claude/skills/insta-ai-create/SKILL.md ~/.agents/skills/insta-ai-create/SKILL.md
 ```
 2. **アプリで手順書として動かない**：ファイルの添付と、手順書としての登録は別です。サイトの「手順書を全部コピー」ボタン（または `全部入り_アプリ用.md` の全文）を、入力欄に貼って始めてください。
 3. **動画編集で動画ツールが見つからない**：次を打って、エラーになったら、AIに「このパソコンに ffmpeg を入れる手順を教えて」と聞きます。

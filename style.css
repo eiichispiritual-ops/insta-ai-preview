@@ -318,3 +318,20 @@ code,.start-cmd,textarea,input{word-break:normal}
 /* デザイン10巡目：07 の skill-use.txt リンク（li li の中）も下線を文字に付け、本文と同じ文字サイズに */
 .getskill-steps li li .text-link{min-height:auto;padding:0;margin:0;line-height:inherit;font-size:inherit;border-bottom:0;text-decoration:underline;text-underline-offset:3px;display:inline}
 .getskill-steps li li .text-link{padding:13px 0}
+/* UX改善：入口の振り分け・用語集 */
+.route-pick{display:grid;gap:10px;margin:28px 0 14px;max-width:460px}
+.route-title{font-size:14px;font-weight:600;color:var(--ink);margin:0 0 2px}
+.route-btn{display:flex;flex-direction:column;gap:3px;min-height:56px;padding:13px 18px;background:var(--accent);color:var(--white);border-radius:6px;text-decoration:none;transition:transform .15s,background .15s}
+.route-btn b{font-size:16px;font-weight:600}
+.route-btn span{font-size:13px;opacity:.92}
+.route-btn:hover,.route-btn:focus-visible{background:var(--accent-dark,#9d3f25);transform:translateY(-1px)}
+.route-btn-sub{background:var(--white);color:var(--ink);border:1px solid var(--line)}
+.route-btn-sub:hover,.route-btn-sub:focus-visible{background:var(--soft)}
+.hero-sublink{margin-right:18px}
+.start-note-strong{font-size:15px;margin:4px 0 10px}
+.glossary{margin-top:16px;border:1px solid var(--line);border-radius:6px;background:var(--white);padding:0 16px;max-width:720px}
+.glossary summary{min-height:48px;display:flex;align-items:center;cursor:pointer;font-weight:600;font-size:15px}
+.glossary dl{margin:0 0 14px;display:grid;gap:8px}
+.glossary dt{font-weight:600;font-size:14px}
+.glossary dd{margin:0 0 6px;font-size:14px;line-height:1.75;color:var(--muted)}
+@media (max-width:640px){.start-note,.start-label,.glossary dd{font-size:15px;line-height:1.8}.start-step h3{font-size:18px}}
