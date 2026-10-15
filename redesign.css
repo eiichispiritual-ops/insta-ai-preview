@@ -401,3 +401,16 @@ section.faq summary>span{margin-left:auto!important;padding-left:14px;flex:none}
 @media(min-width:761px){.start-fields{align-items:end!important}}
 .start-stage{scroll-margin-top:90px}
 .howto-alt .nw{white-space:nowrap}
+/* loop15 */
+@media(min-width:1100px){#get-skill .getskill-intro{position:sticky!important;top:96px!important;align-self:start!important}}
+.service-tabs [role=tab]{padding-left:16px!important;column-gap:6px!important}
+.service-tabs [role=tab]>span,.format-tabs [role=tab]>span{margin-left:6px}
+@media(min-width:1100px){#formats .section-intro{align-items:center!important}}
+.mystyle-section code,.ms-files code{white-space:nowrap}
+.mystyle-section p,.ms-files{overflow-wrap:normal}
+details.start-more>summary,details.reel-qc-detail>summary,details.reel-howto>summary,details.howto-detail>summary,details.reel-agent-body>summary,details.start-opt>summary{display:flex!important;align-items:center;justify-content:space-between!important;gap:12px}
+details.start-more>summary>span,details.reel-qc-detail>summary>span,details.reel-howto>summary>span,details.howto-detail>summary>span,details.reel-agent-body>summary>span,details.start-opt>summary>span{margin-left:auto!important}
+details.start-more>summary::after,details.start-opt>summary::after{margin-left:auto!important}
+#reels .reel-card h3+.reel-note{margin-top:8px!important}
+footer.footer.section-shell{max-width:none!important;width:100%!important;margin:0!important;box-sizing:border-box!important;padding-left:max(22px,calc((100% - 1120px)/2))!important;padding-right:max(22px,calc((100% - 1120px)/2))!important}
+.ms-head>.ms-cost,.ms-head>.ms-need{box-sizing:border-box!important;width:100%!important;max-width:none!important}
