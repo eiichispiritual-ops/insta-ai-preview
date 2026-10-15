@@ -278,3 +278,11 @@ section.faq summary{gap:0}section.faq summary>span{margin-left:auto!important;po
 section.faq summary::before{margin-right:16px!important}
 section.faq details p{padding:0 0 18px 46px}
 #feed{background:linear-gradient(135deg,#b0105a 0%,#8a1a8f 55%,#5b2bb0 100%)!important;background-color:#8a1a8f!important}
+.hx-kinds.hx-kinds2{grid-template-columns:1fr 1fr!important;gap:12px}
+.hx-kinds2 a{padding:16px 18px!important;border-top-width:6px!important}
+.hx-kinds2 li:nth-child(2) a{border-color:#833ab4!important}
+.hx-kinds2 b{font-size:20px!important}.hx-kinds2 span{font-size:15px!important}
+.hx-kinds2 li:last-child{grid-column:auto!important}
+.hx-also{font-size:14px;color:#444;margin:4px 0 12px;order:2}
+.hx-also a{color:#b0105a;font-weight:700}
+@media(max-width:760px){.hx-copy .hx-also{order:2!important}}
