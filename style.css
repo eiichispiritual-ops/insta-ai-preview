@@ -635,3 +635,17 @@ h1,h2,h3{font-feature-settings:"palt" 1}
 }
 @media (min-width:861px){.hero{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:48px}}
 .hero-facts span,.hv-screen figcaption,.hv-reel figcaption,.works-with,.works-with span{font-size:13px}
+/* L5: break uniform blocks */
+@media (min-width:861px){
+.howto-grid{display:grid!important;grid-template-columns:1.5fr 1fr!important;gap:20px 28px!important;align-items:start}
+#howto-03{grid-column:1;grid-row:1/4;order:-1}
+#howto-01,#howto-02,#howto-04{grid-column:2}
+#howto-01 .howto-points,#howto-02 .howto-points,#howto-04 .howto-points{display:none}
+}
+.howto-card{box-shadow:none!important;border:0!important;border-top:1px solid var(--line)!important;border-radius:0!important;background:none!important}
+.service-tabs{display:flex!important;flex-wrap:wrap;gap:0 22px!important;border-bottom:1px solid var(--line)}
+.service-tabs button{flex:0 0 auto!important;width:auto!important;border:0!important;background:none!important;padding:10px 0!important;border-bottom:3px solid transparent!important;border-radius:0!important;min-height:44px}
+.service-tabs button[aria-selected="true"]{border-bottom-color:#111!important}
+.service-tabs button{font-size:0}
+.service-tabs button span{font-size:15px;font-weight:700;color:#111}
+.service-tabs button small{font-size:13px;color:#666;margin-left:6px}
