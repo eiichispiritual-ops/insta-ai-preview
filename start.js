@@ -100,7 +100,7 @@
       var note=function(t){host.appendChild(el('p','start-note',t));};
       var ok=function(t){host.appendChild(el('p','start-note start-ok','【成功の目安】'+t));};
       var warn=function(t){host.appendChild(el('p','start-note start-warn',t));};
-      var head=function(t){host.appendChild(el('h4','start-stage',t));};
+      var head=function(t){var h=el('h4','start-stage',t);var k=t.charAt(0);if(k==='A'||k==='B'||k==='C')h.id='start-s2-'+k.toLowerCase();host.appendChild(h);};
       var row=function(label,text){var r=el('div','start-copyrows');copyRow(r,label,text);host.appendChild(r);};
       var help=function(title,items){var d=el('details','start-more start-help');d.appendChild(el('summary',null,title));items.forEach(function(it){var p=el('p','start-note');p.appendChild(el('b',null,it[0]+'：'));p.appendChild(document.createTextNode(it[1]));d.appendChild(p);if(it[2]){var r=el('div','start-copyrows');copyRow(r,null,it[2]);d.appendChild(r);}});host.appendChild(d);};
       var isCodex=state.ai==='codex';
@@ -148,7 +148,7 @@
     }
   }
   function renderS3(){
-    $('start-prompt').value=prompt();
+    $('start-prompt').value=prompt();if(window.__fitPrompt)window.__fitPrompt();
     var out=OUT[state.make];
     if(state.make==='edit'&&state.ai==='app')out='アプリで出るのは編集の段取り表までです。表を見ながら CapCut などで並べてください。書き出しまで自動で進むのは Claude Code と Codex です。';
     $('start-s3-out').textContent=out;
@@ -230,4 +230,8 @@ function paint(){var n=0;[1,2,3].forEach(function(i){var on=done[i]===1;var d=do
 (function(){var st=document.querySelectorAll('.start-step')[2];if(!st)return;var b=document.createElement('button');b.type='button';b.id='sp-confirm';b.className='sp-confirm';b.textContent='AIから台本が出た';b.hidden=true;b.addEventListener('click',function(e){e.stopPropagation();done[3]=1;try{localStorage.setItem(K,JSON.stringify(done))}catch(_){}paint();});var h=st.querySelector('h3')||st.firstElementChild;var wrap=document.createElement('p');wrap.className='sp-confirm-wrap';wrap.appendChild(b);st.appendChild(wrap);})();
 document.querySelectorAll('.start-step').forEach(function(li,idx){li.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;if(idx===0&&!b.closest('#start-ai'))return;if(b.id==='sp-confirm')return;if(idx>0&&!/コピー|ダウンロード/.test(b.textContent))return;if(idx===2){if(done[3]!==1)done[3]='copied';}else done[idx+1]=1;try{localStorage.setItem(K,JSON.stringify(done))}catch(_){}paint();});});paint();var rb=document.getElementById('sp-resume');var steps=document.querySelectorAll('.start-step');var any=done[1]||done[2]||done[3];if(rb&&any&&!(done[1]===1&&done[2]===1&&done[3]===1)){var nx=done[1]!==1?0:done[2]!==1?1:2;rb.hidden=false;rb.textContent='前回の続きから（手順'+(nx+1)+'）';rb.addEventListener('click',function(){steps[nx].scrollIntoView({behavior:'smooth',block:'start'});});}})();
 ;(function(){var d=document.getElementById('howto-mac');if(d&&window.matchMedia('(min-width:761px)').matches)d.open=true;
-document.addEventListener('click',function(e){var a=e.target.closest('.howto-alt');if(!a)return;var b=document.querySelector('.hx-route .route-btn[data-route="'+a.getAttribute('data-route')+'"]');if(b){e.preventDefault();b.click();}});})();
+document.addEventListener('click',function(e){var a=e.target.closest('.howto-alt');if(!a)return;var b=document.querySelector('.hx-route .route-btn[data-route="'+a.getAttribute('data-route')+'"]');if(b){e.preventDefault();b.click();var t=a.getAttribute('data-target');setTimeout(function(){var g=t&&document.getElementById(t);if(g)g.scrollIntoView({block:'start'});},120);}});})();
+;(function(){function fit(t){if(!t||!t.offsetParent)return;t.style.height='auto';t.style.height=(t.scrollHeight+4)+'px';}window.__fitPrompt=function(){fit(document.getElementById('start-prompt'));fit(document.getElementById('ms-mk'));};
+function all(){fit(document.getElementById('start-prompt'));fit(document.getElementById('ms-mk'));}
+var t=document.getElementById('start-prompt');if(t){new MutationObserver(all).observe(t,{childList:true,characterData:true,subtree:true});['input','change','click'].forEach(function(ev){document.addEventListener(ev,function(){setTimeout(all,30);});});}
+window.addEventListener('resize',all);window.addEventListener('load',all);setTimeout(all,300);})();

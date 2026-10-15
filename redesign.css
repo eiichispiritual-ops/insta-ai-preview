@@ -378,7 +378,8 @@ section.faq summary>span{margin-left:auto!important;padding-left:14px;flex:none}
 .howto-legacy[open]>summary::after{content:"−"}
 .howto-legacy>.howto-grid{margin-top:12px}
 /* loop13 W4/W5 common edges */
-#howto.section-shell,#formats.section-shell,#get-skill.section-shell,#method.section-shell,section.faq.section-shell,#also>.section-shell,#workbench>.section-shell{max-width:1164px!important;padding-left:22px!important;padding-right:22px!important;margin-left:auto!important;margin-right:auto!important;box-sizing:border-box!important}
+#howto.section-shell,#formats.section-shell,#get-skill.section-shell,#method.section-shell,section.faq.section-shell{max-width:none!important;width:100%!important;margin-left:0!important;margin-right:0!important;padding-left:max(22px,calc((100% - 1120px)/2))!important;padding-right:max(22px,calc((100% - 1120px)/2))!important;box-sizing:border-box!important}
+#also>.section-shell,#workbench>.section-shell{max-width:1164px!important;padding-left:22px!important;padding-right:22px!important;margin-left:auto!important;margin-right:auto!important;box-sizing:border-box!important}
 @media(max-width:1099px){#start.start-section,#mystyle.mystyle-section{padding-left:22px!important;padding-right:22px!important}}
 .also-head{display:block!important}.also-head p{margin-top:12px!important}
 @media(max-width:760px){.fmt-gallery{gap:10px!important}.fmt-gallery figure{width:calc((100% - 20px)/3)!important;box-sizing:border-box}}
@@ -389,3 +390,14 @@ section.faq summary>span{margin-left:auto!important;padding-left:14px;flex:none}
 @media(max-width:760px){.also-grid{grid-template-columns:1fr!important}}
 #howto .howto-points{display:block!important}
 #howto .howto-note{font-size:14px!important}
+/* loop14 */
+.sp-save-out{display:block;margin:8px 0 0;font-size:14px;color:#555}
+.start-extra{display:grid!important;grid-template-columns:1fr!important;gap:20px!important}
+.mystyle-section details>summary{padding:14px 16px!important}
+.ms-head>.ms-cost,.ms-head>.ms-need{border:1px solid rgba(255,255,255,.14)!important;border-left:4px solid #ff5fa2!important;border-radius:12px!important;margin-top:16px!important}
+.mystyle-section code,#method code,.mystyle-section .ms-files code{background:rgba(255,255,255,.08)!important;color:#fff!important;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+#workbench .primary-cta{text-align:center!important;justify-content:center!important}
+.req-row~input,.start-fields label{vertical-align:bottom}
+@media(min-width:761px){.start-fields{align-items:end!important}}
+.start-stage{scroll-margin-top:90px}
+.howto-alt .nw{white-space:nowrap}
