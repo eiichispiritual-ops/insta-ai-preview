@@ -367,3 +367,25 @@ section.faq summary>span{margin-left:auto!important;padding-left:14px;flex:none}
 .getskill-steps>li{grid-template-columns:28px 1fr!important;gap:8px!important}.getskill-steps>li>span{font-size:17px!important;font-weight:900;padding-top:1px!important;line-height:1.5}.getskill-steps h3{line-height:1.5}
 #method .method-grid p.method-lead{color:#ece8f2!important;opacity:1!important}.closing h2{margin-bottom:18px!important}
 @media(max-width:1099px){section#reels.reels-section{padding-left:22px!important;padding-right:22px!important}}
+.start-choices[hidden],[hidden].start-choices{display:none!important}
+/* loop13 howto */
+#howto .howto-note{background:none!important;border:0!important;color:#666!important;font-size:13px!important;padding:0!important;margin:6px 0 8px!important;line-height:1.7}
+#howto .howto-alt{display:block;margin-top:4px;color:#b0105a!important;font-weight:700;font-size:14px;text-decoration:underline}
+.howto-legacy{margin-top:32px}
+.howto-legacy>summary{cursor:pointer;font-size:20px;font-weight:900;padding:12px 0;list-style:none;display:flex;align-items:center;gap:10px}
+.howto-legacy>summary::-webkit-details-marker{display:none}
+.howto-legacy>summary::after{content:"+";margin-left:auto;font-size:22px;color:#b0105a}
+.howto-legacy[open]>summary::after{content:"−"}
+.howto-legacy>.howto-grid{margin-top:12px}
+/* loop13 W4/W5 common edges */
+#howto.section-shell,#formats.section-shell,#get-skill.section-shell,#method.section-shell,section.faq.section-shell,#also>.section-shell,#workbench>.section-shell{max-width:1164px!important;padding-left:22px!important;padding-right:22px!important;margin-left:auto!important;margin-right:auto!important;box-sizing:border-box!important}
+@media(max-width:1099px){#start.start-section,#mystyle.mystyle-section{padding-left:22px!important;padding-right:22px!important}}
+.also-head{display:block!important}.also-head p{margin-top:12px!important}
+@media(max-width:760px){.fmt-gallery{gap:10px!important}.fmt-gallery figure{width:calc((100% - 20px)/3)!important;box-sizing:border-box}}
+@media(min-width:1100px){.ms-head>.ms-cost{grid-column:1!important;margin-top:18px!important}.ms-head>.ms-photo{grid-row:5/span 2!important}}
+.howto-legacy[open] details:not([open]) summary span{transform:none!important}
+@media(min-width:1100px){.ms-head>h2{grid-row:1!important}.ms-head>.ms-lead{grid-row:2!important}.ms-head>.ms-flow{grid-row:3!important}.ms-head>.ms-cost{grid-row:4!important;align-self:start}.ms-head>.ms-pair{grid-row:1/span 3!important}.ms-head>.ms-photo{grid-row:4!important;align-self:start}.ms-head>.ms-need{grid-row:5!important}}
+.also-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;align-items:stretch}.also-card{grid-template-columns:1fr!important;grid-column:auto!important}
+@media(max-width:760px){.also-grid{grid-template-columns:1fr!important}}
+#howto .howto-points{display:block!important}
+#howto .howto-note{font-size:14px!important}
