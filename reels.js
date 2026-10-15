@@ -51,7 +51,7 @@
     return Promise.resolve(fb());
   }
   function howtoBlock(h,format){
-    const d=el('details','reel-howto'); const s=el('summary',null,'この動画の作り方'); d.appendChild(s);
+    const d=el('details','reel-howto'); const s=el('summary',null,'この動画の作り方'); const sp=el('span',null,'+'); sp.setAttribute('aria-hidden','true'); s.appendChild(sp); d.appendChild(s);
     if(!h){ d.appendChild(el('p','reel-note','この形式の作り方の記録は、まだ公開していません。')); return d; }
     if(h.summary) d.appendChild(el('p','reel-summary',h.summary));
     if(h.prepare&&h.prepare.length){const w=el('div','reel-prepare');w.appendChild(el('h4',null,'用意するもの'));const ul=el('ul');h.prepare.forEach(x=>ul.appendChild(el('li',null,x)));w.appendChild(ul);
