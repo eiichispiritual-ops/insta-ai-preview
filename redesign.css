@@ -435,3 +435,8 @@ footer.footer.section-shell{max-width:none!important;width:100%!important;margin
 .mystyle-section .ms-copy,.mystyle-section .ms-text{width:100%!important;max-width:none!important;box-sizing:border-box!important}
 .mystyle-section .ms-steps>li>div{flex:1 1 auto!important;min-width:0}
 @media(max-width:1099px){#formats .fmt-gallery{margin-bottom:20px!important}}
+/* loop17 */
+.nw{white-space:nowrap}
+#reels .split-heading{display:block!important}#reels .split-heading>div{margin-top:16px}#reels .split-heading p{text-align:left!important}
+@media(min-width:600px) and (max-width:1099px){#formats .format-tabs{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;flex-wrap:initial!important}#formats .format-tabs>button{min-width:0!important;width:auto!important;flex:none!important}}
+@media(min-width:600px) and (max-width:1099px){#formats .format-tabs>button{padding-left:16px!important;margin:0!important}}
