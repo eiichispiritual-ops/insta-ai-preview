@@ -678,3 +678,31 @@ section.method .method-list article>span{font-size:14px!important}
 .tape{background:rgba(0,149,246,.18)}
 .hand.hv-note,.hand.hv-note br{border-color:var(--line)}
 @media(min-width:761px){.hv-screen figcaption{padding-right:110px}}
+/* mobile: real screenshot strip right under the AI choices */
+.hero-strip{display:none}
+@media(max-width:760px){
+.hero-strip{order:4;display:grid;grid-template-columns:1fr 1fr 44px;gap:6px;align-items:stretch;margin:10px 0 4px;text-decoration:none;color:var(--muted);position:relative}
+.hero-strip img{width:100%;height:58px;object-fit:cover;border-radius:6px;border:1px solid var(--line);display:block}
+.hero-strip img:nth-child(3){object-position:top}
+.hero-strip span{grid-column:1/-1;font-size:14px;line-height:1.4}
+.hero h1{margin-bottom:10px}
+.hero-description{margin-bottom:12px;line-height:1.75}
+.route-pick .route-btn{padding-top:12px;padding-bottom:12px}
+}
+@media(max-width:760px){
+.hero-facts{order:5}
+.hero-description{line-height:1.7!important;margin-bottom:10px!important}
+.route-pick .route-btn{padding-top:10px!important;padding-bottom:10px!important}
+.route-title{margin-bottom:6px!important}
+.hero-strip{grid-template-columns:1fr 1fr 34px;margin-top:8px}
+.hero-strip img{height:50px}
+.hero-strip span{display:none}
+}
+@media(max-width:760px){.hero-strip{width:100%;box-sizing:border-box;grid-template-columns:1fr 1fr 29px}.hero-strip img{height:56px}}
+@media(max-width:760px){.hero-strip{display:flex!important;gap:6px;align-self:stretch}.hero-strip img{flex:1 1 0;min-width:0;width:auto!important;max-width:none!important}.hero-strip img:nth-child(3){flex:0 0 32px}}
+.ms-cost{margin:14px 0 0;padding:14px 16px;background:#fff;border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:6px;font-size:15px;line-height:1.8}
+.ms-cost b{display:block;margin-bottom:4px}
+/* loop2: primary choice reads as the main button (marketer: CTA clarity) */
+.hero .route-pick .route-btn:first-of-type{background:#ffd400!important;border-radius:8px!important;border:0!important;padding-left:14px!important;margin-bottom:4px!important}
+.hero .route-pick .route-btn:first-of-type::after{color:#111}
+.hero .route-pick .route-btn:first-of-type span{color:#222}
