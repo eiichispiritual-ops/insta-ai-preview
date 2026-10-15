@@ -85,7 +85,7 @@
         b.addEventListener('click',function(){if(window.instaAiCopySkill)window.instaAiCopySkill(k,b,$('start-s2-status'));});
         host.appendChild(b);
         if(window.instaAiSkillLength)window.instaAiSkillLength(k).then(function(n){
-          var l=pre+'（'+inner+'・約'+n.toLocaleString('ja-JP')+'字）';
+          var l=pre+'（'+inner+'）';b.title='長い文章です（約'+Math.round(n/1000)+'千字）';
           if(!b.classList.contains('is-copied')){b.textContent=l;}
           b.setAttribute('data-label',l);
         }).catch(function(){});
