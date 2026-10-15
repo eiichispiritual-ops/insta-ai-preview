@@ -668,3 +668,6 @@ h1,h2,h3{font-feature-settings:"palt" 1}
 #storyboard-list span,#storyboard-list *,ol>li>span{font-size:14px!important}
 section.method .method-list article>span{font-size:14px!important}
 .service-tabs button{grid-template-columns:3em 9em 1fr 4.5em!important;box-shadow:none!important}.service-tabs button::before{display:none!important}.service-tabs button[aria-selected="true"]{border-bottom:1px solid var(--line)!important;outline:0}
+.service-tabs button::after{position:static!important;width:auto!important;height:auto!important;background:none!important;transform:none!important;inset:auto!important;display:block!important}
+.service-tabs button small{display:block!important}
+@media (max-width:600px){.service-tabs button{grid-template-columns:2.2em 1fr 4.5em!important}.service-tabs button span{grid-column:2;grid-row:1}.service-tabs button small{grid-column:2;grid-row:2}.service-tabs button::after{grid-column:3;grid-row:1/3}}
