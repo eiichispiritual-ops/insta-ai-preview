@@ -76,7 +76,7 @@
     }
     if(h.materials&&h.materials.length) d.appendChild(list('見本で使った素材',h.materials));
     if(h.agent_prompt){
-      const w=el('div','reel-agent'); w.appendChild(el('h4',null,'Claude Code／Codex で作る'));
+      const w=el('div','reel-agent'); w.appendChild(el('h4',null,'Claude Code／Codex で作る'));w.appendChild(el('p','start-note start-warn','書き出しで「ffmpeg がない」と言われたら、AI に「ffmpeg を Homebrew で入れて」と頼みます（Mac のパスワードを聞かれたら入力して Enter）。'));
       w.appendChild(el('p','reel-note','コピーして Claude Code か Codex に貼ると、自分の素材でこの型の編集指示書と動画を作ります。'));
       const det=el('details','reel-agent-body'); det.appendChild(el('summary',null,'指示文の本文を見る'));
       const ta=el('textarea','reel-agent-text'); ta.readOnly=true; ta.value=h.agent_prompt; ta.rows=14; ta.setAttribute('aria-label','指示文の本文'); det.appendChild(ta);

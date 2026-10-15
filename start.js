@@ -12,7 +12,7 @@
   var AI={
     cc:{name:'Claude Code',cmd:'claude',skills:'.claude/skills',inst:'curl -fsSL https://claude.ai/install.sh | bash',pathNote:'入れたあとに「~/.local/bin is not in your PATH」と出たら、下の1行を貼って Enter。ターミナルを閉じて開き直せば反映されます。この表示が出なければ、ここは飛ばしてかまいません。下の1行は案内に書かれているものと同じで、ユーザー名を書き換える必要はありません。',pathCmd:'echo \'export PATH="$HOME/.local/bin:$PATH"\' >> ~/.zshrc && source ~/.zshrc',instNote:'Claude Code を入れます。入っていれば飛ばしてください。',loginNote:'claude と打ち、案内どおりにログインします。「Do you trust the files in this folder?」と聞かれたら Enter。ログインが済んだら、左下の control キーと C を2回押して元の画面に戻ってください（command キーではありません）。戻らずに次の行を貼ると、AIへの質問として送られてしまいます。',desc:'この手順は Mac で行います。iPhone から見ている人は「アプリ」を選んでください。Macのターミナルで進めます。A・B・C の3つを上から順に。どれも「コピー」を押して、ターミナルに貼って（command＋V）、Enter するだけです。',after:'確認できたら、下の言葉を打って、Claude Codeを起動します。.claude は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。'},
     codex:{name:'Codex',cmd:'codex',skills:'~/.agents/skills',inst:'npm install -g @openai/codex',instNote:'Codex を入れます。入っていれば飛ばしてください。',loginNote:'codex と打ち、案内どおりにログインします。「Do you trust the files in this folder?」と聞かれたら Enter。ログインが済んだら、左下の control キーと C を2回押して元の画面に戻ってください（command キーではありません）。戻らずに次の行を貼ると、AIへの質問として送られてしまいます。',pre:'node -v',preNote:'先に、Node.js が入っているか確認します。数字が出なければ、nodejs.org から LTS を入れて、ターミナルを開き直します。',desc:'この手順は Mac で行います。iPhone から見ている人は「アプリ」を選んでください。Macのターミナルで進めます。A・B・C の3つを上から順に。どれも「コピー」を押して、ターミナルに貼って（command＋V）、Enter するだけです。',after:'確認できたら、このフォルダ（~/insta-ai）のまま、下の言葉を打って、Codexを起動します。.agents は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。古い版の Codex で「インスタAIの手順書」が効かないときだけ、同じ cp の行の ~/.agents/skills を ~/.codex/skills に変えて、もう一度貼ります。Codexがすでに開いていた場合は、一度閉じて、打ち直します。'},
-    app:{name:'アプリ',desc:'① 下のボタンでコピー → ② AIアプリで新しい会話を開き、貼って送信 → ③ 返事が出たら、手順3へ。長い文なので、貼ると「ファイル」のように表示されることがあります。そのまま送信して大丈夫です。'}
+    app:{name:'アプリ',desc:'① 下のボタンでコピー → ② AI（アプリかブラウザ）で新しい会話を開き、貼って送信 → ③ 返事が出たら、手順3へ。長い文なので、貼ると「ファイル」のように表示されることがあります。そのまま送信して大丈夫です。'}
   };
   function copyText(t){
     var fb=function(){try{var x=document.createElement('textarea');x.value=t;x.style.position='fixed';x.style.opacity='0';document.body.appendChild(x);x.select();var ok=document.execCommand('copy');x.remove();return ok;}catch(e){return false;}};
@@ -64,7 +64,7 @@
     }
   }
   var OUT={
-    reel:'形式を相談にした場合は、先に案が2つ出ます。下の「形式の案が2つ出たら」を返してください。\n出てくるもの：・日付とタイトル　・台本の本文　・撮影メモ（撮れる素材か、要確認かの欄つき）',
+    reel:'形式を相談にした場合は、先に案が2つ出ます。下の「形式の案が2つ出たら」を返してください。\n出てくるもの：\n・日付とタイトル\n・台本の本文\n・撮影メモ（話す一文・映すもの・撮れるか要確認か）',
     profile:'出てくるもの：表示名と紹介文の案と、選んだ理由。（ ）や「要確認」の括弧は、プロフィール欄へ貼る前に書き換えるか消します。',
     feed:'出てくるもの：ページごとの見出し・本文・配置。',
     story:'出てくるもの：1枚ごとの本文・使う素材・その画面の役割。材料が1つの日は1枚で終わります。枚数を増やすには、出来事をもう1つか、見る人の困りごとを入れてください。「今日あったこと」を空欄にすると、本文の（ ）は自分で書き換える場所になります。',
@@ -99,6 +99,7 @@
     }else{
       var note=function(t){host.appendChild(el('p','start-note',t));};
       var ok=function(t){host.appendChild(el('p','start-note start-ok','【成功の目安】'+t));};
+      var warn=function(t){host.appendChild(el('p','start-note start-warn',t));};
       var head=function(t){host.appendChild(el('h4','start-stage',t));};
       var row=function(label,text){var r=el('div','start-copyrows');copyRow(r,label,text);host.appendChild(r);};
       var help=function(title,items){var d=el('details','start-more start-help');d.appendChild(el('summary',null,title));items.forEach(function(it){var p=el('p','start-note');p.appendChild(el('b',null,it[0]+'：'));p.appendChild(document.createTextNode(it[1]));d.appendChild(p);if(it[2]){var r=el('div','start-copyrows');copyRow(r,null,it[2]);d.appendChild(r);}});host.appendChild(d);};
@@ -118,31 +119,32 @@
         ['「~/.local/bin is not in your PATH」や「command not found: claude」','次の1行を貼って Enter。そのあと、ターミナルを閉じて開き直し、もう一度「入れる」を貼ります。',a.pathCmd],
         ['何も出ずに止まって見える','ダウンロード中です。1〜2分待ちます。']]);
       head('B　手順書（zip）を受け取って、入れる');
-      note('まず下のボタンで zip をダウンロードします（ダウンロードフォルダに入ります。開かなくてかまいません）。貼ったあとに「“ターミナル”が“ダウンロード”フォルダ内のファイルにアクセスしようとしています」と出たら「許可」を押します。');
+      note('下の1行だけで、zip のダウンロードから手順書を置くところまで進みます（ボタンで先に受け取っておいてもかまいません。ダウンロードフォルダに入ります）。貼ったあとに「“ターミナル”が“ダウンロード”フォルダ内のファイルにアクセスしようとしています」と出たら「許可」を押します。');
       var z=el('a','start-btn primary','全部入りzipをダウンロード');z.href='downloads/insta-ai-all.zip';z.setAttribute('download','');host.appendChild(z);
-      var sk=isCodex?'~/.agents/skills':'.claude/skills';
-      var put='mkdir -p ~/insta-ai && cd ~/insta-ai && Z=$(ls -t ~/Downloads | grep "^insta-ai-all.*\\.zip$" | head -1); D=$(ls -t ~/Downloads | grep "^insta-ai-all" | grep -v "\\.zip$" | head -1); if [ -n "$Z" ]; then unzip -oq ~/Downloads/"$Z" -d insta-ai-all; elif [ -n "$D" ]; then rm -rf insta-ai-all && cp -R ~/Downloads/"$D" insta-ai-all; fi; if [ -d insta-ai-all/insta-ai-create ]; then mkdir -p '+sk+' && cp -R insta-ai-all/insta-ai-create '+sk+'/ && ls '+sk+'; else echo "zip が見つかりません。ダウンロードし直してください"; fi';
+      var sk=isCodex?'~/.agents/skills':'.claude/skills';var ZURL=new URL('downloads/insta-ai-all.zip',location.href).href;
+      var put='mkdir -p ~/insta-ai && cd ~/insta-ai && Z=$(ls -t ~/Downloads | grep "^insta-ai-all.*\\.zip$" | head -1); D=$(ls -t ~/Downloads | grep "^insta-ai-all" | grep -v "\\.zip$" | head -1); if [ -z "$Z" ] && [ -z "$D" ]; then curl -fsSLo ~/Downloads/insta-ai-all.zip '+ZURL+' && Z=insta-ai-all.zip; fi; if [ -n "$Z" ]; then unzip -oq ~/Downloads/"$Z" -d insta-ai-all; elif [ -n "$D" ]; then rm -rf insta-ai-all && cp -R ~/Downloads/"$D" insta-ai-all; fi; if [ -d insta-ai-all/insta-ai-create ]; then mkdir -p '+sk+' && cp -R insta-ai-all/insta-ai-create '+sk+'/ && ls '+sk+'; else echo "zip が見つかりません。ダウンロードし直してください"; fi';
       note('下の「コピー」を押して、ターミナルに貼って Enter。作業フォルダ ~/insta-ai を作り、zip を開いて手順書を置くところまで自動で進みます。ファイル名が「insta-ai-all (1).zip」になっていても、Safari が先に zip を開いていても動きます。');
       row('入れる（長いので中身は省略しています）',put);
       ok('最後に insta-ai-create と出れば成功です。');
       help('うまくいかないとき',[
-        ['「zip が見つかりません」と出た','ダウンロードフォルダに zip がありません。上のボタンでダウンロードし直してから、同じ1行を貼ってください。'],
+        ['「zip が見つかりません」と出た','ダウンロードに失敗しています。上のボタンで zip をダウンロードしてから、同じ1行を貼ってください。'],
         ['違う場所に保存した','zip を Finder の「ダウンロード」に移してから、もう一度貼ります。']].concat(isCodex?[['古い版の Codex で「スキルが見つからない」と出た','次の1行で、古い置き場所にもコピーします。','mkdir -p ~/.codex/skills && cp -R ~/insta-ai/insta-ai-all/insta-ai-create ~/.codex/skills/']]:[]));
       head('C　'+a.name+'を起動して、ログインする');
       var run='cd ~/insta-ai && '+a.cmd;
       row('起動　'+run,run);
+      warn('動画の書き出しで「ffmpeg がない」と言われたら：AI に「ffmpeg を Homebrew で入れて」と頼みます。Mac のパスワードを聞かれたら入力して Enter（画面には出ません）。');
       note('初回はログインが必要です。ブラウザが開いたら、いつものアカウントで許可してください。英語で何か聞かれたら、文字の色の設定も含めて Enter で進めてかまいません。');
       var chk='インスタAIの手順書（insta-ai-create）は読めていますか。読めていれば「読めています」とだけ答えて。';
       note('起動したら、この1行を貼って Enter。');
       row('確認　'+chk,chk);
       ok('「読めています」と返ってきたら、手順3へ進みます。');
-      note('「読めています」と返らないとき：'+(isCodex?'「~/.agents/skills/insta-ai-create/SKILL.md を読んでから進めて」':'「.claude/skills/insta-ai-create/SKILL.md を読んでから進めて」')+'と貼れば、ファイルを直接読ませて進められます。');
+      warn('「読めています」と返らないとき：'+(isCodex?'「~/.agents/skills/insta-ai-create/SKILL.md を読んでから進めて」':'「.claude/skills/insta-ai-create/SKILL.md を読んでから進めて」')+'と貼れば、ファイルを直接読ませて進められます。');
       help('うまくいかないとき',[
         ['「読めていません」と返ってきた','control＋C を2回押して AI を閉じ、B の1行をもう一度貼ってから、C の「起動」を貼り直します。'],
         ['動画の書き出しで「ffmpeg がない」と言われた','AI に「ffmpeg を Homebrew で入れて」と頼めば入れてくれます。途中で Mac のパスワードを聞かれたら、入力して Enter（画面には表示されません）。'],
         ['次の日に続きをやる','ターミナルを開いて、C の「起動」を貼るだけです。']]);
-      (function(){var qn=el('p','start-note','ターミナルに上から順に貼ります。2 の行で zip をダウンロードフォルダに取ります（ボタンで受け取ってあれば飛ばせます）。');quick.appendChild(qn);
-        [['1 入れる',inst],['2 zip を取る','curl -fsSLo ~/Downloads/insta-ai-all.zip '+new URL('downloads/insta-ai-all.zip',location.href).href],['3 手順書を置く',put],['4 起動',run],['5 確認（AIに貼る）',chk]].forEach(function(x){var r=el('div','start-copyrows');copyRow(r,x[0],x[1]);quick.appendChild(r);});})();
+      (function(){var qn=el('p','start-note','ターミナルに上から順に貼ります。2 の行は zip のダウンロードもします。');quick.appendChild(qn);quick.appendChild(el('p','start-note start-warn','「読めています」と返らないとき：'+(isCodex?'「~/.agents/skills/insta-ai-create/SKILL.md を読んでから進めて」':'「.claude/skills/insta-ai-create/SKILL.md を読んでから進めて」')+'と貼ります。ffmpeg がないと言われたら「ffmpeg を Homebrew で入れて」と頼みます。'));
+        [['1 入れる',inst],['2 zip を取って手順書を置く',put],['3 起動',run],['4 確認（AIに貼る）',chk]].forEach(function(x){var r=el('div','start-copyrows');copyRow(r,x[0],x[1]);quick.appendChild(r);});})();
     }
   }
   function renderS3(){
@@ -184,7 +186,7 @@
     var host=$('start-answers');host.replaceChildren();var g=genre()||'（あなたのジャンル）';
     var exp='私が実際に試したことは（ここに書く）です。ない場合は、見る人への呼びかけで作ってください。';
     var all='ジャンルは'+g+'です。'+(reader()||'見る人は、（どんな場面で何に）困っている人です。')+'使える素材は、スマホで撮れる手元の動画と写真です。ないものは作らないでください。'+exp;
-    copyRow(host,'3点まとめて返す　'+all,all,true);
+    copyRow(host,'まとめて返す　'+all,all,true);
     copyRow(host,'形式の案が2つ出たら　おすすめの方で、台本まで出してください。','おすすめの方で、台本まで出してください。',true);
     copyRow(host,'ジャンルを聞かれたら　ジャンルは'+g+'です。','ジャンルは'+g+'です。',true);
     copyRow(host,'見る人を聞かれたら　見る人は、（どんな場面で何に）困っている人です。',(reader()||'見る人は、（どんな場面で何に）困っている人です。'),true);

@@ -321,3 +321,7 @@ code,kbd,pre,textarea.ms-cmd,.finder-input,.start-copytext{font-family:ui-monosp
 .start-opt summary{min-height:48px;display:flex;align-items:center;font-weight:700;cursor:pointer}
 .start-opt[open]{padding-bottom:12px}
 @media(max-width:1100px){.hx-notes{display:none!important}}
+.start-warn{background:#fff4d6;border-left:4px solid #c9a600;padding:8px 12px;border-radius:8px;color:#3d2b00}
+@media(min-width:761px) and (max-width:1100px){.hx-links{display:none!important}.route-btn span{display:none!important}}
+.start-req .req-tag{align-self:flex-start;width:max-content;margin:0 0 4px}
+.req-row{display:flex;align-items:center;gap:8px;line-height:1.2}.start-req .req-tag{margin:0!important;font-size:14px;padding:0 8px}
