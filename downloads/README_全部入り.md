@@ -5,114 +5,84 @@
 
 ## 目次
 
-1. 3ステップ（AIごと。ターミナルの開き方・インストール・作業フォルダを含む）
+1. はじめ方（AIごと。ターミナルの人は A・B・C の3つ）
 2. AIに聞かれたら、こう返す
 3. 中身一覧
 4. 動画編集の使い方
 5. 詰まったとき3点
 6. 置き場所が違うとき
 
-## 1. 3ステップ
+## 1. はじめ方
 
 先に、使うAIを1つ選びます。迷ったら「ChatGPT・Claude のアプリ」で始めてください。あとから切り替えても無駄になりません。ターミナル（文字で Mac に指示を出す画面。打ち間違えても壊れません）を使うのは Claude Code と Codexだけです。この手順は Mac で行います（サイトの「はじめる」と同じ順・同じ言葉です）。
 Windows の人は、「ChatGPT・Claude のアプリを使う人」を選んでください。
 
 ### Claude Code を使う人
 
-**① 準備する**（ターミナルを開く → Claude Code を入れる → 作業フォルダを作る）
+やることは A・B・C の3つです。どれも「コピーして、ターミナルに貼って（command＋V）、Enter」です。
 
-ターミナルは、Spotlight（command＋スペース）で「ターミナル」と打って、Enter で開きます。すでに Claude Code が入っている人は、次の1行（インストール）は飛ばします。
-```bash
-curl -fsSL https://claude.ai/install.sh | bash
-```
-入れたあとに「PATH」の案内（`~/.local/bin is not in your PATH`）が出たら、その案内に書かれた1行をコピーして貼り、Enter を押して、ターミナルを閉じて開き直します。案内が出なかった人は飛ばします。案内と同じ中身の1行は、次のとおりです（ユーザー名は入れなくて大丈夫です）。
+**A. ターミナルを開いて、Claude Code を入れる（初回だけ）**
+
+command＋スペースを押し、「ターミナル」と打って Enter。文字だけの画面が開きます（打ち間違えても壊れません）。すでに Claude Code が入っている人は B へ進みます。
+「command not found: claude」や「~/.local/bin is not in your PATH」と出たら、次の1行を貼って Enter し、ターミナルを開き直してから、もう一度貼ります。
 ```bash
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc && source ~/.zshrc
 ```
-入っているか確認します。バージョンの数字が出れば成功です。「command not found」と出たら、上の1行へ戻ります。
 ```bash
-claude --version
+curl -fsSL https://claude.ai/install.sh | bash && claude --version
 ```
-作業フォルダを作って、その中へ移ります。
-```bash
-mkdir -p ~/insta-ai && cd ~/insta-ai
-```
-次に `claude` と打ち、案内に沿ってログインします。「Do you trust the files in this folder?」と出たら、Enter（Yes）を押します。ログインできたら、control＋C（command ではなく、左下の control キー）を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。以降の手順は、すべてこの作業フォルダ（`~/insta-ai`）の中で行います。
+うまくいった印：最後に数字（バージョン）が出ます。
 
-**② zip を置いて、展開する**
+**B. zip を受け取って、手順書を入れる**
 
-Safari は zip を自動で開くことがあります。`mv` で「No such file」と出たら、Safari の設定「ダウンロード後に安全なファイルを開く」を切って、もう一度ダウンロードするか、Chrome でダウンロードします。ファイル名が違えば、その名前で打ちます（例：`insta-ai-all (1).zip` のときは、`mv ~/Downloads/"insta-ai-all (1).zip" ./insta-ai-all.zip`）。
+サイトの「全部入りzipをダウンロード」を押します（開かなくて大丈夫です）。次の1行をそのまま貼ります。作業フォルダ `~/insta-ai` を作り、zip を開き、手順書を置くところまで自動でやります（「insta-ai-all (1).zip」のような名前や、Safari が先に開いてしまった場合も動きます）。「“ターミナル”が“ダウンロード”フォルダ内のファイルにアクセスしようとしています」と出たら「許可」を押します。
+```bash
+mkdir -p ~/insta-ai && cd ~/insta-ai && Z=$(ls -t ~/Downloads | grep "^insta-ai-all.*\.zip$" | head -1); D=$(ls -t ~/Downloads | grep "^insta-ai-all" | grep -v "\.zip$" | head -1); if [ -n "$Z" ]; then unzip -oq ~/Downloads/"$Z" -d insta-ai-all; elif [ -n "$D" ]; then rm -rf insta-ai-all && cp -R ~/Downloads/"$D" insta-ai-all; fi; if [ -d insta-ai-all/insta-ai-create ]; then mkdir -p .claude/skills && cp -R insta-ai-all/insta-ai-create .claude/skills/ && ls .claude/skills; else echo "zip が見つかりません。ダウンロードし直してください"; fi
+```
+うまくいった印：最後に `insta-ai-create` と出ます。「zip が見つかりません」と出たら、zip をダウンロードし直して、同じ1行を貼り直します。
 
-zip（`insta-ai-all.zip`）を、作業フォルダへ移してから、次の4行を貼ります。
+**C. 起動して、ログインして、最初の1行を貼る**
 ```bash
-mv ~/Downloads/insta-ai-all.zip .
-unzip insta-ai-all.zip -d insta-ai-all
-mkdir -p .claude/skills
-cp -R insta-ai-all/insta-ai-create .claude/skills/
+cd ~/insta-ai && claude
 ```
-入ったか確かめます。この1行は手で打ちます。`insta-ai-create` と出れば成功です。
-```bash
-ls .claude/skills
-```
-`.claude` は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。
-
-**③ AIを開いて、この1行を貼る**
-```bash
-claude
-```
+初回は案内に沿ってログインします。「Do you trust the files in this folder?」と出たら Enter（Yes）。起動したら、次の1行を貼ります。
 ```
 インスタAIのスキル（/insta-ai-create）で、私のプロフィールの、表示名と紹介文を作って。質問せず、足りないところは要確認と書いて仮置きで、そのまま案まで出して。
 ```
 出てくるもの：この1行はプロフィール用なので、表示名と紹介文の案と、選んだ理由が出ます。台本（日付とタイトル・台本の本文・撮影メモ）、フィード投稿（ページごとの見出し・本文・配置）、ストーリー（1枚ごとの本文・使う素材）を作る人は、サイトの「はじめる」で作りたいものを選ぶと、言葉と「出てくるもの」が切り替わります。AIが「要確認」と書いた所は、あなたの本当のことに書き換える場所です。
+次の日に続きをやるときは、ターミナルを開いて C の1行目だけを貼れば始められます。
 
 ### Codex を使う人
 
-**① 準備する**
+やることは A・B・C の3つです。どれも「コピーして、ターミナルに貼って（command＋V）、Enter」です。
 
-先に `node -v` と打ちます。数字が出なければ、https://nodejs.org から LTS を入れて、ターミナルを開き直します。
-すでに Codex が入っている人は、`npm install` の行は飛ばします。
-```bash
-node -v
-npm install -g @openai/codex
-```
-入っているか確認します。バージョンの数字が出れば成功です。「command not found」と出たら、上の `npm install` の行へ戻ります。
-```bash
-codex --version
-```
-作業フォルダを作って、その中へ移ります。
-```bash
-mkdir -p ~/insta-ai && cd ~/insta-ai
-```
-次に `codex` と打ち、案内に沿ってログインします。「Do you trust the files in this folder?」と出たら、Enter（Yes）を押します。ログインできたら、control＋C（command ではなく、左下の control キー）を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。`~/insta-ai` が作業フォルダです。以降の手順は、このフォルダでターミナルを開いたまま行い、`codex` もこのフォルダで打ちます。
+**A. ターミナルを開いて、Codex を入れる（初回だけ）**
 
-**② zip を置いて、展開する**
+command＋スペースを押し、「ターミナル」と打って Enter。文字だけの画面が開きます（打ち間違えても壊れません）。すでに Codex が入っている人は B へ進みます。
+Codex には Node.js が要ります。先に `node -v` と打ち、数字が出なければ https://nodejs.org から LTS を入れて、ターミナルを開き直します。「EACCES」「permission denied」と出たら、`sudo npm install -g @openai/codex` を貼り、Mac のパスワード（画面には出ません）を打ちます。
 ```bash
-mv ~/Downloads/insta-ai-all.zip .
-unzip insta-ai-all.zip -d insta-ai-all
-mkdir -p ~/.agents/skills
-cp -R insta-ai-all/insta-ai-create ~/.agents/skills/
+npm install -g @openai/codex && codex --version
 ```
-入ったか確かめます。この1行は手で打ちます。`insta-ai-create` と出れば成功です。
-```bash
-ls ~/.agents/skills
-```
-`.agents` は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。
+うまくいった印：最後に数字（バージョン）が出ます。
 
-（古い版の Codex で「insta-ai-create のスキル」が効かないときだけ、次の2行で古い置き場所にも置きます。）
-```bash
-mkdir -p ~/.codex/skills
-cp -R insta-ai-all/insta-ai-create ~/.codex/skills/
-```
-Codex がすでに開いている場合は、一度閉じて、`codex` を打ち直します。
+**B. zip を受け取って、手順書を入れる**
 
-**③ AIを開いて、この1行を貼る**
+サイトの「全部入りzipをダウンロード」を押します（開かなくて大丈夫です）。次の1行をそのまま貼ります。作業フォルダ `~/insta-ai` を作り、zip を開き、手順書を置くところまで自動でやります（「insta-ai-all (1).zip」のような名前や、Safari が先に開いてしまった場合も動きます）。「“ターミナル”が“ダウンロード”フォルダ内のファイルにアクセスしようとしています」と出たら「許可」を押します。
 ```bash
-codex
+mkdir -p ~/insta-ai && cd ~/insta-ai && Z=$(ls -t ~/Downloads | grep "^insta-ai-all.*\.zip$" | head -1); D=$(ls -t ~/Downloads | grep "^insta-ai-all" | grep -v "\.zip$" | head -1); if [ -n "$Z" ]; then unzip -oq ~/Downloads/"$Z" -d insta-ai-all; elif [ -n "$D" ]; then rm -rf insta-ai-all && cp -R ~/Downloads/"$D" insta-ai-all; fi; if [ -d insta-ai-all/insta-ai-create ]; then mkdir -p ~/.agents/skills && cp -R insta-ai-all/insta-ai-create ~/.agents/skills/ && ls ~/.agents/skills; else echo "zip が見つかりません。ダウンロードし直してください"; fi
 ```
+うまくいった印：最後に `insta-ai-create` と出ます。古い版の Codex で「スキルが見つからない」と言われたときだけ、`mkdir -p ~/.codex/skills && cp -R ~/insta-ai/insta-ai-all/insta-ai-create ~/.codex/skills/` も貼ります。「zip が見つかりません」と出たら、zip をダウンロードし直して、同じ1行を貼り直します。
+
+**C. 起動して、ログインして、最初の1行を貼る**
+```bash
+cd ~/insta-ai && codex
+```
+初回は案内に沿ってログインします。「Do you trust the files in this folder?」と出たら Enter（Yes）。起動したら、次の1行を貼ります。
 ```
 insta-ai-create のスキルで、私のプロフィールの、表示名と紹介文を作って。質問せず、足りないところは要確認と書いて仮置きで、そのまま案まで出して。
 ```
 出てくるもの：この1行はプロフィール用なので、表示名と紹介文の案と、選んだ理由が出ます。台本（日付とタイトル・台本の本文・撮影メモ）、フィード投稿（ページごとの見出し・本文・配置）、ストーリー（1枚ごとの本文・使う素材）を作る人は、サイトの「はじめる」で作りたいものを選ぶと、言葉と「出てくるもの」が切り替わります。AIが「要確認」と書いた所は、あなたの本当のことに書き換える場所です。
+次の日に続きをやるときは、ターミナルを開いて C の1行目だけを貼れば始められます。
 
 ### ChatGPT・Claude のアプリを使う人
 

@@ -335,3 +335,59 @@ code,.start-cmd,textarea,input{word-break:normal}
 .glossary dt{font-weight:600;font-size:14px}
 .glossary dd{margin:0 0 6px;font-size:14px;line-height:1.75;color:var(--muted)}
 @media (max-width:640px){.start-note,.start-label,.glossary dd{font-size:15px;line-height:1.8}.start-step h3{font-size:18px}}
+.start-stage{margin:26px 0 8px;padding:10px 14px;background:var(--soft);border-left:4px solid var(--accent);font-size:16px;font-weight:600;line-height:1.5}
+.start-ok{color:#2f6b3a;font-weight:600}
+.start-help summary{min-height:44px;display:flex;align-items:center}
+.start-copyrow .start-cmd{word-break:break-all}
+/* ===== デザイン調整（design-refresh）：文字の階層・余白のリズム・色・ボタン・カード ===== */
+:root{--radius:10px;--radius-lg:16px;--shadow-sm:0 1px 2px rgba(32,32,30,.06),0 2px 8px rgba(32,32,30,.05);--shadow-md:0 2px 4px rgba(32,32,30,.05),0 12px 32px rgba(32,32,30,.08);--ok:#2f6b3a}
+body{font-size:16px;font-feature-settings:"palt" 1;text-rendering:optimizeLegibility}
+h1{letter-spacing:-1.5px;line-height:1.38}
+h2{letter-spacing:-.6px;line-height:1.5}
+.overline{font-size:11px;letter-spacing:2px;color:var(--accent)}
+.overline .tiny-square{background:var(--accent)}
+.hero-description,.section-intro p,.start-lead,.getskill-intro>p,.method-lead,.feed-copy p{font-size:15.5px;line-height:1.95;color:#3d3e3a}
+.hero{padding-top:72px;padding-bottom:72px}
+.primary-cta{border-radius:var(--radius);box-shadow:var(--shadow-sm)}
+.primary-cta:hover{transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.route-btn{border-radius:var(--radius);box-shadow:var(--shadow-sm)}
+.route-btn:hover{box-shadow:var(--shadow-md)}
+/* はじめる：一段浮いた作業台 */
+.start-section{position:relative;margin-top:24px;margin-bottom:24px;padding-top:64px;padding-bottom:64px;background:var(--white);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow-md)}
+.start-head h2{font-size:clamp(26px,3vw,36px)}
+.start-step{border-top:1px solid var(--line)}
+.start-num{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:var(--accent);color:var(--white);font-size:17px;font-weight:700;font-family:inherit;flex:none}
+.start-step h3{font-weight:600;letter-spacing:-.3px}
+.start-choice{border-radius:var(--radius);min-height:52px;font-size:15px;transition:border-color .15s,background .15s,box-shadow .15s}
+.start-choice:hover{border-color:var(--accent)}
+.start-choice[aria-pressed="true"]{box-shadow:0 0 0 3px rgba(169,67,39,.18)}
+.start-btn{border-radius:8px;min-height:44px}
+.start-btn.primary{box-shadow:var(--shadow-sm)}
+.start-prompt,.start-fields input,.start-fields select,#skillcopy-manual{border-radius:8px}
+.start-fields input:focus,.start-fields select:focus,.start-prompt:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(169,67,39,.15)}
+.start-card{border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);background:var(--paper)}
+.start-copyrow{border-radius:8px}
+.start-ok{color:var(--ok)}
+.glossary{border-radius:var(--radius)}
+/* カード類 */
+.reel-card,.howto-card{border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);transition:box-shadow .2s,transform .2s}
+.reel-card:hover,.howto-card:hover{box-shadow:var(--shadow-md)}
+.howto-video video{border-radius:0}
+.service-tabs button,.format-tabs button{border-radius:var(--radius)}
+.workbench{border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md)}
+.skill-package,.getskill-steps>li{border-radius:var(--radius-lg)}
+.faq details{border-radius:var(--radius)}
+/* 余白のリズム */
+.reels-section,.howto-section,.formats,.getskill-section,.method,.faq{padding-top:96px;padding-bottom:96px}
+.closing{padding-top:96px;padding-bottom:110px;text-align:center}
+.closing .primary-cta{margin:0 auto}
+@media (max-width:640px){
+  body{font-size:15px}
+  h1{font-size:40px;letter-spacing:-1px}
+  .hero{padding-top:40px;padding-bottom:48px}
+  .hero-art{display:none}
+  .start-section{margin-left:12px;margin-right:12px;padding-top:40px;padding-bottom:40px;padding-left:18px;padding-right:18px;border-radius:14px}
+  .start-num{width:34px;height:34px;font-size:15px}
+  .reels-section,.howto-section,.formats,.getskill-section,.method,.faq,.closing{padding-top:64px;padding-bottom:64px}
+  .route-btn b{font-size:15.5px}
+}
