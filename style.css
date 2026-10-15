@@ -649,3 +649,22 @@ h1,h2,h3{font-feature-settings:"palt" 1}
 .service-tabs button{font-size:0}
 .service-tabs button span{font-size:15px;font-weight:700;color:#111}
 .service-tabs button small{font-size:13px;color:#666;margin-left:6px}
+/* L6: 作れるもの = table rows, not tabs */
+.service-tabs{display:grid!important;grid-template-columns:1fr!important;gap:0!important;border-top:1px solid #111;border-bottom:0;max-width:760px}
+.service-tabs button{display:grid!important;grid-template-columns:3em 9em 1fr 2em;align-items:center;text-align:left;width:100%!important;font-size:14px!important;color:#888;padding:12px 4px!important;border:0!important;border-bottom:1px solid var(--line)!important;min-height:52px}
+.service-tabs button span{font-size:16px!important}
+.service-tabs button small{font-size:14px!important;margin:0!important;color:#555}
+.service-tabs button::after{content:"→";text-align:right;color:#bbb}
+.service-tabs button[aria-selected="true"]{background:#fafafa!important;border-bottom:1px solid var(--line)!important}
+.service-tabs button[aria-selected="true"]::after{content:"表示中";font-size:13px;color:#111;font-weight:700;white-space:nowrap}
+@media (max-width:600px){.service-tabs button{grid-template-columns:2.2em 1fr 3.5em}.service-tabs button small{grid-column:2;grid-row:2}.service-tabs button::after{grid-column:3;grid-row:1/3}}
+/* L6: minimum 14px text */
+.header-start,.header nav a,.hero-facts li,.hero-facts span,.works-with,.works-with span,.works-with b,.hero-sublink,figcaption,.sp-label,.sp-text,summary,.start-label,.start-fields label,.start-copylabel,.start-btn,.ms-flow small,.ms-text,.ms-copy-label,.ms-files,code,.reels-section button,.reels-section .overline,.reel-tag,.reel-stage,.reels-section p,.reels-section h4,.reels-section th,.reels-section td,.reel-brief-text,.reels-section strong,.reel-copy,.howto-label,#toggle-concept,#format-fit,#format-materials,#format-to-work,.format-facts span,.format-note,.storyboard *,#choose-feed,.page-number,#current-format-label,.toolbar-format a,#materials-label,#show-example,#output-kind,#output-label,.sample-caption,#copy-output,#download-output,.output-actions button,.package-note,#allpack-size,.getskill-section a,.nw,.workbench label,.field-help,.form-error,.action-status,.start-status,.start-note,.ms-ok,.edit-guide,.concept-branch span,.next-line,.howto-lead,.howto-points li,.howto-detail li,.package-files span,.allpack-btn span,.allpack-sub,.footer a,.footer p,.service-tabs small,.format-tabs button,.picker-label,.reel-note,.storyboard-head small,.storyboard-head span{font-size:14px!important}
+.service-tabs button[aria-selected="true"]::after{font-size:14px}
+.route-btn span,.reels-section small,.reels-section summary,.feed-page p,#output h4,#output li,#output p,.package-files b,.package-files p,.getskill-section .nw,.getskill-section code,.workbench h4,.workbench li{font-size:14px!important}
+.ms-hero-link span,.preview-disclosure p,.workbench-heading p{font-size:14px!important}
+.ms-flow span{font-size:14px!important}
+.method-list span,.getskill-steps>li>span,.start-num,.ms-num{font-size:14px!important}
+#storyboard-list span,#storyboard-list *,ol>li>span{font-size:14px!important}
+section.method .method-list article>span{font-size:14px!important}
+.service-tabs button{grid-template-columns:3em 9em 1fr 4.5em!important;box-shadow:none!important}.service-tabs button::before{display:none!important}.service-tabs button[aria-selected="true"]{border-bottom:1px solid var(--line)!important;outline:0}

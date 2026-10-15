@@ -10,8 +10,8 @@
   function restore(){try{var o=JSON.parse(localStorage.getItem(KEY)||'null');if(!o)return;if(AI[o.ai])state.ai=o.ai;if(MAKE_NAME[o.make])state.make=o.make;FIELDS.forEach(function(id){if(o.f&&typeof o.f[id]==='string'){var n=$(id);if(n.tagName==='SELECT'){var ok=Array.prototype.some.call(n.options,function(x){return x.value===o.f[id];});if(ok)n.value=o.f[id];}else n.value=o.f[id];}});}catch(e){}}
   var FMT={voiceover:'アフレコ',vlog:'VLOG',talk:'トーク',ranking:'ランキング',comparison:'比較',abstract:'抽象マーケ'};
   var AI={
-    cc:{name:'Claude Code',cmd:'claude',skills:'.claude/skills',inst:'curl -fsSL https://claude.ai/install.sh | bash',pathNote:'入れたあとに「PATH」の案内（~/.local/bin is not in your PATH）が出たら、その案内に書かれた1行をコピーして貼り、Enter を押して、ターミナルを閉じて開き直します。案内が出なかった人は、飛ばします。下の1行は、その案内と同じ中身です（ユーザー名は入れなくて大丈夫です）。',pathCmd:'echo \'export PATH="$HOME/.local/bin:$PATH"\' >> ~/.zshrc && source ~/.zshrc',instNote:'Claude Code を入れます。入っていれば飛ばしてください。',loginNote:'claude と打ち、案内に沿ってログインします。「Do you trust the files in this folder?」と出たら、Enter（Yes）を押します。ログインできたら、control＋C（command ではなく、左下の control キー）を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。',desc:'この手順は Mac で行います。iPhone から見ている人は「アプリ」を選んでください。Macのターミナルで進めます。A・B・C の3つを上から順に。どれも「コピー」を押して、ターミナルに貼って（command＋V）、Enter するだけです。',after:'確認できたら、下の言葉を打って、Claude Codeを起動します。.claude は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。'},
-    codex:{name:'Codex',cmd:'codex',skills:'~/.agents/skills',inst:'npm install -g @openai/codex',instNote:'Codexを入れます（すでに入っている人は飛ばします）。',loginNote:'codex と打ち、案内に沿ってログインします。「Do you trust the files in this folder?」と出たら、Enter（Yes）を押します。ログインできたら、control＋C（command ではなく、左下の control キー）を2回押して元の画面に戻ります（Claude Code も Codex も同じ。戻らないと、次の行がAIへの質問になってしまいます）。',pre:'node -v',preNote:'先に、Node.js が入っているか確認します。数字が出なければ、nodejs.org から LTS を入れて、ターミナルを開き直します。',desc:'この手順は Mac で行います。iPhone から見ている人は「アプリ」を選んでください。Macのターミナルで進めます。A・B・C の3つを上から順に。どれも「コピー」を押して、ターミナルに貼って（command＋V）、Enter するだけです。',after:'確認できたら、このフォルダ（~/insta-ai）のまま、下の言葉を打って、Codexを起動します。.agents は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。古い版の Codex で「insta-ai-create のスキル」が効かないときだけ、同じ cp の行の ~/.agents/skills を ~/.codex/skills に変えて、もう一度貼ります。Codexがすでに開いていた場合は、一度閉じて、打ち直します。'},
+    cc:{name:'Claude Code',cmd:'claude',skills:'.claude/skills',inst:'curl -fsSL https://claude.ai/install.sh | bash',pathNote:'入れたあとに「~/.local/bin is not in your PATH」と出たら、下の1行を貼って Enter。ターミナルを閉じて開き直せば反映されます。この表示が出なければ、ここは飛ばしてかまいません。下の1行は案内に書かれているものと同じで、ユーザー名を書き換える必要はありません。',pathCmd:'echo \'export PATH="$HOME/.local/bin:$PATH"\' >> ~/.zshrc && source ~/.zshrc',instNote:'Claude Code を入れます。入っていれば飛ばしてください。',loginNote:'claude と打ち、案内どおりにログインします。「Do you trust the files in this folder?」と聞かれたら Enter。ログインが済んだら、左下の control キーと C を2回押して元の画面に戻ってください（command キーではありません）。戻らずに次の行を貼ると、AIへの質問として送られてしまいます。',desc:'この手順は Mac で行います。iPhone から見ている人は「アプリ」を選んでください。Macのターミナルで進めます。A・B・C の3つを上から順に。どれも「コピー」を押して、ターミナルに貼って（command＋V）、Enter するだけです。',after:'確認できたら、下の言葉を打って、Claude Codeを起動します。.claude は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。'},
+    codex:{name:'Codex',cmd:'codex',skills:'~/.agents/skills',inst:'npm install -g @openai/codex',instNote:'Codex を入れます。入っていれば飛ばしてください。',loginNote:'codex と打ち、案内どおりにログインします。「Do you trust the files in this folder?」と聞かれたら Enter。ログインが済んだら、左下の control キーと C を2回押して元の画面に戻ってください（command キーではありません）。戻らずに次の行を貼ると、AIへの質問として送られてしまいます。',pre:'node -v',preNote:'先に、Node.js が入っているか確認します。数字が出なければ、nodejs.org から LTS を入れて、ターミナルを開き直します。',desc:'この手順は Mac で行います。iPhone から見ている人は「アプリ」を選んでください。Macのターミナルで進めます。A・B・C の3つを上から順に。どれも「コピー」を押して、ターミナルに貼って（command＋V）、Enter するだけです。',after:'確認できたら、このフォルダ（~/insta-ai）のまま、下の言葉を打って、Codexを起動します。.agents は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。古い版の Codex で「insta-ai-create のスキル」が効かないときだけ、同じ cp の行の ~/.agents/skills を ~/.codex/skills に変えて、もう一度貼ります。Codexがすでに開いていた場合は、一度閉じて、打ち直します。'},
     app:{name:'アプリ',desc:'① 下のボタンでコピー → ② AIアプリで新しい会話を開き、貼って送信 → ③ 返事が出たら、手順3へ。かなり長い文ですが、そのまま送ってください。'}
   };
   function copyText(t){
@@ -118,7 +118,7 @@
       var z=el('a','start-btn primary','全部入りzipをダウンロード');z.href='downloads/insta-ai-all.zip';z.setAttribute('download','');host.appendChild(z);
       var sk=isCodex?'~/.agents/skills':'.claude/skills';
       var put='mkdir -p ~/insta-ai && cd ~/insta-ai && Z=$(ls -t ~/Downloads | grep "^insta-ai-all.*\\.zip$" | head -1); D=$(ls -t ~/Downloads | grep "^insta-ai-all" | grep -v "\\.zip$" | head -1); if [ -n "$Z" ]; then unzip -oq ~/Downloads/"$Z" -d insta-ai-all; elif [ -n "$D" ]; then rm -rf insta-ai-all && cp -R ~/Downloads/"$D" insta-ai-all; fi; if [ -d insta-ai-all/insta-ai-create ]; then mkdir -p '+sk+' && cp -R insta-ai-all/insta-ai-create '+sk+'/ && ls '+sk+'; else echo "zip が見つかりません。ダウンロードし直してください"; fi';
-      note('次に、下の「コピー」を押して、ターミナルに貼って Enter（作業フォルダ ~/insta-ai を作り、zip を開いて、手順書を置くところまで自動でやります。「insta-ai-all (1).zip」のような名前や、Safari が先に開いてしまった場合も、そのまま動きます）。');
+      note('下の「コピー」を押して、ターミナルに貼って Enter。作業フォルダ ~/insta-ai を作り、zip を開いて手順書を置くところまで自動で進みます。ファイル名が「insta-ai-all (1).zip」になっていても、Safari が先に zip を開いていても動きます。');
       row('入れる（長いので中身は省略しています）',put);
       ok('最後に insta-ai-create と出れば成功です。');
       help('うまくいかないとき',[
@@ -127,7 +127,7 @@
       head('C　'+a.name+'を起動して、ログインする');
       var run='cd ~/insta-ai && '+a.cmd;
       row('起動　'+run,run);
-      note('初回は、案内に沿ってログインします（ブラウザが開くので、いつものアカウントで許可）。「Do you trust the files in this folder?」など英語で聞かれたら、そのまま Enter で進めます（文字の色の好みなども Enter でOK）。');
+      note('初回はログインが必要です。ブラウザが開いたら、いつものアカウントで許可してください。英語で何か聞かれたら、文字の色の設定も含めて Enter で進めてかまいません。');
       var chk=(isCodex?'insta-ai-create のスキル':'インスタAIのスキル（/insta-ai-create）')+'は読めていますか。読めていれば「読めています」とだけ答えて。';
       note('起動したら、この1行を貼って Enter。');
       row('確認　'+chk,chk);
@@ -140,7 +140,7 @@
   function renderS3(){
     $('start-prompt').value=prompt();
     var out=OUT[state.make];
-    if(state.make==='edit'&&state.ai==='app')out='出てくるもの：編集指示書の表まで。素材は文で伝え、表を見ながら CapCut などの編集アプリで並べます。書き出しまで自動でやるのは Claude Code か Codex です。';
+    if(state.make==='edit'&&state.ai==='app')out='アプリで出るのは編集の段取り表までです。表を見ながら CapCut などで並べてください。書き出しまで自動で進むのは Claude Code と Codex です。';
     $('start-s3-out').textContent=out;
     $('start-format-wrap').hidden=!(state.make==='reel'||state.make==='edit');
     $('start-folder-wrap').hidden=!(state.make==='edit'&&state.ai!=='app');
