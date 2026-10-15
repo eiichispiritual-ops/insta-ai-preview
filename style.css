@@ -634,3 +634,4 @@ h1,h2,h3{font-feature-settings:"palt" 1}
 .hv-note{grid-column:1;grid-row:2}
 }
 @media (min-width:861px){.hero{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:48px}}
+.hero-facts span,.hv-screen figcaption,.hv-reel figcaption,.works-with,.works-with span{font-size:13px}

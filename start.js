@@ -96,7 +96,7 @@
       mk('all','手順書を全部コピー','全部入り','start-btn');
     }else{
       var note=function(t){host.appendChild(el('p','start-note',t));};
-      var ok=function(t){host.appendChild(el('p','start-note start-ok','✅ うまくいった印：'+t));};
+      var ok=function(t){host.appendChild(el('p','start-note start-ok','【成功の目安】'+t));};
       var head=function(t){host.appendChild(el('h4','start-stage',t));};
       var row=function(label,text){var r=el('div','start-copyrows');copyRow(r,label,text);host.appendChild(r);};
       var help=function(title,items){var d=el('details','start-more start-help');d.appendChild(el('summary',null,title));items.forEach(function(it){var p=el('p','start-note');p.appendChild(el('b',null,it[0]+'：'));p.appendChild(document.createTextNode(it[1]));d.appendChild(p);if(it[2]){var r=el('div','start-copyrows');copyRow(r,null,it[2]);d.appendChild(r);}});host.appendChild(d);};
