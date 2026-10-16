@@ -15,11 +15,11 @@
     app:{name:'アプリ',desc:'① 下のボタンでコピー → ② AI（アプリかブラウザ）で新しい会話を開き、貼って送信 → ③ 返事が出たら、手順3へ。長い文なので、貼ると「ファイル」のように表示されることがあります。そのまま送信して大丈夫です。'}
   };
   function copyText(t){
-    var fb=function(){try{var x=document.createElement('textarea');x.value=t;x.style.position='fixed';x.style.opacity='0';document.body.appendChild(x);x.select();var ok=document.execCommand('copy');x.remove();return ok;}catch(e){return false;}};
-    if(navigator.clipboard&&navigator.clipboard.writeText){
-      return Promise.race([navigator.clipboard.writeText(t).then(function(){return true;},function(){return fb();}),new Promise(function(r){setTimeout(function(){r(fb());},2500);})]);
-    }
-    return Promise.resolve(fb());
+    function fallback(){try{var x=document.createElement('textarea');x.value=t;x.style.position='fixed';x.style.opacity='0';document.body.appendChild(x);x.select();var ok=document.execCommand('copy');x.remove();return ok;}catch(e){return false;}}
+    if(!navigator.clipboard||!navigator.clipboard.writeText)return Promise.resolve(fallback());
+    return new Promise(function(resolve){var settled=false;var timer=setTimeout(function(){if(!settled){settled=true;resolve(false);}},2500);
+      navigator.clipboard.writeText(t).then(function(){if(settled)return;settled=true;clearTimeout(timer);resolve(true);},function(){if(settled)return;settled=true;clearTimeout(timer);resolve(fallback());});
+    });
   }
   function bindCopy(btn,getText,status,onFail){
     btn.addEventListener('click',function(){
@@ -42,7 +42,10 @@
     row.appendChild(sp);
     var b=el('button','start-btn','コピー');b.type='button';
     var st=el('span','start-status','');st.setAttribute('role','status');
-    bindCopy(b,function(){return typeof text==='function'?text():text;},st);
+    bindCopy(b,function(){return typeof text==='function'?text():text;},st,function(){
+      var manual=row.querySelector('textarea');if(!manual){manual=el('textarea','start-manual');manual.readOnly=true;manual.rows=5;manual.setAttribute('aria-label','手でコピーする全文');row.appendChild(manual);}
+      manual.value=typeof text==='function'?text():text;manual.focus();manual.select();st.textContent='下の全文を選択しました。スマホは長押ししてコピー、PCはcommand＋C（WindowsはCtrl＋C）。';
+    });
     row.appendChild(b);row.appendChild(st);host.appendChild(row);return row;
   }
   function genre(){return $('start-genre').value.trim();}
@@ -73,10 +76,12 @@
   var MAKE_NAME={reel:'リールの台本',profile:'プロフィール',feed:'フィード投稿',story:'ストーリー',edit:'動画編集'};
   function appKey(){var f=$('start-format').value;if(state.make==='reel')return f?'reel-'+f:'reel-any';if(state.make==='edit')return f?'edit-'+f:'edit-any';return state.make;}
   function appName(){var f=$('start-format').value;return MAKE_NAME[state.make]+((state.make==='reel'||state.make==='edit')&&f?'・'+FMT[f]:'');}
+  var formatHome=$('start-format-wrap').parentNode;
   function renderS2(){
     var a=AI[state.ai], host=$('start-s2-actions'); host.replaceChildren(); $('start-s2-status').textContent='';
     $('start-s2-desc').textContent=a.desc;
     $('start-s2-make').hidden=state.ai!=='app';
+    var fmt=$('start-format-wrap');if(state.ai==='app'){$('start-s2-make').appendChild(fmt);}else{formatHome.appendChild(fmt);}
     if(state.ai==='app'){
       var key=appKey(),nm=appName();
       var mk=function(k,pre,inner,cls){
@@ -91,11 +96,19 @@
         }).catch(function(){});
         return b;
       };
-      (function(){var p=el('p','start-note','アプリがまだないとき：');var l1=el('a',null,'App Store で ChatGPT');l1.href='https://apps.apple.com/app/chatgpt/id6448311069';l1.target='_blank';l1.rel='noopener';var l2=el('a',null,'Google Play で ChatGPT');l2.href='https://play.google.com/store/apps/details?id=com.openai.chatgpt';l2.target='_blank';l2.rel='noopener';var l3=el('a',null,'ブラウザ版（chatgpt.com）');l3.href='https://chatgpt.com/';l3.target='_blank';l3.rel='noopener';p.append(l1,' ／ ',l2,'（どちらも無料）。アプリを入れずに使うなら、',l3,'でも同じです。');host.appendChild(p);})();
-      if(key.indexOf('reel-')===0){mk(key+'-lite','手順書をコピー',nm+'・短い版','start-btn primary');mk(key,'くわしい版をコピー',nm+'・長い','start-btn');host.appendChild(el('p','start-note','まずは短い版で大丈夫です。台本の質を上げたいときは、くわしい版（参照資料つき）を貼ります。'));}
-      else mk(key,'手順書をコピー',nm+'用','start-btn primary');
-      mk('all','手順書を全部コピー','全部入り','start-btn');
-      host.appendChild(el('p','start-note','「全部」はふつうは使いません。すべての入口をまとめた長い版です。'));
+      var main=mk(key.indexOf('reel-')===0?key+'-lite':key,'手順書をコピー',nm+'用','start-btn primary');
+      host.appendChild(el('p','start-note','初めての方は、このボタンだけで進められます。'));
+      var links=el('div','ai-open-links');
+      [['ChatGPTを開く','https://chatgpt.com/'],['Claudeを開く','https://claude.ai/']].forEach(function(x){var a=el('a','start-btn',x[0]+' ↗');a.href=x[1];a.target='_blank';a.rel='noopener';links.appendChild(a);});
+      host.appendChild(links);
+      host.appendChild(el('p','start-note','別のタブが開きます。新しい会話の入力欄に貼って送信し、返事が出たらこのページのタブに戻ります。すでにアプリを使っている方は、いつものアプリを開いてください。'));
+      var help=el('details','start-more');help.appendChild(el('summary',null,'コピーした後の貼り方・戻り方'));
+      help.appendChild(el('p','start-note','スマホ：AIの入力欄を長押し →「ペースト」または「貼り付け」→ 送信。パソコン：入力欄をクリック → Macはcommand＋V、WindowsはCtrl＋V → 送信。ブラウザのタブ一覧からインスタAIに戻ります。'));
+      host.appendChild(help);
+      var more=el('details','start-more');more.appendChild(el('summary',null,'慣れてきたら：詳しい手順書を使う'));
+      more.appendChild(el('p','start-note','まず1本作ってからで大丈夫です。詳しい版は参照資料を追加します。全部入りは、複数の用途をまとめて使う方向けです。'));
+      if(key.indexOf('reel-')===0)more.appendChild(mk(key,'くわしい版をコピー',nm+'用','start-btn'));
+      more.appendChild(mk('all','手順書を全部コピー','全部入り','start-btn'));host.appendChild(more);
     }else{
       var note=function(t){host.appendChild(el('p','start-note',t));};
       var ok=function(t){host.appendChild(el('p','start-note start-ok','【成功の目安】'+t));};
@@ -107,7 +120,7 @@
       var quick=el('details','start-more start-quick');quick.appendChild(el('summary',null,'慣れている人向け：コマンドだけ見る'));host.appendChild(quick);
       note(isCodex?'Codex は ChatGPT の有料プラン（Plus 以上）か、OpenAI の API キーで使えます。':'Claude Code は Claude の有料プラン（Pro 以上）か、Anthropic の API キーで使えます。無料プランでは使えません。');
       head('A　ターミナルを開いて、'+a.name+'を入れる（初回だけ）');
-      note('command＋スペースで「ターミナル」と打って Enter。文字だけの画面が開きます。打ち間違えても Mac は壊れません。すでに '+a.name+' が入っている人は、B へ進みます。');
+      note('command＋スペースで「ターミナル」と打って Enter。文字だけの画面が開きます。ここでは、このページのコマンドだけをコピーして使います。すでに '+a.name+' が入っている人は、B へ進みます。');
       if(isCodex){note('Codex には Node.js が要ります。先に次の1行で確認します。数字（例：v22.11.0）が出ればOK。出なければ nodejs.org で「LTS」をダウンロードして入れ、ターミナルを開き直します。');row('確認　node -v','node -v');}
       var inst=a.inst+' && '+a.cmd+' --version';
       row('入れる　'+inst,inst);
@@ -119,25 +132,25 @@
         ['「~/.local/bin is not in your PATH」や「command not found: claude」','次の1行を貼って Enter。そのあと、ターミナルを閉じて開き直し、もう一度「入れる」を貼ります。',a.pathCmd],
         ['何も出ずに止まって見える','ダウンロード中です。1〜2分待ちます。']]);
       head('B　手順書（zip）を受け取って、入れる');
-      note('下の1行だけで、zip のダウンロードから手順書を置くところまで進みます（ボタンで先に受け取っておいてもかまいません。ダウンロードフォルダに入ります）。貼ったあとに「“ターミナル”が“ダウンロード”フォルダ内のファイルにアクセスしようとしています」と出たら「許可」を押します。');
+      note('下の1行で、このページの配布パックを新しく取得し、手順書を置きます。前に入れた手順書があれば、バックアップ用フォルダに残します。zipを手元に保存したい場合だけ、ダウンロードボタンを使ってください。');
       var z=el('a','start-btn primary','全部入りzipをダウンロード');z.href='downloads/insta-ai-all.zip';z.setAttribute('download','');host.appendChild(z);
       var sk=isCodex?'~/.agents/skills':'.claude/skills';var ZURL=new URL('downloads/insta-ai-all.zip',location.href).href;
-      var put='(mkdir -p ~/Downloads ~/insta-ai && cd ~/insta-ai && Z=$(ls -t ~/Downloads | grep "^insta-ai-all.*\\.zip$" | head -1); D=$(ls -t ~/Downloads | grep "^insta-ai-all" | grep -v "\\.zip$" | head -1); if [ -z "$Z" ] && [ -z "$D" ]; then curl -fsSLo ~/Downloads/insta-ai-all.zip '+ZURL+' && Z=insta-ai-all.zip; fi; if [ -n "$Z" ]; then unzip -oq ~/Downloads/"$Z" -d insta-ai-all; elif [ -n "$D" ]; then rm -rf insta-ai-all && cp -R ~/Downloads/"$D" insta-ai-all; fi; if [ -d insta-ai-all/insta-ai-create ]; then mkdir -p '+sk+' && cp -R insta-ai-all/insta-ai-create '+sk+'/ && ls '+sk+'; else echo "zip が見つかりません。ダウンロードし直してください"; exit 1; fi)';
-      note('下の「コピー」を押して、ターミナルに貼って Enter。作業フォルダ ~/insta-ai を作り、zip を開いて手順書を置くところまで自動で進みます。ファイル名が「insta-ai-all (1).zip」になっていても、Safari が先に zip を開いていても動きます。');
+      var put='(set -eu; mkdir -p ~/insta-ai; cd ~/insta-ai; D=$(mktemp -d "$PWD/setup.XXXXXX"); curl -fLSs "'+ZURL+'" -o "$D/pack.zip"; unzip -q "$D/pack.zip" -d "$D/unpacked"; test -s "$D/unpacked/insta-ai-create/SKILL.md"; test -d "$D/unpacked/insta-ai-create/references"; S='+sk+'; mkdir -p "$S"; if [ -e "$S/insta-ai-create" ]; then B=$(mktemp -d "$S/insta-ai-backup.XXXXXX"); mv "$S/insta-ai-create" "$B/"; fi; cp -R "$D/unpacked/insta-ai-create" "$S/"; test -s "$S/insta-ai-create/SKILL.md"; echo "insta-ai-create の配置を確認しました"; shasum -a 256 "$S/insta-ai-create/SKILL.md")';
+      note('下の「コピー」を押して、ターミナルに貼って Enter。取得・展開・必須ファイルの確認を行います。エラーが出た場合は、その内容を確認してから先へ進みます。');
       row('入れる（長いので中身は省略しています）',put);
-      ok('最後に insta-ai-create と出れば成功です。');
+      ok('「insta-ai-create の配置を確認しました」と、ファイル確認用の英数字が出れば配置完了です。');
       help('うまくいかないとき',[
-        ['「zip が見つかりません」と出た','ダウンロードに失敗しています。上のボタンで zip をダウンロードしてから、同じ1行を貼ってください。'],
-        ['違う場所に保存した','zip を Finder の「ダウンロード」に移してから、もう一度貼ります。']].concat(isCodex?[['古い版の Codex で「スキルが見つからない」と出た','次の1行で、古い置き場所にもコピーします。','mkdir -p ~/.codex/skills && cp -R ~/insta-ai/insta-ai-all/insta-ai-create ~/.codex/skills/']]:[]));
+        ['「curl」「unzip」のエラーが出た','取得または展開に失敗しています。通信を確認し、エラーの文をAIに伝えてください。配置完了の表示が出るまではCへ進みません。'],
+        ['前の手順書に戻したい','skillsフォルダ内の insta-ai-backup で始まるフォルダに前の手順書が残っています。戻し方はAIに相談してください。']].concat(isCodex?[['古い版の Codex で「スキルが見つからない」と出た','次の1行で、古い置き場所にもコピーします。','mkdir -p ~/.codex/skills && cp -R ~/.agents/skills/insta-ai-create ~/.codex/skills/']]:[]));
       head('C　'+a.name+'を起動して、ログインする');
       var run='cd ~/insta-ai && '+a.cmd;
       row('起動　'+run,run);
       warn('動画の書き出しで「ffmpeg がない」と言われたら：AI に「ffmpeg を Homebrew で入れて」と頼みます。Mac のパスワードを聞かれたら入力して Enter（画面には出ません）。');
-      note('初回はログインが必要です。ブラウザが開いたら、いつものアカウントで許可してください。英語で何か聞かれたら、文字の色の設定も含めて Enter で進めてかまいません。');
-      var chk='インスタAIの手順書（insta-ai-create）は読めていますか。読めていれば「読めています」とだけ答えて。';
+      note('初回はログインが必要です。ブラウザが開いたら、いつものアカウントで許可してください。英語の確認が出たら、表示内容を読んで進めます。分からない場合は、その文をAIに貼って意味を確認してください。');
+      var chk='インスタAIの手順書（insta-ai-create）のSKILL.mdと、そこから参照する資料を1つ実際に読んで。読めたファイル名と、参照資料の見出しを1つ挙げて。読めない場合はその場所を教えて。';
       note('起動したら、この1行を貼って Enter。');
       row('確認　'+chk,chk);
-      ok('「読めています」と返ってきたら、手順3へ進みます。');
+      ok('SKILL.mdと参照資料のファイル名・見出しが返り、配布資料と一致していれば手順3へ進みます。');
       warn('「読めています」と返らないとき：'+(isCodex?'「~/.agents/skills/insta-ai-create/SKILL.md を読んでから進めて」':'「.claude/skills/insta-ai-create/SKILL.md を読んでから進めて」')+'と貼れば、ファイルを直接読ませて進められます。');
       help('うまくいかないとき',[
         ['「読めていません」と返ってきた','control＋C を2回押して AI を閉じ、B の1行をもう一度貼ってから、C の「起動」を貼り直します。'],
@@ -175,11 +188,11 @@
     $(groupId).querySelectorAll('['+attr+']').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute(attr)===val?'true':'false');});
   }
   function setMake(){save();setPressed('start-make','data-make',state.make);setPressed('start-make2','data-make',state.make);if(state.ai==='app')renderS2();renderS3();}
-  $('start-ai').addEventListener('click',function(e){var b=e.target.closest('[data-ai]');if(!b)return;state.ai=b.getAttribute('data-ai');setPressed('start-ai','data-ai',state.ai);save();renderS2();renderS3();});
-  $('start-make').addEventListener('click',function(e){var b=e.target.closest('[data-make]');if(!b)return;state.make=b.getAttribute('data-make');setMake();});
-  $('start-make2').addEventListener('click',function(e){var b=e.target.closest('[data-make]');if(!b)return;state.make=b.getAttribute('data-make');setMake();});
+  $('start-ai').addEventListener('click',function(e){var b=e.target.closest('[data-ai]');if(!b)return;var changed=state.ai!==b.getAttribute('data-ai');state.ai=b.getAttribute('data-ai');if(changed)document.dispatchEvent(new Event('insta-ai-selection-change'));setPressed('start-ai','data-ai',state.ai);save();renderS2();renderS3();});
+  $('start-make').addEventListener('click',function(e){var b=e.target.closest('[data-make]');if(!b)return;var changed=state.make!==b.getAttribute('data-make');state.make=b.getAttribute('data-make');if(changed)document.dispatchEvent(new Event('insta-ai-selection-change'));setMake();});
+  $('start-make2').addEventListener('click',function(e){var b=e.target.closest('[data-make]');if(!b)return;var changed=state.make!==b.getAttribute('data-make');state.make=b.getAttribute('data-make');if(changed)document.dispatchEvent(new Event('insta-ai-selection-change'));setMake();});
   ['start-genre','start-reader','start-trouble','start-name','start-today','start-format','start-folder','start-tip'].forEach(function(id){$(id).addEventListener('input',function(){save();renderS3();renderAnswers();});$(id).addEventListener('change',function(){save();renderS3();});});
-  $('start-format').addEventListener('change',function(){if(state.ai==='app')renderS2();});
+  $('start-format').addEventListener('change',function(){if(state.ai==='app')renderS2();document.dispatchEvent(new Event('insta-ai-selection-change'));});
   bindCopy($('start-copy-prompt'),function(){return $('start-prompt').value;},$('start-s3-status'),function(){$('start-prompt').focus();$('start-prompt').select();});
   /* 質問への返し方 */
   function renderAnswers(){
@@ -224,11 +237,23 @@
 (function(){document.querySelectorAll('.route-btn[data-route]').forEach(function(a){a.addEventListener('click',function(){var b=document.querySelector('#start-ai [data-ai="'+a.getAttribute('data-route')+'"]');if(b)b.click();});});})();
 /* 自分の動画の型：コピーボタン */
 (function(){document.querySelectorAll('.ms-btn[data-copy]').forEach(function(b){b.addEventListener('click',function(){var t=document.getElementById(b.getAttribute('data-copy'));if(!t)return;var st=b.parentNode.querySelector('.ms-status');var done=function(ok){if(st)st.textContent=ok?'コピーしました。':'コピーできませんでした。上の文を長押し（選択）してコピーしてください。';};var fb=function(){try{t.focus();t.select();return document.execCommand('copy');}catch(e){return false;}};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t.value).then(function(){done(true);},function(){done(fb());});}else done(fb());});});})();
-/* 進み具合：各手順でボタンを押したら印を付ける（このブラウザだけに保存） */
-(function(){var K='instaAiProgress.v1',done={};try{done=JSON.parse(localStorage.getItem(K)||'{}')}catch(e){}
-function paint(){var n=0;[1,2,3].forEach(function(i){var on=done[i]===1;var d=document.querySelector('.sp-dots [data-sp="'+i+'"]');if(d)d.classList.toggle('on',on);if(on)n++;});var t=document.getElementById('sp-text');if(t)t.textContent=n===3?'3/3　1本目の下書きができました':(done[3]==='copied'?n+'/3　ひと言をコピーしました。AIに貼って送信すると台本が出ます':n+'/3');var cf=document.getElementById('sp-confirm');if(cf)cf.hidden=done[3]!=='copied';}
-(function(){var st=document.querySelectorAll('.start-step')[2];if(!st)return;var b=document.createElement('button');b.type='button';b.id='sp-confirm';b.className='sp-confirm';b.textContent='AIから台本が出た';b.hidden=true;b.addEventListener('click',function(e){e.stopPropagation();done[3]=1;try{localStorage.setItem(K,JSON.stringify(done))}catch(_){}paint();});var h=st.querySelector('h3')||st.firstElementChild;var wrap=document.createElement('p');wrap.className='sp-confirm-wrap';wrap.appendChild(b);st.appendChild(wrap);})();
-document.querySelectorAll('.start-step').forEach(function(li,idx){li.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;if(idx===0&&!b.closest('#start-ai'))return;if(b.id==='sp-confirm')return;if(idx>0&&!/コピー|ダウンロード/.test(b.textContent))return;if(idx===2){if(done[3]!==1)done[3]='copied';}else done[idx+1]=1;try{localStorage.setItem(K,JSON.stringify(done))}catch(_){}paint();});});paint();var rb=document.getElementById('sp-resume');var steps=document.querySelectorAll('.start-step');var any=done[1]||done[2]||done[3];if(rb&&any&&!(done[1]===1&&done[2]===1&&done[3]===1)){var nx=done[1]!==1?0:done[2]!==1?1:2;rb.hidden=false;rb.textContent='前回の続きから（手順'+(nx+1)+'）';rb.addEventListener('click',function(){steps[nx].scrollIntoView({behavior:'smooth',block:'start'});});}})();
+/* 進み具合は利用者の確認で記録。コピー失敗やダウンロードを完了にしない。 */
+(function(){
+  var K='instaAiProgress.v2',done={},steps=document.querySelectorAll('.start-step');
+  try{done=JSON.parse(localStorage.getItem(K)||'{}')||{};}catch(e){}
+  function paint(){var n=0;[1,2,3].forEach(function(i){var on=done[i]===1,d=document.querySelector('.sp-dots [data-sp="'+i+'"]');if(d)d.classList.toggle('on',on);if(on)n++;});
+    document.getElementById('sp-text').textContent=n+'/3'+(n===3?'　最初の作業を確認しました':'');
+    document.querySelectorAll('[data-progress-confirm]').forEach(function(b){var on=done[b.dataset.progressConfirm]===1;b.setAttribute('aria-pressed',String(on));b.textContent=(on?'✓ ':'')+b.dataset.label;});
+    var rb=document.getElementById('sp-resume');if(rb){rb.hidden=n===0||n===3;var nx=done[1]!==1?0:done[2]!==1?1:2;rb.textContent='続きから（手順'+(nx+1)+'）';rb.onclick=function(){steps[nx].scrollIntoView({block:'start',behavior:'smooth'});};}}
+  function save(){try{localStorage.setItem(K,JSON.stringify(done));}catch(e){}paint();}
+  [['手順書を送信し、AIの返事を確認した',2],['台本・原稿・編集指示書を受け取り、要確認を確かめた',3]].forEach(function(x){var b=document.createElement('button');b.type='button';b.className='sp-confirm';b.dataset.progressConfirm=x[1];b.dataset.label=x[0];b.addEventListener('click',function(){done[1]=1;done[x[1]]=done[x[1]]===1?0:1;save();});var wrap=document.createElement('p');wrap.className='sp-confirm-wrap';wrap.appendChild(b);steps[x[1]-1].querySelector('div').appendChild(wrap);});
+  document.addEventListener('insta-ai-selection-change',function(){
+    var had=done[2]===1||done[3]===1;done={1:1};save();var note=document.getElementById('start-selection-note');
+    if(note){note.hidden=!had;note.textContent='選ぶ内容が変わりました。手順2の手順書をコピーし直してAIに送り、そのあと手順3の言葉を送ってください。';}
+  });
+  document.getElementById('start-ai').addEventListener('click',function(e){if(e.target.closest('[data-ai]')){done[1]=1;save();}});
+  paint();
+})();
 ;(function(){var d=document.getElementById('howto-mac');if(d&&window.matchMedia('(min-width:761px)').matches)d.open=true;
 document.addEventListener('click',function(e){var a=e.target.closest('.howto-alt');if(!a)return;var b=document.querySelector('.hx-route .route-btn[data-route="'+a.getAttribute('data-route')+'"]');if(b){e.preventDefault();b.click();var t=a.getAttribute('data-target');setTimeout(function(){var g=t&&document.getElementById(t);if(g)g.scrollIntoView({block:'start'});},120);}});})();
 ;(function(){function fit(t){if(!t||!t.offsetParent)return;t.style.height='auto';t.style.height=(t.scrollHeight+4)+'px';}window.__fitPrompt=function(){fit(document.getElementById('start-prompt'));all();};

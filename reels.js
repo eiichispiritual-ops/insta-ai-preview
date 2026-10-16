@@ -17,13 +17,21 @@
     v.src=base+side.file; v.poster=base+side.poster; v.controls=false; v.playsInline=true; v.preload='metadata';
     v.setAttribute('aria-label',label+'：'+item.title);
     const b=el('button','howto-play reel-play','▶'); b.type='button'; b.setAttribute('aria-label',label+'を再生');
-    // 再生中だけ標準の操作バーを出す。止まったら▶に戻す（字幕に被せない）
+    const status=el('p','reel-note'); status.hidden=true; status.setAttribute('role','status');
+    let attempt=0;
+    const failed=()=>{status.textContent='動画を再生できませんでした。「再試行」を押してください。';status.hidden=false;b.textContent='再試行';b.setAttribute('aria-label',label+'を再試行');b.hidden=false;};
+    const play=async()=>{
+      const request=++attempt;
+      try{if(v.error)v.load();await v.play();}
+      catch(error){if(request===attempt&&error.name!=='AbortError')failed();}
+    };
+    // 初回再生後は、停止中も標準の操作バーを残す。
     v.addEventListener('play',()=>{v.controls=true;b.hidden=true;});
-    v.addEventListener('pause',()=>{v.controls=false;b.hidden=false;});
-    v.addEventListener('ended',()=>{v.controls=false;b.hidden=false;});
-    b.addEventListener('click',()=>{v.play();});
-    v.addEventListener('click',()=>{ if(!v.controls) v.play(); });
-    frame.appendChild(v); frame.appendChild(b); box.appendChild(frame);
+    v.addEventListener('playing',()=>{++attempt;v.controls=true;b.hidden=true;status.hidden=true;status.textContent='';});
+    v.addEventListener('error',()=>{++attempt;failed();});
+    b.addEventListener('click',play);
+    v.addEventListener('click',()=>{if(!v.controls)play();});
+    frame.appendChild(v); frame.appendChild(b); box.appendChild(frame); box.appendChild(status);
     const cap=el('figcaption'); cap.appendChild(el('span','reel-tag',label));
     if(side.duration_sec) cap.appendChild(el('small',null,Math.round(side.duration_sec)+'秒'));
     box.appendChild(cap); return box;
