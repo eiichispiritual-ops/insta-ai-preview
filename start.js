@@ -148,7 +148,7 @@
       var run='cd ~/insta-ai && '+a.cmd;
       row('起動　'+run,run);
       warn('動画の書き出しで「ffmpeg がない」と言われたら：AI に「ffmpeg を Homebrew で入れて」と頼みます。Mac のパスワードを聞かれたら入力して Enter（画面には出ません）。');
-      note('初回はログインが必要です。ブラウザが開いたら、いつものアカウントで許可してください。英語の確認が出たら、表示内容を読んで進めます。分からない場合は、別途ChatGPTかClaudeの会話を開き、表示文の意味を確認してください。確認後、このターミナルへ戻ります。パスワードや認証コードは貼りません。');
+      note('初回はログインが必要です。ブラウザが開いたら、いつものアカウントで許可してください。英語の確認が出たら、表示内容を読んで進めます。分からない場合は、別途ChatGPTやClaudeの新しいチャットを開き、表示文の意味を確認してください。確認後、このターミナルへ戻ります。パスワードや認証コードは貼りません。');
       var chk='インスタAIの手順書（insta-ai-create）のSKILL.mdと、そこから参照する資料を1つ実際に読んで。読めたファイル名と、参照資料の見出しを1つ挙げて。読めない場合はその場所を教えて。';
       note('ここからは起動したAIのチャットに貼ってEnterで送信します。Bのコマンド入力欄とは違います。');
       row('確認　'+chk,chk,'ai');
@@ -211,7 +211,7 @@
   copyRow($('start-shoot-copy'),'撮れる条件をAIへ送る',function(){return '撮れる条件で形式を選んでください。顔出しは'+$('start-face').value+'、声の録音は'+$('start-voice').value+'、手元の撮影は'+$('start-hands').value+'です。今ある条件で作れる案を1つおすすめし、用意する素材を示して台本まで進めてください。';});
   $('start-recover-copy').addEventListener('click',async function(){
     var st=$('start-recover-status'),box=$('start-recover-manual'),key=appKey();if(key.indexOf('reel-')===0)key+='-lite';st.textContent='再開用の文章を準備しています…';
-    var request=prompt(), selection=state.ai+'|'+state.make;try{var skill=await window.instaAiSkillText(key);if(request!==prompt()||selection!==state.ai+'|'+state.make){st.textContent='入力が変わりました。もう一度コピーしてください。';return;}var t=skill+'\n\n## 今回の依頼\n'+request;box.value=t;var ok=await copyText(t);box.hidden=ok;st.textContent=ok?'コピーしました。新しいAIのチャットへ貼ってそのまま送信してください。以前の返事は含まれません。':'下の全文を選択してコピーし、新しいAIのチャットへ送信してください。';if(!ok){box.focus();box.select();}}catch(e){st.textContent='手順書を読み込めませんでした。通信を確認してもう一度押してください。';}
+    var request=prompt(), selection=state.ai+'|'+state.make;try{var skill=await window.instaAiSkillText(key);if(request!==prompt()||selection!==state.ai+'|'+state.make){st.textContent='入力が変わりました。もう一度コピーしてください。';return;}var t=skill+'\n\n## 今回の依頼\n'+request;box.value=t;var ok=await copyText(t);box.hidden=ok;st.textContent=ok?'コピーしました。新しいAIのチャットへ貼ってそのまま送信してください。以前の返事は含まれません。':'下の全文を選択してコピーし、新しいAIのチャットへ貼ってそのまま送信してください。';if(!ok){box.focus();box.select();}}catch(e){st.textContent='手順書を読み込めませんでした。通信を確認してもう一度押してください。';}
   });
 
   /* 質問への返し方 */
@@ -249,7 +249,7 @@
     loadHowto().then(function(h){
       var p=h[f]&&h[f].agent_prompt;
       if(!p){agentSt.textContent='この形式の指示文を読み込めませんでした。';return;}
-      if(f!==$('start-format').value){agentSt.textContent='形式が変わりました。もう一度コピーしてください。';return;}return copyText(p).then(function(ok){$('start-agent-manual').value=p;$('start-agent-manual').hidden=ok;agentSt.textContent=ok?'コピーしました（'+FMT[f]+'）。AIに貼って送ります。':'コピーできませんでした。下の全文を選んでコピーしてください。';});
+      if(f!==$('start-format').value){agentSt.textContent='形式が変わりました。もう一度コピーしてください。';return;}return copyText(p).then(function(ok){$('start-agent-manual').value=p;$('start-agent-manual').hidden=ok;agentSt.textContent=ok?'コピーしました（'+FMT[f]+'）。AIのチャットに貼って、そのまま送信してください。':'コピーできませんでした。下の全文を選んでコピーしてください。';});
     }).catch(function(){agentSt.textContent='読み込めませんでした。ページを開き直してください。';});
   });
   restore();setPressed('start-ai','data-ai',state.ai);setPressed('start-make','data-make',state.make);setPressed('start-make2','data-make',state.make);
