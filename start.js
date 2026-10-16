@@ -284,5 +284,5 @@ function all(){fit(document.getElementById('start-prompt'));fit(document.getElem
 var t=document.getElementById('start-prompt');if(t){new MutationObserver(all).observe(t,{childList:true,characterData:true,subtree:true});['input','change','click'].forEach(function(ev){document.addEventListener(ev,function(){setTimeout(all,30);});});}
 window.addEventListener('resize',all);window.addEventListener('load',all);setTimeout(all,300);})();
 /* 貼る場所の表示を、選んだAIの名前に合わせる */
-;(function(){function upd(){var n=state.ai==='cc'?'Claude Code の入力欄':state.ai==='codex'?'Codex の入力欄':'AIのチャットの入力欄';document.querySelectorAll('.copy-destination').forEach(function(e){if(e.textContent.indexOf('ターミナル')<0)e.textContent='貼る場所：'+n;});}
+;(function(){function upd(){var sel=document.querySelector('#start-ai [data-ai][aria-pressed="true"]');var ai=sel?sel.getAttribute('data-ai'):'app';var n=ai==='cc'?'Claude Code の入力欄':ai==='codex'?'Codex の入力欄':'AIのチャットの入力欄';document.querySelectorAll('.copy-destination').forEach(function(e){if(e.textContent.indexOf('ターミナル')<0)e.textContent='貼る場所：'+n;});}
 var h=document.getElementById('start-ai');if(h)h.addEventListener('click',function(){setTimeout(upd,60);});document.addEventListener('insta-ai-selection-change',function(){setTimeout(upd,60);});setTimeout(upd,300);})();
