@@ -69,6 +69,7 @@
     }catch(err){fallback(text,e.name);}
   }
   /* 入口ごとの字数（サイトのボタン表示用）。ボタンを押したときのコピー文と同じ build() の長さ。 */
+  window.instaAiSkillText=function(key){return load().then(function(b){return build(key,b);});};
   window.instaAiSkillLength=function(key){return load().then(function(b){return build(key,b).length;});};
   window.instaAiCopySkill=function(key,btn,extra){return copyKey(key,btn,extra);};
   document.querySelectorAll('#get-skill [data-skillcopy]').forEach(function(b){
