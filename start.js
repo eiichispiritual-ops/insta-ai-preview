@@ -10,8 +10,8 @@
   function restore(){try{var o=JSON.parse(localStorage.getItem(KEY)||'null');if(!o)return;if(AI[o.ai])state.ai=o.ai;if(MAKE_NAME[o.make])state.make=o.make;FIELDS.forEach(function(id){if(o.f&&typeof o.f[id]==='string'){var n=$(id);if(n.tagName==='SELECT'){var ok=Array.prototype.some.call(n.options,function(x){return x.value===o.f[id];});if(ok)n.value=o.f[id];}else n.value=o.f[id];}});}catch(e){}}
   var FMT={voiceover:'アフレコ',vlog:'VLOG',talk:'トーク',ranking:'ランキング',comparison:'比較',abstract:'抽象マーケ'};
   var AI={
-    cc:{name:'Claude Code',cmd:'claude',skills:'.claude/skills',inst:'curl -fsSL https://claude.ai/install.sh | bash',pathNote:'入れたあとに「~/.local/bin is not in your PATH」と出たら、下の1行を貼って Enter。ターミナルを閉じて開き直せば反映されます。この表示が出なければ、ここは飛ばしてかまいません。下の1行は案内に書かれているものと同じで、ユーザー名を書き換える必要はありません。',pathCmd:'echo \'export PATH="$HOME/.local/bin:$PATH"\' >> ~/.zshrc && source ~/.zshrc',instNote:'Claude Code を入れます。入っていれば飛ばしてください。',loginNote:'claude と打ち、案内どおりにログインします。「Do you trust the files in this folder?」と聞かれたら Enter。ログインが済んだら、左下の control キーと C を2回押して元の画面に戻ってください（command キーではありません）。戻らずに次の行を貼ると、AIへの質問として送られてしまいます。',desc:'この手順は Mac で行います。iPhone から見ている人は「アプリ」を選んでください。Macのターミナルで進めます。A・B・C の3つを上から順に。各行の「貼る場所」を確認し、コピーしてcommand＋Vで貼り、Enterで進めます。CでAIを起動したあとは、AIのチャットへ送ります。',after:'確認できたら、下の言葉を打って、Claude Codeを起動します。.claude は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。'},
-    codex:{name:'Codex',cmd:'codex',skills:'~/.agents/skills',inst:'npm install -g @openai/codex',instNote:'Codex を入れます。入っていれば飛ばしてください。',loginNote:'codex と打ち、案内どおりにログインします。「Do you trust the files in this folder?」と聞かれたら Enter。ログインが済んだら、左下の control キーと C を2回押して元の画面に戻ってください（command キーではありません）。戻らずに次の行を貼ると、AIへの質問として送られてしまいます。',pre:'node -v',preNote:'先に、Node.js が入っているか確認します。数字が出なければ、nodejs.org から LTS を入れて、ターミナルを開き直します。',desc:'この手順は Mac で行います。iPhone から見ている人は「アプリ」を選んでください。Macのターミナルで進めます。A・B・C の3つを上から順に。各行の「貼る場所」を確認し、コピーしてcommand＋Vで貼り、Enterで進めます。CでAIを起動したあとは、AIのチャットへ送ります。',after:'確認できたら、このフォルダ（~/insta-ai）のまま、下の言葉を打って、Codexを起動します。.agents は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。古い版の Codex で「インスタAIの手順書」が効かないときだけ、同じ cp の行の ~/.agents/skills を ~/.codex/skills に変えて、もう一度貼ります。Codexがすでに開いていた場合は、一度閉じて、打ち直します。'},
+    cc:{name:'Claude Code',cmd:'claude',skills:'.claude/skills',inst:'curl -fsSL https://claude.ai/install.sh | bash',pathNote:'入れたあとに「~/.local/bin is not in your PATH」と出たら、下の1行を貼って Enter。ターミナルを閉じて開き直せば反映されます。この表示が出なければ、ここは飛ばしてかまいません。下の1行は案内に書かれているものと同じで、ユーザー名を書き換える必要はありません。',pathCmd:'echo \'export PATH="$HOME/.local/bin:$PATH"\' >> ~/.zshrc && source ~/.zshrc',instNote:'Claude Code を入れます。入っていれば飛ばしてください。',loginNote:'claude と打ち、案内どおりにログインします。「Do you trust the files in this folder?」と聞かれたら Enter。ログインが済んだら、左下の control キーと C を2回押して元の画面に戻ってください（command キーではありません）。戻らずに次の行を貼ると、AIへの質問として送られてしまいます。',desc:'この手順はMacでのみ行えます。Mac以外の方は「アプリ」を選んでください。Macのターミナルで進めます。A・B・C の3つを上から順に。各行の「貼る場所」を確認し、コピーしてcommand＋Vで貼り、Enterで進めます。Cで{AI}を起動したあとは、{AI}の入力欄へ送ります。',after:'確認できたら、下の言葉を打って、Claude Codeを起動します。.claude は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。'},
+    codex:{name:'Codex',cmd:'codex',skills:'~/.agents/skills',inst:'npm install -g @openai/codex',instNote:'Codex を入れます。入っていれば飛ばしてください。',loginNote:'codex と打ち、案内どおりにログインします。「Do you trust the files in this folder?」と聞かれたら Enter。ログインが済んだら、左下の control キーと C を2回押して元の画面に戻ってください（command キーではありません）。戻らずに次の行を貼ると、AIへの質問として送られてしまいます。',pre:'node -v',preNote:'先に、Node.js が入っているか確認します。数字が出なければ、nodejs.org から LTS を入れて、ターミナルを開き直します。',desc:'この手順はMacでのみ行えます。Mac以外の方は「アプリ」を選んでください。Macのターミナルで進めます。A・B・C の3つを上から順に。各行の「貼る場所」を確認し、コピーしてcommand＋Vで貼り、Enterで進めます。Cで{AI}を起動したあとは、{AI}の入力欄へ送ります。',after:'確認できたら、このフォルダ（~/insta-ai）のまま、下の言葉を打って、Codexを起動します。.agents は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。古い版の Codex で「インスタAIの手順書」が効かないときだけ、同じ cp の行の ~/.agents/skills を ~/.codex/skills に変えて、もう一度貼ります。Codexがすでに開いていた場合は、一度閉じて、打ち直します。'},
     app:{name:'アプリ',desc:'① 下のボタンでコピー → ② AI（アプリかブラウザ）で新しいチャットを開き、貼ってそのまま送信 → ③ 返事が出たら、手順3へ。長い文なので、貼ると「ファイル」のように表示されることがあります。そのまま送信して大丈夫です。'}
   };
   function copyText(t){
@@ -39,7 +39,7 @@
     else if(split&&i>0){sp.appendChild(el('b','start-copylabel',s.slice(0,i)));sp.appendChild(el('span','start-copybody',s.slice(i+1)));}
     else if(/^[\x20-\x7e\n]+$/.test(s)){sp.appendChild(el('code','start-cmd',s));}
     else sp.textContent=s;
-    row.appendChild(sp);row.appendChild(el('small','start-note copy-destination','貼る場所：'+(destination==='terminal'?'ターミナル（AIを起動する前の入力欄）':'AIのチャットの入力欄')));
+    row.appendChild(sp);row.appendChild(el('small','start-note copy-destination','貼る場所：'+(destination==='terminal'?'ターミナル（AIを起動する前の入力欄）':(state.ai==='cc'?'Claude Code の入力欄':state.ai==='codex'?'Codex の入力欄':'AIのチャットの入力欄'))));
     var b=el('button','start-btn','コピー');b.type='button';
     var st=el('span','start-status','');st.setAttribute('role','status');
     bindCopy(b,function(){return typeof text==='function'?text():text;},st,function(){
@@ -80,7 +80,7 @@
   var formatHome=$('start-format-wrap').parentNode;
   function renderS2(){
     var a=AI[state.ai], host=$('start-s2-actions'); host.replaceChildren(); $('start-s2-status').textContent='';
-    $('start-s2-desc').textContent=a.desc;
+    $('start-s2-desc').textContent=a.desc.replace(/{AI}/g,a.name);
     $('start-s2-make').hidden=state.ai!=='app';
     var fmt=$('start-format-wrap');if(state.ai==='app'){$('start-s2-make').appendChild(fmt);}else{formatHome.appendChild(fmt);}
     if(state.ai==='app'){
@@ -140,7 +140,7 @@
       var put='(set -eu; mkdir -p ~/insta-ai; cd ~/insta-ai; D=$(mktemp -d "$PWD/setup.XXXXXX"); curl -fLSs "'+ZURL+'" -o "$D/pack.zip"; unzip -q "$D/pack.zip" -d "$D/unpacked"; test -s "$D/unpacked/insta-ai-create/SKILL.md"; test -d "$D/unpacked/insta-ai-create/references"; S='+sk+'; mkdir -p "$S"; if [ -e "$S/insta-ai-create" ]; then B=$(mktemp -d "$S/insta-ai-backup.XXXXXX"); mv "$S/insta-ai-create" "$B/"; fi; cp -R "$D/unpacked/insta-ai-create" "$S/"; test -s "$S/insta-ai-create/SKILL.md"; sh "$D/unpacked/insta-ai-safety/apply.sh"; echo "insta-ai-create の配置を確認しました"; shasum -a 256 "$S/insta-ai-create/SKILL.md")';
       note('下の「コピー」を押して、ターミナルに貼って Enter。取得・展開・必須ファイルの確認を行います。エラーが出た場合は、その内容を確認してから先へ進みます。');
       row('入れる（長いので中身は省略しています）',put);
-      ok('「安全設定：OK」「insta-ai-create の配置を確認しました」と、ファイル確認用の英数字が出れば配置完了です。作業フォルダ内で進めるためのルールと設定ファイルも配置します。「安全設定：OK」は配置完了の表示です。有効な権限は、起動したAIの権限画面でも確認してください。');
+      ok('「安全設定：OK」「insta-ai-create の配置を確認しました」と、ファイル確認用の英数字が出れば配置完了です。作業フォルダ内で進めるためのルールと設定ファイルも配置します。「安全設定：OK」は配置完了の表示です。有効な権限は、起動した'+a.name+'の権限画面でも確認してください。');
       help('うまくいかないとき',[
         ['「curl」「unzip」のエラーが出た','取得または展開に失敗しています。通信を確認し、エラーの文をAIに伝えてください。配置完了の表示が出るまではCへ進みません。'],
         ['前の手順書に戻したい','skillsフォルダ内の insta-ai-backup で始まるフォルダに前の手順書が残っています。戻し方はAIに相談してください。']].concat(isCodex?[['古い版の Codex で「スキルが見つからない」と出た','次の1行で、古い置き場所にもコピーします。','mkdir -p ~/.codex/skills && cp -R ~/.agents/skills/insta-ai-create ~/.codex/skills/']]:[]));
@@ -150,7 +150,7 @@
       warn('動画の書き出しで「ffmpeg がない」と言われたら：AI に「ffmpeg を Homebrew で入れて」と頼みます。Mac のパスワードを聞かれたら入力して Enter（画面には出ません）。');
       note('初回はログインが必要です。ブラウザが開いたら、いつものアカウントで許可してください。英語の確認が出たら、表示内容を読んで進めます。分からない場合は、別途ChatGPTやClaudeの新しいチャットを開き、表示文の意味を確認してください。確認後、このターミナルへ戻ります。パスワードや認証コードは貼りません。');
       var chk='インスタAIの手順書（insta-ai-create）のSKILL.mdと、そこから参照する資料を1つ実際に読んで。読めたファイル名と、参照資料の見出しを1つ挙げて。読めない場合はその場所を教えて。';
-      note('ここからは起動したAIのチャットに貼ってEnterで送信します。Bのコマンド入力欄とは違います。');
+      note('ここからは起動した'+a.name+'の入力欄に貼ってEnterで送信します。Bのコマンド入力欄とは違います。');
       row('確認　'+chk,chk,'ai');
       ok('SKILL.mdと参照資料のファイル名・見出しが返り、配布資料と一致していれば手順3へ進みます。');
       warn('「読めています」と返らないとき：'+(isCodex?'「~/.agents/skills/insta-ai-create/SKILL.md を読んでから進めて」':'「.claude/skills/insta-ai-create/SKILL.md を読んでから進めて」')+'と貼れば、ファイルを直接読ませて進められます。');
@@ -158,7 +158,7 @@
         ['「読めていません」と返ってきた','control＋C を2回押して AI を閉じ、B の1行をもう一度貼ってから、C の「起動」を貼り直します。'],
         ['動画の書き出しで「ffmpeg がない」と言われた','AI に「ffmpeg を Homebrew で入れて」と頼めば入れてくれます。途中で Mac のパスワードを聞かれたら、入力して Enter（画面には表示されません）。'],
         ['次の日に続きをやる','ターミナルを開いて、C の「起動」を貼るだけです。']]);
-      (function(){var qn=el('p','start-note','1〜3はターミナル、4は起動したAIの入力欄へ貼ります。2の行でzipも取得します。');quick.appendChild(qn);quick.appendChild(el('p','start-note start-warn','「読めています」と返らないとき：'+(isCodex?'「~/.agents/skills/insta-ai-create/SKILL.md を読んでから進めて」':'「.claude/skills/insta-ai-create/SKILL.md を読んでから進めて」')+'と貼ります。ffmpeg がないと言われたら「ffmpeg を Homebrew で入れて」と頼みます。'));
+      (function(){var qn=el('p','start-note','1〜3はターミナル、4は起動した'+a.name+'の入力欄へ貼ります。2の行でzipも取得します。');quick.appendChild(qn);quick.appendChild(el('p','start-note start-warn','「読めています」と返らないとき：'+(isCodex?'「~/.agents/skills/insta-ai-create/SKILL.md を読んでから進めて」':'「.claude/skills/insta-ai-create/SKILL.md を読んでから進めて」')+'と貼ります。ffmpeg がないと言われたら「ffmpeg を Homebrew で入れて」と頼みます。'));
         [['1 入れる',inst],['2 zip を取って手順書を置く',put],['3 起動',run],['4 確認（AIに貼る）',chk]].forEach(function(x){var r=el('div','start-copyrows');copyRow(r,x[0],x[1],false,x[1]===chk?'ai':'terminal');quick.appendChild(r);});})();
     }
   }
