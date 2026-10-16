@@ -12,7 +12,7 @@
   var AI={
     cc:{name:'Claude Code',cmd:'claude',skills:'.claude/skills',inst:'curl -fsSL https://claude.ai/install.sh | bash',pathNote:'入れたあとに「~/.local/bin is not in your PATH」と出たら、下の1行を貼って Enter。ターミナルを閉じて開き直せば反映されます。この表示が出なければ、ここは飛ばしてかまいません。下の1行は案内に書かれているものと同じで、ユーザー名を書き換える必要はありません。',pathCmd:'echo \'export PATH="$HOME/.local/bin:$PATH"\' >> ~/.zshrc && source ~/.zshrc',instNote:'Claude Code を入れます。入っていれば飛ばしてください。',loginNote:'claude と打ち、案内どおりにログインします。「Do you trust the files in this folder?」と聞かれたら Enter。ログインが済んだら、左下の control キーと C を2回押して元の画面に戻ってください（command キーではありません）。戻らずに次の行を貼ると、AIへの質問として送られてしまいます。',desc:'この手順は Mac で行います。iPhone から見ている人は「アプリ」を選んでください。Macのターミナルで進めます。A・B・C の3つを上から順に。各行の「貼る場所」を確認し、コピーしてcommand＋Vで貼り、Enterで進めます。CでAIを起動したあとは、AIの会話へ送ります。',after:'確認できたら、下の言葉を打って、Claude Codeを起動します。.claude は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。'},
     codex:{name:'Codex',cmd:'codex',skills:'~/.agents/skills',inst:'npm install -g @openai/codex',instNote:'Codex を入れます。入っていれば飛ばしてください。',loginNote:'codex と打ち、案内どおりにログインします。「Do you trust the files in this folder?」と聞かれたら Enter。ログインが済んだら、左下の control キーと C を2回押して元の画面に戻ってください（command キーではありません）。戻らずに次の行を貼ると、AIへの質問として送られてしまいます。',pre:'node -v',preNote:'先に、Node.js が入っているか確認します。数字が出なければ、nodejs.org から LTS を入れて、ターミナルを開き直します。',desc:'この手順は Mac で行います。iPhone から見ている人は「アプリ」を選んでください。Macのターミナルで進めます。A・B・C の3つを上から順に。各行の「貼る場所」を確認し、コピーしてcommand＋Vで貼り、Enterで進めます。CでAIを起動したあとは、AIの会話へ送ります。',after:'確認できたら、このフォルダ（~/insta-ai）のまま、下の言葉を打って、Codexを起動します。.agents は隠しフォルダなので Finder には出ませんが、ちゃんと入っています。古い版の Codex で「インスタAIの手順書」が効かないときだけ、同じ cp の行の ~/.agents/skills を ~/.codex/skills に変えて、もう一度貼ります。Codexがすでに開いていた場合は、一度閉じて、打ち直します。'},
-    app:{name:'アプリ',desc:'① 下のボタンでコピー → ② AI（アプリかブラウザ）で新しい会話を開き、貼って送信 → ③ 返事が出たら、手順3へ。長い文なので、貼ると「ファイル」のように表示されることがあります。そのまま送信して大丈夫です。'}
+    app:{name:'アプリ',desc:'① 下のボタンでコピー → ② AI（アプリかブラウザ）で新しいチャットを開き、貼ってそのまま送信 → ③ 返事が出たら、手順3へ。長い文なので、貼ると「ファイル」のように表示されることがあります。そのまま送信して大丈夫です。'}
   };
   function copyText(t){
     function fallback(){try{var x=document.createElement('textarea');x.value=t;x.style.position='fixed';x.style.opacity='0';document.body.appendChild(x);x.select();var ok=document.execCommand('copy');x.remove();return ok;}catch(e){return false;}}
@@ -102,7 +102,7 @@
       var links=el('div','ai-open-links');
       [['ChatGPTを開く','https://chatgpt.com/'],['Claudeを開く','https://claude.ai/']].forEach(function(x){var a=el('a','start-btn',x[0]+' ↗');a.href=x[1];a.target='_blank';a.rel='noopener';links.appendChild(a);});
       host.appendChild(links);
-      host.appendChild(el('p','start-note','別のタブが開きます。新しい会話の入力欄に貼って送信し、返事が出たらこのページのタブに戻ります。すでにアプリを使っている方は、いつものアプリを開いてください。'));
+      host.appendChild(el('p','start-note','別のタブが開きます。新しいチャットの入力欄に貼ってそのまま送信し、返事が出たらこのページのタブに戻ります。すでにアプリを使っている方は、いつものアプリを開いてください。'));
       var help=el('details','start-more');help.appendChild(el('summary',null,'コピーした後の貼り方・戻り方'));
       help.appendChild(el('p','start-note','スマホ：AIの入力欄を長押し →「ペースト」または「貼り付け」→ 送信。パソコン：入力欄をクリック → Macはcommand＋V、WindowsはCtrl＋V → 送信。ブラウザのタブ一覧からインスタAIに戻ります。'));
       host.appendChild(help);
@@ -211,7 +211,7 @@
   copyRow($('start-shoot-copy'),'撮れる条件をAIへ送る',function(){return '撮れる条件で形式を選んでください。顔出しは'+$('start-face').value+'、声の録音は'+$('start-voice').value+'、手元の撮影は'+$('start-hands').value+'です。今ある条件で作れる案を1つおすすめし、用意する素材を示して台本まで進めてください。';});
   $('start-recover-copy').addEventListener('click',async function(){
     var st=$('start-recover-status'),box=$('start-recover-manual'),key=appKey();if(key.indexOf('reel-')===0)key+='-lite';st.textContent='再開用の文章を準備しています…';
-    var request=prompt(), selection=state.ai+'|'+state.make;try{var skill=await window.instaAiSkillText(key);if(request!==prompt()||selection!==state.ai+'|'+state.make){st.textContent='入力が変わりました。もう一度コピーしてください。';return;}var t=skill+'\n\n## 今回の依頼\n'+request;box.value=t;var ok=await copyText(t);box.hidden=ok;st.textContent=ok?'コピーしました。新しいAIの会話へ貼って送信してください。以前の返事は含まれません。':'下の全文を選択してコピーし、新しいAIの会話へ送信してください。';if(!ok){box.focus();box.select();}}catch(e){st.textContent='手順書を読み込めませんでした。通信を確認してもう一度押してください。';}
+    var request=prompt(), selection=state.ai+'|'+state.make;try{var skill=await window.instaAiSkillText(key);if(request!==prompt()||selection!==state.ai+'|'+state.make){st.textContent='入力が変わりました。もう一度コピーしてください。';return;}var t=skill+'\n\n## 今回の依頼\n'+request;box.value=t;var ok=await copyText(t);box.hidden=ok;st.textContent=ok?'コピーしました。新しいAIのチャットへ貼ってそのまま送信してください。以前の返事は含まれません。':'下の全文を選択してコピーし、新しいAIのチャットへ送信してください。';if(!ok){box.focus();box.select();}}catch(e){st.textContent='手順書を読み込めませんでした。通信を確認してもう一度押してください。';}
   });
 
   /* 質問への返し方 */

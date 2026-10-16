@@ -64,7 +64,7 @@
     try{
       if(!navigator.clipboard||!navigator.clipboard.writeText)throw Error('unavailable');
       await Promise.race([navigator.clipboard.writeText(text),new Promise(function(_,rej){setTimeout(function(){rej(Error('timeout'));},2500);})]);
-      say('コピーしました（'+e.name+'・'+text.length.toLocaleString('ja-JP')+'文字）。ChatGPT や Claude の新しい会話に貼って、送信してください。'+(text.length>10000?'長いので、貼ると「ファイル」のように表示されることがあります。そのまま送信して大丈夫です。':''));
+      say('コピーしました（'+e.name+'・'+text.length.toLocaleString('ja-JP')+'文字）。ChatGPT や Claude の新しいチャットに貼って、そのまま送信してください。'+(text.length>10000?'長いので、貼ると「ファイル」のように表示されることがあります。そのまま送信して大丈夫です。':''));
       if(btn){var old=btn.getAttribute('data-label')||btn.textContent;btn.setAttribute('data-label',old);btn.classList.add('is-copied');btn.textContent='コピーしました';setTimeout(function(){btn.textContent=old;btn.classList.remove('is-copied');},2200);}
     }catch(err){fallback(text,e.name);}
   }
