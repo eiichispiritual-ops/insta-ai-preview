@@ -39,7 +39,7 @@ curl -fsSL https://claude.ai/install.sh | bash && claude --version
 ```bash
 mkdir -p ~/insta-ai && cd ~/insta-ai && Z=$(ls -t ~/Downloads | grep "^insta-ai-all.*\.zip$" | head -1); D=$(ls -t ~/Downloads | grep "^insta-ai-all" | grep -v "\.zip$" | head -1); if [ -n "$Z" ]; then unzip -oq ~/Downloads/"$Z" -d insta-ai-all; elif [ -n "$D" ]; then rm -rf insta-ai-all && cp -R ~/Downloads/"$D" insta-ai-all; fi; if [ -d insta-ai-all/insta-ai-create ]; then mkdir -p .claude/skills && cp -R insta-ai-all/insta-ai-create .claude/skills/ && sh insta-ai-all/insta-ai-safety/apply.sh && ls .claude/skills; else echo "zip が見つかりません。ダウンロードし直してください"; fi
 ```
-うまくいった印：「安全設定：OK」と `insta-ai-create` が出ます。このとき、AI が `~/insta-ai` の外のフォルダ（書類、デスクトップ、Instagram の資料など）を読まない設定も入ります。「zip が見つかりません」と出たら、zip をダウンロードし直して、同じ1行を貼り直します。
+うまくいった印：「安全設定：OK」と `insta-ai-create` が出ます。作業フォルダ内で進めるためのルールと設定ファイルを配置します。「安全設定：OK」は配置完了の表示です。有効な権限は、起動したAIの権限画面でも確認してください。「zip が見つかりません」と出たら、zip をダウンロードし直して、同じ1行を貼り直します。
 
 **C. 起動して、ログインして、最初の1行を貼る**
 ```bash
@@ -71,7 +71,7 @@ npm install -g @openai/codex && codex --version
 ```bash
 mkdir -p ~/insta-ai && cd ~/insta-ai && Z=$(ls -t ~/Downloads | grep "^insta-ai-all.*\.zip$" | head -1); D=$(ls -t ~/Downloads | grep "^insta-ai-all" | grep -v "\.zip$" | head -1); if [ -n "$Z" ]; then unzip -oq ~/Downloads/"$Z" -d insta-ai-all; elif [ -n "$D" ]; then rm -rf insta-ai-all && cp -R ~/Downloads/"$D" insta-ai-all; fi; if [ -d insta-ai-all/insta-ai-create ]; then mkdir -p ~/.agents/skills && cp -R insta-ai-all/insta-ai-create ~/.agents/skills/ && sh insta-ai-all/insta-ai-safety/apply.sh && ls ~/.agents/skills; else echo "zip が見つかりません。ダウンロードし直してください"; fi
 ```
-うまくいった印：「安全設定：OK」と `insta-ai-create` が出ます。このとき、AI が `~/insta-ai` の外のフォルダ（書類、デスクトップ、Instagram の資料など）を読まない設定も入ります。古い版の Codex で「スキルが見つからない」と言われたときだけ、`mkdir -p ~/.codex/skills && cp -R ~/insta-ai/insta-ai-all/insta-ai-create ~/.codex/skills/` も貼ります。「zip が見つかりません」と出たら、zip をダウンロードし直して、同じ1行を貼り直します。
+うまくいった印：「安全設定：OK」と `insta-ai-create` が出ます。作業フォルダ内で進めるためのルールと設定ファイルを配置します。「安全設定：OK」は配置完了の表示です。有効な権限は、起動したAIの権限画面でも確認してください。古い版の Codex で「スキルが見つからない」と言われたときだけ、`mkdir -p ~/.codex/skills && cp -R ~/insta-ai/insta-ai-all/insta-ai-create ~/.codex/skills/` も貼ります。「zip が見つかりません」と出たら、zip をダウンロードし直して、同じ1行を貼り直します。
 
 **C. 起動して、ログインして、最初の1行を貼る**
 ```bash
@@ -129,7 +129,7 @@ insta-ai-create のスキルで、私のプロフィールの、表示名と紹�
 ```
 README.md
 全部入り_アプリ用.md   アプリに貼る連結済みの1ファイル（サイトの「手順書を全部コピー」と同じ内容。スキルのフォルダの外に置いてあります）
-insta-ai-safety/        外のフォルダを読まない設定（apply.sh が ~/insta-ai に入れます）
+insta-ai-safety/        作業フォルダ用のルール・設定（apply.sh が ~/insta-ai に入れます）
 insta-ai-create/        手順書の本体（SKILL.md と references/ の36本、合計37ファイル）。これだけを cp -R します
 video-edit/            （動画編集用）
   howto_<形式>.md       形式ごとの作り方（6形式：アフレコ・VLOG・トーク・抽象マーケ・ランキング・比較）

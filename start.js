@@ -140,7 +140,7 @@
       var put='(set -eu; mkdir -p ~/insta-ai; cd ~/insta-ai; D=$(mktemp -d "$PWD/setup.XXXXXX"); curl -fLSs "'+ZURL+'" -o "$D/pack.zip"; unzip -q "$D/pack.zip" -d "$D/unpacked"; test -s "$D/unpacked/insta-ai-create/SKILL.md"; test -d "$D/unpacked/insta-ai-create/references"; S='+sk+'; mkdir -p "$S"; if [ -e "$S/insta-ai-create" ]; then B=$(mktemp -d "$S/insta-ai-backup.XXXXXX"); mv "$S/insta-ai-create" "$B/"; fi; cp -R "$D/unpacked/insta-ai-create" "$S/"; test -s "$S/insta-ai-create/SKILL.md"; sh "$D/unpacked/insta-ai-safety/apply.sh"; echo "insta-ai-create の配置を確認しました"; shasum -a 256 "$S/insta-ai-create/SKILL.md")';
       note('下の「コピー」を押して、ターミナルに貼って Enter。取得・展開・必須ファイルの確認を行います。エラーが出た場合は、その内容を確認してから先へ進みます。');
       row('入れる（長いので中身は省略しています）',put);
-      ok('「安全設定：OK」「insta-ai-create の配置を確認しました」と、ファイル確認用の英数字が出れば配置完了です。AI が ~/insta-ai の外のフォルダを読まない設定も、ここで一緒に入ります。');
+      ok('「安全設定：OK」「insta-ai-create の配置を確認しました」と、ファイル確認用の英数字が出れば配置完了です。作業フォルダ内で進めるためのルールと設定ファイルも配置します。「安全設定：OK」は配置完了の表示です。有効な権限は、起動したAIの権限画面でも確認してください。');
       help('うまくいかないとき',[
         ['「curl」「unzip」のエラーが出た','取得または展開に失敗しています。通信を確認し、エラーの文をAIに伝えてください。配置完了の表示が出るまではCへ進みません。'],
         ['前の手順書に戻したい','skillsフォルダ内の insta-ai-backup で始まるフォルダに前の手順書が残っています。戻し方はAIに相談してください。']].concat(isCodex?[['古い版の Codex で「スキルが見つからない」と出た','次の1行で、古い置き場所にもコピーします。','mkdir -p ~/.codex/skills && cp -R ~/.agents/skills/insta-ai-create ~/.codex/skills/']]:[]));
