@@ -466,3 +466,5 @@ footer.footer.section-shell{max-width:none!important;width:100%!important;margin
 .sp-inline-dots i{width:20px;height:6px;border-radius:3px;background:#cfd8ee;display:block}
 .sp-inline-dots i.on{background:var(--accent)}
 .start-extra>.start-card,.start-card:nth-child(2){position:static!important;top:auto!important}
+/* sweep3: mobile tap targets */
+@media(max-width:760px){.header-ms{min-height:44px;padding:0 6px}.hx-links a{display:inline-flex;align-items:center;min-height:44px}.hx-also a{display:inline-block;padding:12px 0;margin:-12px 0}}
