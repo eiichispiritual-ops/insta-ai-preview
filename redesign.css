@@ -465,3 +465,4 @@ footer.footer.section-shell{max-width:none!important;width:100%!important;margin
 .sp-inline-dots{display:inline-flex;gap:4px}
 .sp-inline-dots i{width:20px;height:6px;border-radius:3px;background:#cfd8ee;display:block}
 .sp-inline-dots i.on{background:var(--accent)}
+.start-extra>.start-card,.start-card:nth-child(2){position:static!important;top:auto!important}
